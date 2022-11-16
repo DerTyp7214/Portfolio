@@ -1,9 +1,8 @@
 import { PageInfo } from "../types/types"
 
 export default async function fetchPageInfo(): Promise<PageInfo> {
-    const data = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getPageInfo`)
-
-    const json = await data.json()
-
-    return json
+    return {
+        title: 'Josua Lengwenath (DerTyp7214)',
+        favIconUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/favicon.ico`
+    }
 }

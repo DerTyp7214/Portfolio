@@ -84,6 +84,6 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
       projects,
       skills,
       contactInfo
-    },
+    }
   }
 }

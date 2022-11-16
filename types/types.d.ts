@@ -16,8 +16,8 @@ export interface Social {
 export interface Skill {
     name: string;
     score: number;
-    topWorld?: number;
-    topWorldRank?: number;
+    topWorld: number | null;
+    topWorldRank: number | null;
     imageUrl: string;
 }
 

@@ -32,7 +32,7 @@ export default function ProjectCard({ project }: Props) {
 
             <div className='px-0 md:px-10'>
                 <h4 className='text-4xl font-light'>{project.name}</h4>
-                <p className='text-xl fomt-bold mt-1 space-x-2'>{project.authors.map(author => <Link href={`https://github.com/${author}`} target='_blank'>{author}</Link>).reduce((a, b) => [a, <span>&</span>, b] as any)}</p>
+                <p className='text-xl fomt-bold mt-1 space-x-2'>{project.authors.map((author, index) => <Link key={index} href={`https://github.com/${author}`} target='_blank'>{author}</Link>).reduce((a, b) => [a, <span>&</span>, b] as any)}</p>
 
                 <div className='flex space-x-2 my-2'>
                     {project.skills.map((skill, index) =>
