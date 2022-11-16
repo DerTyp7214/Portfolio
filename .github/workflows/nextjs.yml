@@ -70,8 +70,12 @@ jobs:
         run: pnpm install
       - name: Build with Next.js
         run: pnpm next build
+        env:
+          NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
       - name: Static HTML export with Next.js
         run: pnpm next export
+        env:
+          NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
