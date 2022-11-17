@@ -38,8 +38,8 @@ export default function ProjectCard({ project }: Props) {
                     {project.skills.map((skill, index) =>
                         <div className='h-12 w-12 rounded-[5px] bg-background/50 relative flex justify-center items-center'>
                             <img key={index} className='p-2 filter z-20' src={skill.imageUrl} alt={skill.name} />
-                            <div className='absolute top-0 left-0 w-full h-full peer z-50' />
-                            <span className='absolute p-1 top-[-30%] select-none rounded-[5px] opacity-0 peer-hover:opacity-100 transition-all bg-white/40 text-black backdrop-blur-[5px] z-40'>{skill.name}</span>
+                            <div className='absolute top-0 left-0 w-full h-full peer z-40' />
+                            <span className='absolute p-1 top-[-30%] select-none rounded-[5px] opacity-0 peer-hover:opacity-100 transition-all bg-white/40 text-black backdrop-blur-[5px] z-30'>{skill.name}</span>
                         </div>
                     )}
                 </div>
