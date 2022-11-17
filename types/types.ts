@@ -1,6 +1,8 @@
 export interface PageInfo {
     title: string;
     favIconUrl: string;
+    description: string;
+    ogImageUrl: string;
 }
 
 export interface ProfileInfo {
