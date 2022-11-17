@@ -2,7 +2,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { GetStaticProps } from 'next/types'
-import { CodersRankActivities, CodersRankBadge, ContactInfo, PageInfo, ProfileInfo, Project, Skill, Social } from '../types/types'
+import { CodersRankActivities, CodersRankBadge, ContactInfo, GitHubContributions, PageInfo, ProfileInfo, Project, Skill, Social } from '../types/types'
 import { ArrowUpIcon } from '@heroicons/react/24/solid'
 import About from '../components/About'
 import ContactMe from '../components/ContactMe'
@@ -20,6 +20,7 @@ import fetchActivities from '../utils/fetchActivities'
 import ActivityChart from '../components/ActivityChart'
 import fetchBadges from '../utils/fetchBadges'
 import ReactTooltip from 'react-tooltip'
+import { fetchGithubContributions } from '../utils/fetchGithubContributions'
 
 type Props = {
   pageInfo: PageInfo,
@@ -28,11 +29,20 @@ type Props = {
   projects: Project[],
   skills: Skill[],
   contactInfo: ContactInfo,
-  activities: CodersRankActivities,
+  contributions: GitHubContributions,
   badges: CodersRankBadge[]
 }
 
-export default function Home({ pageInfo, socials, profileInfo, projects, skills, contactInfo, activities, badges }: Props) {
+export default function Home({
+  pageInfo,
+  socials,
+  profileInfo,
+  projects,
+  skills,
+  contactInfo,
+  contributions,
+  badges
+}: Props) {
   return (
     <div className='h-screen bg-background text-white overflow-y-scroll scroll-smooth overflow-x-hidden z-0 customScroll'>
       <Head>
@@ -55,7 +65,10 @@ export default function Home({ pageInfo, socials, profileInfo, projects, skills,
       </section>
 
       <section id='skills' className='snap-start mt-20 mb-20'>
-        <Skills skills={skills} chartData={activities} badges={badges} />
+        <Skills
+          skills={skills}
+          gitHubContributions={contributions}
+          badges={badges} />
       </section>
 
       <section id='contact' className='snap-start mt-20'>
@@ -69,7 +82,7 @@ export default function Home({ pageInfo, socials, profileInfo, projects, skills,
           </div>
         </footer>
       </Link>
-      <ReactTooltip html backgroundColor='#56606b' />
+      <ReactTooltip html backgroundColor='#56606b' multiline className='max-w-[200px] text-center' />
     </div>
   )
 }
@@ -82,8 +95,8 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   const projects: Project[] = await fetchProjects()
   const skills: Skill[] = await fetchSkills()
   const contactInfo: ContactInfo = await fetchContactInfo()
-  const activities: CodersRankActivities = await fetchActivities()
   const badges: CodersRankBadge[] = await fetchBadges()
+  const contributions: GitHubContributions = await fetchGithubContributions()
 
   return {
     props: {
@@ -93,7 +106,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
       projects,
       skills,
       contactInfo,
-      activities,
+      contributions,
       badges
     }
   }

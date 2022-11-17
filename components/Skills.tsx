@@ -1,17 +1,17 @@
 import { motion } from 'framer-motion'
 import React from 'react'
-import { CodersRankActivities, CodersRankBadge, Skill } from '../types/types'
-import ActivityChart from './ActivityChart'
+import { CodersRankBadge, GitHubContributions, Skill } from '../types/types'
 import BadgeCollection from './BadgeCollection'
+import ContributionChart from './ContributionChart'
 import SkillItem from './SkillItem'
 
 type Props = {
     skills: Skill[],
-    chartData: CodersRankActivities,
+    gitHubContributions: GitHubContributions,
     badges: CodersRankBadge[]
 }
 
-export default function Skills({ skills, chartData, badges }: Props) {
+export default function Skills({ skills, gitHubContributions, badges }: Props) {
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -41,7 +41,7 @@ export default function Skills({ skills, chartData, badges }: Props) {
                 </div>
                 <div className='opacity-0 h-0 w-0 lg:w-auto lg:h-auto lg:opacity-100 pt-2 2xl:pt-12 flex flex-col items-center space-y-10'>
                     <BadgeCollection badges={badges} />
-                    <ActivityChart chartData={chartData} />
+                    <ContributionChart chartData={gitHubContributions} />
                 </div>
             </div>
         </motion.div >

@@ -50,22 +50,22 @@ export interface CodersRankTechnology {
     score: number;
 }
 
-interface CodersRankBadgeV2 {
+export interface CodersRankBadgeV2 {
     badgeFamily: string;
     badgeType: string;
     description: string;
-    values: {
+    values: ({
         language: string;
-    }[] | {
+    } & {
         days: string;
         endDate: string;
         startDate: string;
-    }[];
+    });
     version: 'v2';
     visibility: string;
 }
 
-interface CodersRankBadgeV1 {
+export interface CodersRankBadgeV1 {
     language: string;
     location_name: string;
     location_type: string;
@@ -106,3 +106,25 @@ export interface CodersRankWorkExperience {
     title: string;
     end_date?: string;
 }
+
+export interface ContributionDay {
+    contributionCount: number;
+    contributionLevel: ContributionLevelName;
+    date: string;
+    color: string;
+}
+
+export interface GitHubContributions {
+    contributions?: ContributionDay[][];
+    totalContributions?: number;
+}
+
+export const CONTRIBUTION_LEVELS = {
+    NONE: 0,
+    FIRST_QUARTILE: 1,
+    SECOND_QUARTILE: 2,
+    THIRD_QUARTILE: 3,
+    FOURTH_QUARTILE: 4,
+}
+
+export type ContributionLevelName = keyof typeof CONTRIBUTION_LEVELS

@@ -1,6 +1,5 @@
 import moment from 'moment'
 import React from 'react'
-import ReactTooltip from 'react-tooltip'
 import { CodersRankActivities } from '../types/types'
 import { lerpColor } from '../utils/colorUtils'
 
@@ -63,7 +62,7 @@ export default function ActivityChart({ chartData }: Props) {
       <h1 className='pb-1 tracking-wide'><span className='font-semibold'>{total} activites</span> in the last year</h1>
       <div className='flex flex-row space-x-3'>
         <div className='relative flex flex-col items-end font-thin text-sm' style={{ fontSize: `${(rectSpacing / 2) + rectSize}px` }}>
-          <span className={`mt-[-${rectSpacing}px]`}>Mon</span>
+          <span style={{ marginTop: `-${rectSpacing}px` }}>Mon</span>
           <span className='absolute' style={{ top: `${((rectSpacing + rectSize) * 2) - rectSpacing}px` }}>Wed</span>
           <span className='absolute' style={{ top: `${((rectSpacing + rectSize) * 4) - rectSpacing}px` }}>Fri</span>
           <span className='absolute' style={{ top: `${((rectSpacing + rectSize) * 6) - rectSpacing}px` }}>Sun</span>
