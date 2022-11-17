@@ -24,7 +24,7 @@ export default function SkillItem({ skill, directionLeft }: Props) {
             }}
             viewport={{ once: true }}
             className='group relative flex cursor-pointer'>
-            <div className='rounded-3xl border border-gray-500 bg-secondaryBackground'>
+            <div className='rounded-3xl border border-gray-500 bg-secondaryBackground flex flex-col items-center justify-center overflow-hidden'>
                 <img
                     src={skill.imageUrl}
                     alt={skill.name}
