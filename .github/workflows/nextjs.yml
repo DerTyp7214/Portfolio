@@ -5,6 +5,9 @@
 name: Deploy Next.js site to Pages
 
 on:
+
+  schedule:
+    - cron: '* 0 * * *'
   # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
