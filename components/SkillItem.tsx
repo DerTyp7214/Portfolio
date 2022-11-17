@@ -12,7 +12,7 @@ export default function SkillItem({ skill, directionLeft }: Props) {
     return (
         <motion.div
             initial={{
-                x: directionLeft ? -200 : 200,
+                x: directionLeft ? -100 : 100,
                 opacity: 0
             }}
             transition={{
