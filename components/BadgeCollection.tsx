@@ -23,7 +23,7 @@ export default function BadgeCollection({ badges }: Props) {
         <div>
             <h1 className='tracking-wide'>Badges</h1>
 
-            <div className='flex flex-wrap'>
+            <div className='grid grid-cols-6'>
                 {v2Badges.map((badge, index) => (
                     <div key={index} className='flex flex-col items-center bg-secondaryBackground w-32 p-2 m-2 rounded-md'>
                         <img src={getBadeImage(badge)} alt={badge.description} className='w-14 h-14' />
