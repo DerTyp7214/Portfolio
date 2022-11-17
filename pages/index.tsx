@@ -34,7 +34,7 @@ type Props = {
 
 export default function Home({ pageInfo, socials, profileInfo, projects, skills, contactInfo, activities, badges }: Props) {
   return (
-    <div className='h-screen bg-background text-white snap-y snap-mandatory overflow-y-scroll scroll-smooth overflow-x-hidden z-0 customScroll'>
+    <div className='h-screen bg-background text-white overflow-y-scroll scroll-smooth overflow-x-hidden z-0 customScroll'>
       <Head>
         <title>{pageInfo.title}</title>
         <link rel='icon' href={pageInfo.favIconUrl} />
@@ -42,23 +42,23 @@ export default function Home({ pageInfo, socials, profileInfo, projects, skills,
 
       <Header socials={socials} />
 
-      <section id='profile' className='snap-center'>
+      <section id='profile' className='snap-center mb-20'>
         <Profile profileInfo={profileInfo} />
       </section>
 
-      <section id='about' className='snap-center'>
+      <section id='about' className='snap-center mt-20 mb-20'>
         <About profileInfo={profileInfo} />
       </section>
 
-      <section id='projects' className='snap-center'>
+      <section id='projects' className='snap-center mt-20 mb-20'>
         <Projects projects={projects} />
       </section>
 
-      <section id='skills' className='snap-start'>
+      <section id='skills' className='snap-start mt-20 mb-20'>
         <Skills skills={skills} chartData={activities} badges={badges} />
       </section>
 
-      <section id='contact' className='snap-start'>
+      <section id='contact' className='snap-start mt-20'>
         <ContactMe contactInfo={contactInfo} />
       </section>
 

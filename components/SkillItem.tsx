@@ -28,7 +28,7 @@ export default function SkillItem({ skill, directionLeft }: Props) {
                 <img
                     src={skill.imageUrl}
                     alt={skill.name}
-                    className='object-contain w-20 h-20 md:w-22 md:h-22 xl:w-26 xl:h-26 filter group-hover:blur-[3px] group-hover:grayscale-[.7] transition duration-300 ease-in-out m-4' />
+                    className='object-contain w-16 h-16 md:w-22 md:h-22 xl:w-26 xl:h-26 filter group-hover:blur-[3px] group-hover:grayscale-[.7] transition duration-300 ease-in-out m-4' />
             </div>
 
             <div className='absolute top-[1px] left-[1px] opacity-0 group-hover:opacity-80 transition duration-300 ease-in-out group-hover:bg-white/30 w-28 h-28 md:w-30 md:h-30 xl:w-34 xl:h-34 rounded-3xl z-0'>

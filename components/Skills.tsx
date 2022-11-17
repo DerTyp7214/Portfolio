@@ -24,27 +24,26 @@ export default function Skills({ skills, chartData, badges }: Props) {
 
             <h3 className='absolute top-36 uppercase tracking-[3px] text-gray-500 text-sm'>Hover over a skill for some informations</h3>
 
-            <div className='flex flex-row space-x-10 pt-48 relative'>
-                <div className='flex flex-row space-y-10 justify-center items-start'>
-                    <div className='opacity-100 w-auto lg:opacity-0 lg:w-0 grid grid-cols-3 gap-5'>
+            <div className='flex flex-col 2xl:flex-row space-y-10 2xl:space-y-0 2xl:space-x-10 pt-48 relative transition-transform duration-200'>
+                <div className='flex flex-row space-y-10 justify-center items-start transition-transform duration-200'>
+                    <div className='opacity-100 w-auto md:opacity-0 md:w-0 grid grid-cols-3 gap-5'>
                         {skills?.slice(0, Math.min(skills.length, 3 * 5))?.map((skill, index) => <SkillItem key={index} skill={skill} directionLeft={index % 3 < 1} />)}
                     </div>
-                    <div className='opacity-0 w-0 lg:opacity-100 lg:w-auto xl:opacity-0 xl:w-0 grid grid-cols-4 gap-5'>
+                    <div className='opacity-0 w-0 md:opacity-100 md:w-auto lg:opacity-0 lg:w-0 grid grid-cols-4 gap-5'>
                         {skills?.slice(0, Math.min(skills.length, 4 * 5))?.map((skill, index) => <SkillItem key={index} skill={skill} directionLeft={index % 4 < 2} />)}
                     </div>
-                    <div className='w-0 opacity-0 xl:opacity-100 xl:w-auto 2xl:opacity-0 2xl:w-0 grid grid-cols-5 gap-5'>
+                    <div className='w-0 opacity-0 lg:opacity-100 lg:w-auto xl:opacity-0 xl:w-0 grid grid-cols-5 gap-5'>
                         {skills?.slice(0, Math.min(skills.length, 5 * 5))?.map((skill, index) => <SkillItem key={index} skill={skill} directionLeft={index % 5 < (index > skills.length / 2 ? 3 : 2)} />)}
                     </div>
-                    <div className='w-0 opacity-0 2xl:opacity-100 2xl:w-auto grid grid-cols-5 gap-5'>
+                    <div className='w-0 opacity-0 xl:opacity-100 xl:w-auto grid grid-cols-5 gap-5'>
                         {skills?.slice(0, Math.min(skills.length, 5 * 5))?.map((skill, index) => <SkillItem key={index} skill={skill} directionLeft />)}
                     </div>
                 </div>
-                <div className='pt-12 flex flex-col items-center space-y-10 opacity-0 w-0 2xl:opacity-100 2xl:w-auto'>
+                <div className='opacity-0 h-0 w-0 lg:w-auto lg:h-auto lg:opacity-100 pt-2 2xl:pt-12 flex flex-col items-center space-y-10'>
                     <BadgeCollection badges={badges} />
                     <ActivityChart chartData={chartData} />
                 </div>
             </div>
-
         </motion.div >
     )
 }

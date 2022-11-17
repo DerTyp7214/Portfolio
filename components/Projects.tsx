@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion'
 import React from 'react'
+import { motion } from 'framer-motion'
 import { Project } from '../types/types'
 import ProjectCard from './ProjectCard'
 
@@ -13,7 +13,7 @@ export default function Projects({ projects }: Props) {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 1.5 }}
-            className='h-screen flex flex-row relative overflow-hidden text-left max-w-full justify-evenly mx-auto items-start'>
+            className='min-h-screen flex flex-row relative overflow-hidden text-left max-w-full justify-evenly mx-auto items-start'>
             <h3 className='absolute top-24 uppercase tracking-[20px] text-gray-500 text-2xl'>
                 Projects
             </h3>

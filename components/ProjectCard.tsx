@@ -12,7 +12,7 @@ type Props = {
 
 export default function ProjectCard({ project }: Props) {
     return (
-        <article className='relative flex flex-col rounded-lg items-center space-y-7 flex-shrink-0 snap-center w-[500px] md:w-[600px] xl:w-[900px] bg-secondaryBackground p-10 opacity-60 hover:opacity-100 transition-opacity duration-200 overflow-hidden'>
+        <article className='relative flex flex-col rounded-lg items-center space-y-7 flex-shrink-0 snap-center w-[90vw] max-w-[500px] md:w-[600px] md:max-w-none xl:w-[900px] bg-secondaryBackground p-10 opacity-60 hover:opacity-100 transition-all duration-200 overflow-hidden'>
             <motion.img
                 initial={{
                     y: -100,
@@ -26,13 +26,13 @@ export default function ProjectCard({ project }: Props) {
                     duration: 1.2,
                 }}
                 viewport={{ once: true }}
-                className='w-32 h-32 rounded-3xl xl:w-[200px] xl:h-[200px] object-contain object-center'
+                className='w-32 h-32 rounded-3xl xl:w-[200px] xl:h-[200px] object-contain object-center transition-all duration-200'
                 src={project.imageUrl}
                 alt={project.name} />
 
-            <div className='px-0 md:px-10'>
+            <div className='px-0 md:px-10 max-w-full'>
                 <h4 className='text-4xl font-light'>{project.name}</h4>
-                <p className='text-xl fomt-bold mt-1 space-x-2'>{project.authors.map((author, index) => <Link key={index} href={`https://github.com/${author}`} target='_blank'>{author}</Link>).reduce((a, b) => [a, <span>&</span>, b] as any)}</p>
+                <p className='text-xl fomt-bold mt-1 space-x-2 flex flex-wrap'>{project.authors.map((author, index) => <Link key={index} href={`https://github.com/${author}`} target='_blank'>{author}</Link>).reduce((a, b) => [a, <span>&</span>, b] as any)}</p>
 
                 <div className='flex space-x-2 my-2'>
                     {project.skills.map((skill, index) =>
