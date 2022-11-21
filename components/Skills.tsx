@@ -6,6 +6,7 @@ import BadgeCollection from './BadgeCollection'
 import ContributionChart from './ContributionChart'
 import Modal from './Modal'
 import SkillItem from './SkillItem'
+import SkillModal from './SkillModal'
 
 type Props = {
   skills: Skill[]
@@ -23,14 +24,6 @@ export default function Skills({ skills, gitHubContributions, badges }: Props) {
     ShowModal(true)
   }
 
-  const currentEntries = Object.entries(currentSkill ?? {}).filter(
-    ([_, value]) =>
-      value &&
-      !value.toString().startsWith('http') &&
-      value !== true &&
-      value !== false
-  )
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -45,53 +38,11 @@ export default function Skills({ skills, gitHubContributions, badges }: Props) {
         Hover over a skill for some informations
       </h3>
 
-      <Modal
-        show={showModal && !!currentSkill}
+      <SkillModal
+        show={showModal}
+        skill={currentSkill}
         onClose={() => ShowModal(false)}
-        title={currentSkill?.name}>
-        {currentSkill && (
-          <div className='flex flex-col items-center justify-start lg:justify-center p-4 h-full overflow-auto'>
-            <h1 className='text-5xl font-bold text-white mb-10 underline decoration-accent/40'>
-              {currentSkill.name}
-            </h1>
-            <div className='grid grid-cols-2 space-x-4'>
-              {currentEntries.map(([key, value]) => (
-                <div
-                  key={key}
-                  className='flex flex-col items-center justify-center overflow-hidden'>
-                  <h1 className='text-3xl font-bold text-white'>{value}</h1>
-                  <p className='text-white/60 text-center'>
-                    {capitalize(key.split(/(?=[A-Z])/).join(' '))}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className='flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4 items-center justify-center mt-10'>
-              <button
-                className='text-lg border-2 border-accent/20 rounded-3xl hover:border-accent/40 hover:bg-accent/10 hover:rounded-2xl transition-all duration-200 p-2'
-                onClick={() => {
-                  window.open(
-                    `https://profile.codersrank.io/leaderboard/developer?technology=${currentSkill.name}`,
-                    '_blank'
-                  )
-                }}>
-                CodersRank Leaderboards (World)
-              </button>
-              <button
-                className='text-lg border-2 border-accent/20 rounded-3xl hover:border-accent/40 hover:bg-accent/10 hover:rounded-2xl transition-all duration-200 p-2'
-                onClick={() => {
-                  window.open(
-                    `https://profile.codersrank.io/leaderboard/developer?technology=${currentSkill.name}&country=Germany`,
-                    '_blank'
-                  )
-                }}>
-                CodersRank Leaderboards (Germany)
-              </button>
-            </div>
-          </div>
-        )}
-      </Modal>
+      />
 
       <div className='flex flex-col 2xl:flex-row space-y-10 2xl:space-y-0 2xl:space-x-10 pt-48 relative transition-transform duration-200'>
         <div className='flex flex-row space-y-10 justify-center items-start transition-transform duration-200'>

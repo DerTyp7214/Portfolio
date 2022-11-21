@@ -1,16 +1,31 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import React from 'react'
-import { Project } from '../types/types'
+import React, { useState } from 'react'
+import { Project, Skill } from '../types/types'
+import SkillModal from './SkillModal'
 
 type Props = {
   project: Project
 }
 
 export default function ProjectCard({ project }: Props) {
+  const [showModal, ShowModal] = useState(false)
+
+  const [currentSkill, setCurrentSkill] = useState<Skill | null>(null)
+
+  const openModal = (skill: Skill) => {
+    setCurrentSkill(skill)
+    ShowModal(true)
+  }
+
   return (
     <article className='relative flex flex-col rounded-lg items-center space-y-7 flex-shrink-0 snap-center w-[90vw] max-w-[500px] md:w-[600px] md:max-w-none xl:w-[900px] bg-secondaryBackground p-10 opacity-60 hover:opacity-100 transition-all duration-200 overflow-hidden'>
+      <SkillModal
+        show={showModal}
+        skill={currentSkill}
+        onClose={() => ShowModal(false)}
+      />
       <motion.div
         initial={{
           y: -80,
@@ -50,7 +65,8 @@ export default function ProjectCard({ project }: Props) {
           {project.skills.map((skill, index) => (
             <div
               key={index}
-              className='h-12 w-12 rounded-[5px] bg-background/50 relative flex justify-center items-center'>
+              onClick={() => openModal(skill)}
+              className='h-12 w-12 rounded-[5px] bg-background/50 relative flex justify-center items-center cursor-pointer'>
               <Image
                 className='p-2 filter z-20'
                 src={skill.imageUrl}
