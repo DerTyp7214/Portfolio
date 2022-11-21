@@ -1,4 +1,7 @@
+import { ClipboardIcon } from '@heroicons/react/24/outline'
+import { ShareIcon } from '@heroicons/react/24/solid'
 import React from 'react'
+import { toast } from 'react-toastify'
 import { Skill } from '../types/types'
 import { capitalize } from '../utils/stringUtils'
 import Modal from './Modal'
@@ -22,6 +25,34 @@ export default function SkillModal({ skill, show, onClose }: Props) {
     <Modal show={show && !!skill} onClose={onClose} title={skill?.name}>
       {skill && (
         <div className='flex flex-col items-center justify-start lg:justify-center p-4 h-full overflow-auto'>
+          <ShareIcon
+            className='absolute top-4 right-14 w-6 h-6 cursor-pointer'
+            onClick={() => {
+              const shareData = {
+                title: skill.name,
+                text: `${window.location.origin}/?skill=${skill.name}#skills`,
+              }
+              if (navigator.canShare(shareData)) {
+                navigator.share(shareData)
+                toast('Link shared', {
+                  type: 'info',
+                  icon: () => <ShareIcon className='h-6 w-6' />,
+                })
+              }
+            }}
+          />
+          <ClipboardIcon
+            className='absolute top-4 right-24 w-6 h-6 cursor-pointer'
+            onClick={() => {
+              navigator.clipboard.writeText(
+                `${window.location.origin}/?skill=${skill.name}#skills`
+              )
+              toast('Link copied to clipboard', {
+                type: 'info',
+                icon: () => <ClipboardIcon className='h-6 w-6' />,
+              })
+            }}
+          />
           <h1 className='text-5xl font-bold text-white mb-10 underline decoration-accent/40'>
             {skill.name}
           </h1>

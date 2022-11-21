@@ -46,11 +46,11 @@ export default function Modal({ show, children, onClose, title }: Props) {
             onClick={(e) => e.stopPropagation()}
             initial={{
               opacity: show ? 0 : 1,
-              filter: show ? 'blur(20px)' : '',
+              filter: show ? 'blur(20px)' : 'blur(0px)',
             }}
             animate={{
               opacity: show ? 1 : 0,
-              filter: show ? '' : 'blur(20px)',
+              filter: show ? 'blur(0px)' : 'blur(20px)',
             }}
             onAnimationComplete={() => {
               if (show === false) {
@@ -63,7 +63,9 @@ export default function Modal({ show, children, onClose, title }: Props) {
               className='absolute top-3 right-3 w-8 h-8 cursor-pointer'
               onClick={close}
             />
-            <h1 className='text-3xl font-bold text-white ml-4 mt-2 absolute'>{title}</h1>
+            <h1 className='text-3xl font-bold text-white ml-4 mt-2 absolute'>
+              {title}
+            </h1>
             <div className='w-full h-full flex flex-col items-center justify-center overflow-hidden pt-20'>
               {children}
             </div>

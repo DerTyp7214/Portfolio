@@ -1,6 +1,6 @@
 import { ContributionDay } from '../types/types'
 
-export async function fetchGithubContributions() {
+export default async function fetchGithubContributions() {
   const query = `
     query($userName:String!) {
       user(login: $userName){

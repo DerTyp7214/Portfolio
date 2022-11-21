@@ -1,10 +1,9 @@
 import { motion } from 'framer-motion'
-import React, { useState } from 'react'
+import { URLSearchParams } from 'next/dist/compiled/@edge-runtime/primitives/url'
+import React, { useEffect, useState } from 'react'
 import { CodersRankBadge, GitHubContributions, Skill } from '../types/types'
-import { capitalize } from '../utils/stringUtils'
 import BadgeCollection from './BadgeCollection'
 import ContributionChart from './ContributionChart'
-import Modal from './Modal'
 import SkillItem from './SkillItem'
 import SkillModal from './SkillModal'
 
@@ -23,6 +22,20 @@ export default function Skills({ skills, gitHubContributions, badges }: Props) {
     setCurrentSkill(skill)
     ShowModal(true)
   }
+
+  useEffect(() => {
+    if (window.location.hash === '#skills') {
+      const searchParams = new URLSearchParams(window.location.search)
+
+      const skill = skills.find(
+        (skill) => skill.name.toLowerCase() === searchParams.get('skill')?.toLowerCase()
+      )
+      if (skill) {
+        openModal(skill)
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <motion.div

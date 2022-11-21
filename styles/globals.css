@@ -22,7 +22,7 @@
     }
 }
 
-.modal-content::before {
+.modal-content::before, .Toastify__toast::before {
     content: "";
     position: absolute;
     top: 0;

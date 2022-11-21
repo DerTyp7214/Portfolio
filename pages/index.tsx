@@ -14,6 +14,7 @@ import {
   Social,
 } from '../types/types'
 import { ArrowUpIcon } from '@heroicons/react/24/solid'
+import { ToastContainer } from 'react-toastify'
 import About from '../components/About'
 import ContactMe from '../components/ContactMe'
 import Header from '../components/Header'
@@ -28,7 +29,8 @@ import fetchSkills from '../utils/fetchSkills'
 import fetchSocials from '../utils/fetchSocials'
 import fetchBadges from '../utils/fetchBadges'
 import ReactTooltip from 'react-tooltip'
-import { fetchGithubContributions } from '../utils/fetchGithubContributions'
+import fetchGithubContributions from '../utils/fetchGithubContributions'
+import 'react-toastify/dist/ReactToastify.css'
 
 type Props = {
   pageInfo: PageInfo
@@ -102,6 +104,26 @@ export default function Home({
         backgroundColor='#56606b'
         multiline
         className='max-w-[200px] text-center'
+      />
+      <ToastContainer
+        position='bottom-right'
+        autoClose={5000}
+        progressStyle={{ background: '#ff7ef9' }}
+        toastStyle={{
+          background: '#2f373f80',
+          borderRadius: '1rem',
+          paddingRight: '10px',
+          backdropFilter: 'blur(20px)',
+        }}
+        toastClassName='transition-all duration-200 m-2'
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+        theme='dark'
       />
     </div>
   )
