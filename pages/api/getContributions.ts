@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { GitHubContributions } from '../../types/types'
-import { fetchGithubContributions } from '../../utils/fetchGithubContributions'
+import fetchGithubContributions from '../../utils/fetchGithubContributions'
 
 export default async function handler(
   req: NextApiRequest,
