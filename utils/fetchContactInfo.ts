@@ -1,7 +1,7 @@
-import { ContactInfo } from "../types/types"
+import { ContactInfo } from '../types/types'
 
 export default async function fetchContactInfo(): Promise<ContactInfo> {
-    return {
-        email: 'lengwenath1+contact@gmail.com'
-    }
+  return {
+    email: 'lengwenath1+contact@gmail.com',
+  }
 }

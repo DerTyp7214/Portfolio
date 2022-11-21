@@ -1,49 +1,156 @@
 import { motion } from 'framer-motion'
-import React from 'react'
+import React, { useState } from 'react'
 import { CodersRankBadge, GitHubContributions, Skill } from '../types/types'
+import { capitalize } from '../utils/stringUtils'
 import BadgeCollection from './BadgeCollection'
 import ContributionChart from './ContributionChart'
+import Modal from './Modal'
 import SkillItem from './SkillItem'
 
 type Props = {
-    skills: Skill[],
-    gitHubContributions: GitHubContributions,
-    badges: CodersRankBadge[]
+  skills: Skill[]
+  gitHubContributions: GitHubContributions
+  badges: CodersRankBadge[]
 }
 
 export default function Skills({ skills, gitHubContributions, badges }: Props) {
-    return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 1.5 }}
-            className='flex relative text-center flex-row max-w-[2000px] px-10 min-h-screen justify-center space-y-0 mx-auto items-start'>
-            <h3 className='absolute top-24 uppercase tracking-[20px] text-gray-500 text-2xl'>
-                Skills
-            </h3>
+  const [showModal, ShowModal] = useState(false)
 
-            <h3 className='absolute top-36 uppercase tracking-[3px] text-gray-500 text-sm'>Hover over a skill for some informations</h3>
+  const [currentSkill, setCurrentSkill] = useState<Skill | null>(null)
 
-            <div className='flex flex-col 2xl:flex-row space-y-10 2xl:space-y-0 2xl:space-x-10 pt-48 relative transition-transform duration-200'>
-                <div className='flex flex-row space-y-10 justify-center items-start transition-transform duration-200'>
-                    <div className='opacity-100 w-auto md:opacity-0 md:w-0 grid grid-cols-3 gap-5'>
-                        {skills?.slice(0, Math.min(skills.length, 3 * 5))?.map((skill, index) => <SkillItem key={index} skill={skill} directionLeft={index % 3 < 1} />)}
-                    </div>
-                    <div className='opacity-0 w-0 md:opacity-100 md:w-auto lg:opacity-0 lg:w-0 grid grid-cols-4 gap-5'>
-                        {skills?.slice(0, Math.min(skills.length, 4 * 5))?.map((skill, index) => <SkillItem key={index} skill={skill} directionLeft={index % 4 < 2} />)}
-                    </div>
-                    <div className='w-0 opacity-0 lg:opacity-100 lg:w-auto xl:opacity-0 xl:w-0 grid grid-cols-5 gap-5'>
-                        {skills?.slice(0, Math.min(skills.length, 5 * 5))?.map((skill, index) => <SkillItem key={index} skill={skill} directionLeft={index % 5 < (index > skills.length / 2 ? 3 : 2)} />)}
-                    </div>
-                    <div className='w-0 opacity-0 xl:opacity-100 xl:w-auto grid grid-cols-5 gap-5'>
-                        {skills?.slice(0, Math.min(skills.length, 5 * 5))?.map((skill, index) => <SkillItem key={index} skill={skill} directionLeft />)}
-                    </div>
+  const openModal = (skill: Skill) => {
+    setCurrentSkill(skill)
+    ShowModal(true)
+  }
+
+  const currentEntries = Object.entries(currentSkill ?? {}).filter(
+    ([_, value]) =>
+      value &&
+      !value.toString().startsWith('http') &&
+      value !== true &&
+      value !== false
+  )
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 1.5 }}
+      className='flex relative text-center flex-row max-w-[2000px] px-10 min-h-screen justify-center space-y-0 mx-auto items-start'>
+      <h3 className='absolute top-24 uppercase tracking-[20px] text-gray-500 text-2xl'>
+        Skills
+      </h3>
+
+      <h3 className='absolute top-36 uppercase tracking-[3px] text-gray-500 text-sm'>
+        Hover over a skill for some informations
+      </h3>
+
+      <Modal
+        show={showModal && !!currentSkill}
+        onClose={() => ShowModal(false)}
+        title={currentSkill?.name}>
+        {currentSkill && (
+          <div className='flex flex-col items-center justify-start lg:justify-center p-4 h-full overflow-auto'>
+            <h1 className='text-5xl font-bold text-white mb-10 underline decoration-accent/40'>
+              {currentSkill.name}
+            </h1>
+            <div className='grid grid-cols-2 space-x-4'>
+              {currentEntries.map(([key, value]) => (
+                <div
+                  key={key}
+                  className='flex flex-col items-center justify-center overflow-hidden'>
+                  <h1 className='text-3xl font-bold text-white'>{value}</h1>
+                  <p className='text-white/60 text-center'>
+                    {capitalize(key.split(/(?=[A-Z])/).join(' '))}
+                  </p>
                 </div>
-                <div className='opacity-0 h-0 w-0 lg:w-auto lg:h-auto lg:opacity-100 pt-2 2xl:pt-12 flex flex-col items-center space-y-10'>
-                    <BadgeCollection badges={badges} />
-                    <ContributionChart chartData={gitHubContributions} />
-                </div>
+              ))}
             </div>
-        </motion.div >
-    )
+
+            <div className='flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4 items-center justify-center mt-10'>
+              <button
+                className='text-lg border-2 border-accent/20 rounded-3xl hover:border-accent/40 hover:bg-accent/10 hover:rounded-2xl transition-all duration-200 p-2'
+                onClick={() => {
+                  window.open(
+                    `https://profile.codersrank.io/leaderboard/developer?technology=${currentSkill.name}`,
+                    '_blank'
+                  )
+                }}>
+                CodersRank Leaderboards (World)
+              </button>
+              <button
+                className='text-lg border-2 border-accent/20 rounded-3xl hover:border-accent/40 hover:bg-accent/10 hover:rounded-2xl transition-all duration-200 p-2'
+                onClick={() => {
+                  window.open(
+                    `https://profile.codersrank.io/leaderboard/developer?technology=${currentSkill.name}&country=Germany`,
+                    '_blank'
+                  )
+                }}>
+                CodersRank Leaderboards (Germany)
+              </button>
+            </div>
+          </div>
+        )}
+      </Modal>
+
+      <div className='flex flex-col 2xl:flex-row space-y-10 2xl:space-y-0 2xl:space-x-10 pt-48 relative transition-transform duration-200'>
+        <div className='flex flex-row space-y-10 justify-center items-start transition-transform duration-200'>
+          <div className='opacity-100 w-auto md:opacity-0 md:w-0 grid grid-cols-3 gap-5'>
+            {skills
+              ?.slice(0, Math.min(skills.length, 3 * 5))
+              ?.map((skill, index) => (
+                <SkillItem
+                  onClick={openModal}
+                  key={index}
+                  skill={skill}
+                  directionLeft={index % 3 < 1}
+                />
+              ))}
+          </div>
+          <div className='opacity-0 w-0 md:opacity-100 md:w-auto lg:opacity-0 lg:w-0 grid grid-cols-4 gap-5'>
+            {skills
+              ?.slice(0, Math.min(skills.length, 4 * 5))
+              ?.map((skill, index) => (
+                <SkillItem
+                  onClick={openModal}
+                  key={index}
+                  skill={skill}
+                  directionLeft={index % 4 < 2}
+                />
+              ))}
+          </div>
+          <div className='w-0 opacity-0 lg:opacity-100 lg:w-auto xl:opacity-0 xl:w-0 grid grid-cols-5 gap-5'>
+            {skills
+              ?.slice(0, Math.min(skills.length, 5 * 5))
+              ?.map((skill, index) => (
+                <SkillItem
+                  onClick={openModal}
+                  key={index}
+                  skill={skill}
+                  directionLeft={
+                    index % 5 < (index > skills.length / 2 ? 3 : 2)
+                  }
+                />
+              ))}
+          </div>
+          <div className='w-0 opacity-0 xl:opacity-100 xl:w-auto grid grid-cols-5 gap-5'>
+            {skills
+              ?.slice(0, Math.min(skills.length, 5 * 5))
+              ?.map((skill, index) => (
+                <SkillItem
+                  key={index}
+                  onClick={openModal}
+                  skill={skill}
+                  directionLeft
+                />
+              ))}
+          </div>
+        </div>
+        <div className='opacity-0 h-0 w-0 lg:w-auto lg:h-auto lg:opacity-100 pt-2 2xl:pt-12 flex flex-col items-center space-y-10'>
+          <BadgeCollection badges={badges} />
+          <ContributionChart chartData={gitHubContributions} />
+        </div>
+      </div>
+    </motion.div>
+  )
 }

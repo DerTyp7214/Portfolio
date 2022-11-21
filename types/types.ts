@@ -1,132 +1,135 @@
 export interface PageInfo {
-    title: string;
-    favIconUrl: string;
-    description: string;
-    ogImageUrl: string;
+  title: string
+  favIconUrl: string
+  description: string
+  ogImageUrl: string
 }
 
 export interface ProfileInfo {
-    name: string;
-    avatarUrl: string;
+  name: string
+  avatarUrl: string
 }
 
 export interface Social {
-    name: string;
-    url: string;
+  name: string
+  url: string
 }
 
 export interface Skill {
-    name: string;
-    score: number;
-    topWorld: number | null;
-    topWorldRank: number | null;
-    imageUrl: string;
+  name: string
+  score: number
+  topWorld: number | null
+  topWorldRank: number | null
+  topCountry?: number | null
+  topCountryRank?: number | null
+  imageUrl: string
+  language: boolean
 }
 
 export interface Project {
-    name: string;
-    imageUrl: string;
-    authors: string[];
-    skills: Skill[];
-    githubUrl?: string;
-    playStoreUrl?: string;
-    keypoints: string[];
+  name: string
+  imageUrl: string
+  authors: string[]
+  skills: Skill[]
+  githubUrl?: string
+  playStoreUrl?: string
+  keypoints: string[]
 }
 
 export interface ContactInfo {
-    email: string;
+  email: string
 }
 
 export interface CodersRankLanguage {
-    name: string;
-    country_all: number;
-    country_rank: number;
-    score: number;
-    self_url: string;
-    world_wide_all: number;
-    world_wide_rank: number;
+  name: string
+  country_all: number
+  country_rank: number
+  score: number
+  self_url: string
+  world_wide_all: number
+  world_wide_rank: number
 }
 
 export interface CodersRankTechnology {
-    name: string;
-    score: number;
+  name: string
+  score: number
 }
 
 export interface CodersRankBadgeV2 {
-    badgeFamily: string;
-    badgeType: string;
-    description: string;
-    values: ({
-        language: string;
-    } & {
-        days: string;
-        endDate: string;
-        startDate: string;
-    });
-    version: 'v2';
-    visibility: string;
+  badgeFamily: string
+  badgeType: string
+  description: string
+  values: {
+    language: string
+  } & {
+    days: string
+    endDate: string
+    startDate: string
+  }
+  version: 'v2'
+  visibility: string
 }
 
 export interface CodersRankBadgeV1 {
-    language: string;
-    location_name: string;
-    location_type: string;
-    rank: number;
-    version: 'v1';
-    visibility: string;
+  language: string
+  location_name: string
+  location_type: string
+  rank: number
+  version: 'v1'
+  visibility: string
 }
 
-export type CodersRankBadge = CodersRankBadgeV1 | CodersRankBadgeV2;
+export type CodersRankBadge = CodersRankBadgeV1 | CodersRankBadgeV2
 
 export interface CodersRankProject {
-    description: string;
-    highlighted_technologies: string[];
-    image: string;
-    is_current: boolean;
-    link_to_project: string;
-    link_to_source_code: string;
-    other_technologies: string[];
-    project_title: string;
-    start_date: string;
-    end_date?: string;
+  description: string
+  highlighted_technologies: string[]
+  image: string
+  is_current: boolean
+  link_to_project: string
+  link_to_source_code: string
+  other_technologies: string[]
+  project_title: string
+  start_date: string
+  end_date?: string
 }
 
 export interface CodersRankActivities {
-    [key: string]: {
-        [key: string]: number;
-    };
+  [key: string]: {
+    [key: string]: number
+  }
 }
 
 export interface CodersRankWorkExperience {
-    company: string;
-    highlighted_technologies: string[];
-    is_current: boolean;
-    is_remote: boolean;
-    location: string;
-    other_technologies: string[];
-    start_date: string;
-    title: string;
-    end_date?: string;
+  company: string
+  highlighted_technologies: string[]
+  is_current: boolean
+  is_remote: boolean
+  location: string
+  other_technologies: string[]
+  start_date: string
+  title: string
+  end_date?: string
 }
 
 export interface ContributionDay {
-    contributionCount: number;
-    contributionLevel: ContributionLevelName;
-    date: string;
-    color: string;
+  contributionCount: number
+  contributionLevel: ContributionLevelName
+  date: string
+  color: string
 }
 
 export interface GitHubContributions {
-    contributions?: ContributionDay[][];
-    totalContributions?: number;
+  contributions?: ContributionDay[][]
+  totalContributions?: number
 }
 
 export const CONTRIBUTION_LEVELS = {
-    NONE: 0,
-    FIRST_QUARTILE: 1,
-    SECOND_QUARTILE: 2,
-    THIRD_QUARTILE: 3,
-    FOURTH_QUARTILE: 4,
+  NONE: 0,
+  FIRST_QUARTILE: 1,
+  SECOND_QUARTILE: 2,
+  THIRD_QUARTILE: 3,
+  FOURTH_QUARTILE: 4,
 }
 
 export type ContributionLevelName = keyof typeof CONTRIBUTION_LEVELS

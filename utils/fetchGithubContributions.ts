@@ -1,4 +1,4 @@
-import { ContributionDay } from "../types/types"
+import { ContributionDay } from '../types/types'
 
 export async function fetchGithubContributions() {
   const query = `
@@ -19,33 +19,38 @@ export async function fetchGithubContributions() {
         }
       }
     }
-    `;
+    `
   const variables = `
     {
       "userName": "DerTyp7214"
     }
-    `;
+    `
 
   const response = await fetch('https://api.github.com/graphql', {
     body: JSON.stringify({ query, variables }),
     headers: { Authorization: `bearer ${process.env.GITHUB_TOKEN}` },
-    method: 'POST'
+    method: 'POST',
   })
 
   const { data } = await response.json()
 
-  const contributionCalendar = data?.user?.contributionsCollection?.contributionCalendar
+  const contributionCalendar =
+    data?.user?.contributionsCollection?.contributionCalendar
 
   if (
-    !contributionCalendar || !Object.hasOwn(contributionCalendar, "weeks") ||
-    !Object.hasOwn(contributionCalendar, "totalContributions")
+    !contributionCalendar ||
+    !Object.hasOwn(contributionCalendar, 'weeks') ||
+    !Object.hasOwn(contributionCalendar, 'totalContributions')
   ) {
     return {}
   }
 
-  const { weeks, totalContributions }: {
-    weeks: { contributionDays: ContributionDay[] }[];
-    totalContributions: number;
+  const {
+    weeks,
+    totalContributions,
+  }: {
+    weeks: { contributionDays: ContributionDay[] }[]
+    totalContributions: number
   } = contributionCalendar
 
   const contributions = weeks.map((week) => week.contributionDays)
