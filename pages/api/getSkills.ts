@@ -13,6 +13,7 @@ const languages = [
   'Dart',
   'Python',
   'TypeScript',
+  'C#',
 ]
 
 const technologies = [
@@ -23,7 +24,6 @@ const technologies = [
   'NextJS',
   'Gson',
   'Flutter',
-  'Git',
   'GitHub',
 ]
 
