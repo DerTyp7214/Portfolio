@@ -30,7 +30,9 @@ import fetchSocials from '../utils/fetchSocials'
 import fetchBadges from '../utils/fetchBadges'
 import ReactTooltip from 'react-tooltip'
 import fetchGithubContributions from '../utils/fetchGithubContributions'
+
 import 'react-toastify/dist/ReactToastify.css'
+import { getFormatedDate } from '../utils/stringUtils'
 
 type Props = {
   pageInfo: PageInfo
@@ -91,13 +93,42 @@ export default function Home({
         <ContactMe contactInfo={contactInfo} />
       </section>
 
-      <Link href='#profile'>
-        <footer className='sticky bottom-5 w-full z-50'>
-          <div className='flex items-center justify-center'>
-            <ArrowUpIcon className='h-10 w-10 rounded-full filter text-white/30 hover:text-white hover:h-11 hover:w-11 transition-all duration-300 cursor-pointer' />
-          </div>
-        </footer>
-      </Link>
+      <footer className='sticky bottom-0 w-full z-50'>
+        <div className='flex items-center justify-center pb-5'>
+          <Link
+            href='#profile'
+            className='h-10 w-10 rounded-full hover:h-11 hover:w-11 transition-all overflow-hidden'>
+            <ArrowUpIcon className='filter text-white/30 hover:text-white transition-all duration-300 cursor-pointer' />
+          </Link>
+        </div>
+        <div className='absolute bottom-1 right-2 text-right text-sm opacity-20'>
+          <p>
+            <Link
+              target='_blank'
+              href={
+                process.env.NEXT_PUBLIC_RUN_ID
+                  ? `https://github.com/DerTyp7214/Portfoio/actions/runs/${process.env.NEXT_PUBLIC_RUN_ID}`
+                  : 'https://github.com/DerTyp7214/Portfoio/actions'
+              }>
+              {getFormatedDate(new Date())}
+            </Link>
+          </p>
+          <p>
+            {require('../package.json').version} (
+            <Link
+              target='_blank'
+              className='underline p-1'
+              href={
+                process.env.NEXT_PUBLIC_GIT_HASH
+                  ? `https://github.com/DerTyp7214/Portfoio/commit/${process.env.NEXT_PUBLIC_GIT_HASH}`
+                  : 'https://github.com/DerTyp7214/Portfoio/tree/main'
+              }>
+              {process.env.NEXT_PUBLIC_GIT_HASH_SHORT ?? 'main'}
+            </Link>
+            )
+          </p>
+        </div>
+      </footer>
       <div id='modal-root'></div>
       <ReactTooltip
         html
