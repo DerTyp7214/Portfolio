@@ -36,8 +36,6 @@ jobs:
       - id: commit
         name: Get commit Hash
         uses: pr-mpt/actions-commit-hash@v2
-        with:
-          commit: '${{ github.event.workflow_run.head_sha }}'
 
       - uses: pnpm/action-setup@v2
         name: Install pnpm
