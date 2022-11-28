@@ -93,7 +93,7 @@ export default function Home({
         <ContactMe contactInfo={contactInfo} />
       </section>
 
-      <footer className='sticky bottom-0 w-full z-50'>
+      <footer className='sticky bottom-0 z-50 w-min m-auto'>
         <div className='flex items-center justify-center pb-5'>
           <Link
             href='#profile'
@@ -101,34 +101,34 @@ export default function Home({
             <ArrowUpIcon className='filter text-white/30 hover:text-white transition-all duration-300 cursor-pointer' />
           </Link>
         </div>
-        <div className='absolute bottom-1 right-2 text-right text-sm opacity-20'>
-          <p>
-            <Link
-              target='_blank'
-              href={
-                process.env.NEXT_PUBLIC_RUN_ID
-                  ? `https://github.com/DerTyp7214/Portfoio/actions/runs/${process.env.NEXT_PUBLIC_RUN_ID}`
-                  : 'https://github.com/DerTyp7214/Portfoio/actions'
-              }>
-              {getFormatedDate(new Date())}
-            </Link>
-          </p>
-          <p>
-            {require('../package.json').version} (
-            <Link
-              target='_blank'
-              className='underline p-1'
-              href={
-                process.env.NEXT_PUBLIC_GIT_HASH
-                  ? `https://github.com/DerTyp7214/Portfoio/commit/${process.env.NEXT_PUBLIC_GIT_HASH}`
-                  : 'https://github.com/DerTyp7214/Portfoio/tree/main'
-              }>
-              {process.env.NEXT_PUBLIC_GIT_HASH_SHORT ?? 'main'}
-            </Link>
-            )
-          </p>
-        </div>
       </footer>
+      <div className='mb-1 mr-2 text-right text-sm opacity-20'>
+        <p>
+          <Link
+            target='_blank'
+            href={
+              process.env.NEXT_PUBLIC_RUN_ID
+                ? `https://github.com/DerTyp7214/Portfoio/actions/runs/${process.env.NEXT_PUBLIC_RUN_ID}`
+                : 'https://github.com/DerTyp7214/Portfoio/actions'
+            }>
+            {getFormatedDate(new Date())}
+          </Link>
+        </p>
+        <p>
+          {require('../package.json').version} (
+          <Link
+            target='_blank'
+            className='underline p-1'
+            href={
+              process.env.NEXT_PUBLIC_GIT_HASH
+                ? `https://github.com/DerTyp7214/Portfoio/commit/${process.env.NEXT_PUBLIC_GIT_HASH}`
+                : 'https://github.com/DerTyp7214/Portfoio/tree/main'
+            }>
+            {process.env.NEXT_PUBLIC_GIT_HASH_SHORT ?? 'main'}
+          </Link>
+          )
+        </p>
+      </div>
       <div id='modal-root'></div>
       <ReactTooltip
         html
