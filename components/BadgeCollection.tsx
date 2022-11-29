@@ -35,14 +35,10 @@ export default function BadgeCollection({ badges }: Props) {
         {v2Badges.map((badge, index) => (
           <div
             key={index}
-            className='flex flex-col items-center bg-secondaryBackground w-32 p-2 m-2 rounded-md'
+            className='flex flex-col items-center bg-secondaryBackground w-32 p-2 m-2 rounded-md cursor-default'
             data-tip={badge.description}>
             <div className='w-14 h-14 relative'>
-              <Image
-                src={getBadeImage(badge)}
-                alt={badge.description}
-                fill
-              />
+              <Image src={getBadeImage(badge)} alt={badge.description} fill />
             </div>
             <p className='text-xs mt-2'>
               {badge.badgeType.split(/(?=[A-Z])/).join(' ')}
@@ -62,18 +58,14 @@ export default function BadgeCollection({ badges }: Props) {
                             fill
                           />
                         </div>
-                        <p
-                          key={key}
-                          className='text-sm font-bold'>
+                        <p key={key} className='text-sm font-bold'>
                           {value}
                         </p>
                       </div>
                     )
                   case 'days':
                     return (
-                      <p
-                        key={key}
-                        className='text-xs mt-2 mb-1 uppercase'>
+                      <p key={key} className='text-xs mt-2 mb-1 uppercase'>
                         {value} Days
                       </p>
                     )

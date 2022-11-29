@@ -30,6 +30,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -72,8 +76,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Lint code
-        run: pnpm lint
+      - name: get-package-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@main
+
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          eslint: true
+          prettier: true
 
       - name: Build with Next.js
         run: pnpm next build
@@ -97,6 +108,9 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: ./out
+
+      - name: Generate Summary
+        run: echo '## Job Summary (${{ steps.date.outputs.date }})\n\n| | |\n| -- | -- |\n| Version | ${{ steps.package-version.outputs.current-version}} |\n| Commit | [${{ steps.commit.outputs.short }}](https://github.com/DerTyp7214/Portfoio/commit/${{ steps.commit.outputs.hash }}) |\n| Job | [${{ github.run_id }}](https://github.com/DerTyp7214/Portfoio/actions/runs/${{ github.run_id }}) |' >> $GITHUB_STEP_SUMMARY
 
   # Deployment job
   deploy:

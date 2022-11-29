@@ -55,6 +55,36 @@ export default function Home({
   contributions,
   badges,
 }: Props) {
+  const versionInfo = (
+    <div className='mb-1 mr-2 text-right text-sm opacity-20'>
+      <p>
+        <Link
+          target='_blank'
+          href={
+            process.env.NEXT_PUBLIC_GIT_HASH
+              ? `https://github.com/DerTyp7214/Portfoio/commit/${process.env.NEXT_PUBLIC_GIT_HASH}`
+              : 'https://github.com/DerTyp7214/Portfoio/tree/main'
+          }>
+          {getFormatedDate(new Date())}
+        </Link>
+      </p>
+      <p>
+        {require('../package.json').version} (
+        <Link
+          target='_blank'
+          className='underline p-1'
+          href={
+            process.env.NEXT_PUBLIC_RUN_ID
+              ? `https://github.com/DerTyp7214/Portfoio/actions/runs/${process.env.NEXT_PUBLIC_RUN_ID}`
+              : 'https://github.com/DerTyp7214/Portfoio/actions'
+          }>
+          {process.env.NEXT_PUBLIC_RUN_ID ?? 'actions'}
+        </Link>
+        )
+      </p>
+    </div>
+  )
+
   return (
     <div className='h-screen bg-background text-white overflow-y-scroll scroll-smooth overflow-x-hidden z-0 customScroll'>
       <Head>
@@ -102,33 +132,10 @@ export default function Home({
           </Link>
         </div>
       </footer>
-      <div className='mb-1 mr-2 text-right text-sm opacity-20'>
-        <p>
-          <Link
-            target='_blank'
-            href={
-              process.env.NEXT_PUBLIC_RUN_ID
-                ? `https://github.com/DerTyp7214/Portfoio/actions/runs/${process.env.NEXT_PUBLIC_RUN_ID}`
-                : 'https://github.com/DerTyp7214/Portfoio/actions'
-            }>
-            {getFormatedDate(new Date())}
-          </Link>
-        </p>
-        <p>
-          {require('../package.json').version} (
-          <Link
-            target='_blank'
-            className='underline p-1'
-            href={
-              process.env.NEXT_PUBLIC_GIT_HASH
-                ? `https://github.com/DerTyp7214/Portfoio/commit/${process.env.NEXT_PUBLIC_GIT_HASH}`
-                : 'https://github.com/DerTyp7214/Portfoio/tree/main'
-            }>
-            {process.env.NEXT_PUBLIC_GIT_HASH_SHORT ?? 'main'}
-          </Link>
-          )
-        </p>
+      <div className='absolute bottom-0 right-1 hidden lg:block'>
+        {versionInfo}
       </div>
+      <div className='block lg:hidden'>{versionInfo}</div>
       <div id='modal-root'></div>
       <ReactTooltip
         html
