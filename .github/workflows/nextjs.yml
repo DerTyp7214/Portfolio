@@ -76,7 +76,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: get-package-version
+      - name: Get Package Version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@main
 
@@ -84,7 +84,6 @@ jobs:
         uses: wearerequired/lint-action@v2
         with:
           eslint: true
-          prettier: true
 
       - name: Build with Next.js
         run: pnpm next build
