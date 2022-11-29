@@ -32,7 +32,7 @@ jobs:
     steps:
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
       - name: Checkout
         uses: actions/checkout@v3
@@ -109,7 +109,7 @@ jobs:
           path: ./out
 
       - name: Generate Summary
-        run: echo '## Job Summary (${{ steps.date.outputs.date }})\n\n| | |\n| -- | -- |\n| Version | ${{ steps.package-version.outputs.current-version}} |\n| Commit | [${{ steps.commit.outputs.short }}](https://github.com/DerTyp7214/Portfoio/commit/${{ steps.commit.outputs.hash }}) |\n| Job | [${{ github.run_id }}](https://github.com/DerTyp7214/Portfoio/actions/runs/${{ github.run_id }}) |' >> $GITHUB_STEP_SUMMARY
+        run: echo -e '## Job Summary (${{ steps.date.outputs.date }})\n\n| | |\n| -- | -- |\n| Version | ${{ steps.package-version.outputs.current-version}} |\n| Commit | [${{ steps.commit.outputs.short }}](https://github.com/DerTyp7214/Portfoio/commit/${{ steps.commit.outputs.hash }}) |\n| Job | [${{ github.run_id }}](https://github.com/DerTyp7214/Portfoio/actions/runs/${{ github.run_id }}) |' >> $GITHUB_STEP_SUMMARY
 
   # Deployment job
   deploy:
