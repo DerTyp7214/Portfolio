@@ -109,7 +109,15 @@ jobs:
           path: ./out
 
       - name: Generate Summary
-        run: echo -e '## Job Summary (${{ steps.date.outputs.date }})\n\n| | |\n| -- | -- |\n| Version | ${{ steps.package-version.outputs.current-version}} |\n| Commit | [${{ steps.commit.outputs.short }}](https://github.com/DerTyp7214/Portfoio/commit/${{ steps.commit.outputs.hash }}) |\n| Job | [${{ github.run_id }}](https://github.com/DerTyp7214/Portfoio/actions/runs/${{ github.run_id }}) |' >> $GITHUB_STEP_SUMMARY
+        run: |
+          echo "## Job Summary (${{ steps.date.outputs.date }})" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Key | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "| -- | -- |" >> $GITHUB_STEP_SUMMARY
+          echo "| Version | ${{ steps.package-version.outputs.current-version}} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Commit | [${{ steps.commit.outputs.short }}](https://github.com/DerTyp7214/Portfoio/commit/${{ steps.commit.outputs.hash }}) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Job | [${{ github.run_id }}](https://github.com/DerTyp7214/Portfoio/actions/runs/${{ github.run_id }}) |" >> $GITHUB_STEP_SUMMARY
 
   # Deployment job
   deploy:
