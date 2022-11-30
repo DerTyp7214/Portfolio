@@ -66,7 +66,8 @@ export default function ProjectCard({ project }: Props) {
               {typeof project.downloads === 'number'
                 ? new Intl.NumberFormat('en-Us').format(project.downloads)
                 : project.downloads}
-            </b>{' '}
+              +{' '}
+            </b>
             Downloads
           </p>
         )}

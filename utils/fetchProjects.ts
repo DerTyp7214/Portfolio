@@ -40,12 +40,13 @@ export default async function fetchProjects(): Promise<Project[]> {
         'It also allows you to download themes from the community.',
         'It is available on F-Droid and GitHub.',
       ],
-      downloads: await gitHubDownloads(
-        'DerTyp7214',
-        'RboardThemeManagerV3',
-        'tags/latest-release',
-        true
-      ),
+      downloads:
+        (await gitHubDownloads(
+          'DerTyp7214',
+          'RboardThemeManagerV3',
+          'tags/latest-release',
+          true
+        )) + 12000, // 12k downloads from Play Store before it was removed
     },
     {
       name: 'Rboard Theme Creator',
@@ -62,7 +63,14 @@ export default async function fetchProjects(): Promise<Project[]> {
         'It also allows you to share your themes with others.',
         'It is available on Google Play and GitHub.',
       ],
-      downloads: await playStoreDownloads('de.dertyp7214.rboardthemecreator'),
+      downloads:
+        (await playStoreDownloads('de.dertyp7214.rboardthemecreator')) +
+        (await gitHubDownloads(
+          'DerTyp7214',
+          'RboardThemeCreator',
+          'tags/latest-release',
+          true
+        )),
     },
     {
       name: 'Rboard Patcher',
@@ -80,7 +88,14 @@ export default async function fetchProjects(): Promise<Project[]> {
         'It is also available as a module for Rboard Theme Manager V3.',
         'It is also available as a module for Rboard Theme Creator.',
       ],
-      downloads: await playStoreDownloads('de.dertyp7214.rboardpatcher'),
+      downloads:
+        (await playStoreDownloads('de.dertyp7214.rboardpatcher')) +
+        (await gitHubDownloads(
+          'DerTyp7214',
+          'RboardPatcher',
+          'tags/latest-release',
+          true
+        )),
     },
     {
       name: 'Rboard IME Tester',
@@ -96,7 +111,14 @@ export default async function fetchProjects(): Promise<Project[]> {
         'It allows you to test your keyboard layouts.',
         'It is available on Google Play.',
       ],
-      downloads: await playStoreDownloads('de.dertyp7214.rboardimetester'),
+      downloads:
+        (await playStoreDownloads('de.dertyp7214.rboardimetester')) +
+        (await gitHubDownloads(
+          'DerTyp7214',
+          'RboardIMETester',
+          'tags/latest-release',
+          true
+        )),
     },
     {
       name: 'Mixplorer Theme Creator',
@@ -113,9 +135,14 @@ export default async function fetchProjects(): Promise<Project[]> {
         'It also allows you to share your themes with others.',
         'It is available on Google Play.',
       ],
-      downloads: await playStoreDownloads(
-        'de.dertyp7214.mixplorerthemecreator'
-      ),
+      downloads:
+        (await playStoreDownloads('de.dertyp7214.mixplorerthemecreator')) +
+        (await gitHubDownloads(
+          'DerTyp7214',
+          'MixplorerThemeCreator',
+          'tags/latest-release',
+          true
+        )),
     },
     {
       name: 'Overlayer',
@@ -148,7 +175,14 @@ export default async function fetchProjects(): Promise<Project[]> {
         'It allows you to control YouTube Music from your phone.',
         'It is available on Google Play.',
       ],
-      downloads: await playStoreDownloads('de.dertyp7214.youtubemusicremote'),
+      downloads:
+        (await playStoreDownloads('de.dertyp7214.youtubemusicremote')) +
+        (await gitHubDownloads(
+          'DerTyp7214',
+          'YouTubeMusicRemote',
+          'tags/latest-release',
+          true
+        )),
     },
     {
       name: 'YouTube Music Desktop',

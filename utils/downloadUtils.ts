@@ -1,13 +1,23 @@
 const regex =
   />([0-9K+]{0,})<\/div><div class="[A-Za-z0-9]{0,10}">Downloads<\/div>/g
 
+export function stringToNumber(number: string) {
+  if (number.includes('K')) {
+    return parseInt(number.replace('K', '')) * 1000
+  } else if (number.includes('+')) {
+    return parseInt(number.replace('+', '')) + 1
+  } else {
+    return parseInt(number)
+  }
+}
+
 export async function playStoreDownloads(packageName: string) {
   try {
     const html = await fetch(
       `https://play.google.com/store/apps/details?id=${packageName}`
     ).then((res) => res.text())
     const result = regex.exec(html.match(regex)?.[0] ?? '')
-    return result ? result[1] : null
+    return result ? stringToNumber(result[1]) : null
   } catch (e) {
     return null
   }
@@ -31,7 +41,7 @@ export async function gitHubDownloads(
         {
           headers: {
             Accept: 'application/vnd.github.v3+json',
-            'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+            Authorization: `token ${process.env.GITHUB_TOKEN}`,
           },
         }
       ).then((res) => res.json())
@@ -52,7 +62,7 @@ export async function gitHubDownloads(
         {
           headers: {
             Accept: 'application/vnd.github.v3+json',
-            'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+            Authorization: `token ${process.env.GITHUB_TOKEN}`,
           },
         }
       ).then((res) => res.json())
