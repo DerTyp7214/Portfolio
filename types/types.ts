@@ -34,6 +34,7 @@ export interface Project {
   githubUrl?: string
   playStoreUrl?: string
   keypoints: string[]
+  downloads?: string | number | null
 }
 
 export interface ContactInfo {

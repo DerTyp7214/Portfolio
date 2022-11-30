@@ -60,6 +60,16 @@ export default function ProjectCard({ project }: Props) {
             ))
             .reduce((a, b) => [a, <span key={b.toString()}>&</span>, b] as any)}
         </p>
+        {!!project.downloads && (
+          <p className='text-md font-light mt-1'>
+            <b>
+              {typeof project.downloads === 'number'
+                ? new Intl.NumberFormat('en-Us').format(project.downloads)
+                : project.downloads}
+            </b>{' '}
+            Downloads
+          </p>
+        )}
 
         <div className='flex space-x-2 my-2'>
           {project.skills.map((skill, index) => (

@@ -1,5 +1,6 @@
 import { Project, Skill } from '../types/types'
 import fetchSkill from './fetchSkill'
+import { gitHubDownloads, playStoreDownloads } from './downloadUtils'
 
 const languageSkills = [
   'Kotlin',
@@ -39,6 +40,12 @@ export default async function fetchProjects(): Promise<Project[]> {
         'It also allows you to download themes from the community.',
         'It is available on F-Droid and GitHub.',
       ],
+      downloads: await gitHubDownloads(
+        'DerTyp7214',
+        'RboardThemeManagerV3',
+        'tags/latest-release',
+        true
+      ),
     },
     {
       name: 'Rboard Theme Creator',
@@ -55,6 +62,7 @@ export default async function fetchProjects(): Promise<Project[]> {
         'It also allows you to share your themes with others.',
         'It is available on Google Play and GitHub.',
       ],
+      downloads: await playStoreDownloads('de.dertyp7214.rboardthemecreator'),
     },
     {
       name: 'Rboard Patcher',
@@ -72,6 +80,7 @@ export default async function fetchProjects(): Promise<Project[]> {
         'It is also available as a module for Rboard Theme Manager V3.',
         'It is also available as a module for Rboard Theme Creator.',
       ],
+      downloads: await playStoreDownloads('de.dertyp7214.rboardpatcher'),
     },
     {
       name: 'Rboard IME Tester',
@@ -87,6 +96,7 @@ export default async function fetchProjects(): Promise<Project[]> {
         'It allows you to test your keyboard layouts.',
         'It is available on Google Play.',
       ],
+      downloads: await playStoreDownloads('de.dertyp7214.rboardimetester'),
     },
     {
       name: 'Mixplorer Theme Creator',
@@ -103,6 +113,9 @@ export default async function fetchProjects(): Promise<Project[]> {
         'It also allows you to share your themes with others.',
         'It is available on Google Play.',
       ],
+      downloads: await playStoreDownloads(
+        'de.dertyp7214.mixplorerthemecreator'
+      ),
     },
     {
       name: 'Overlayer',
@@ -119,6 +132,7 @@ export default async function fetchProjects(): Promise<Project[]> {
         'It allows you to manage overlays in Android.',
         'It is available on Google Play.',
       ],
+      downloads: await playStoreDownloads('de.dertyp7214.overlayer'),
     },
     {
       name: 'YouTube Music Remote',
@@ -134,6 +148,7 @@ export default async function fetchProjects(): Promise<Project[]> {
         'It allows you to control YouTube Music from your phone.',
         'It is available on Google Play.',
       ],
+      downloads: await playStoreDownloads('de.dertyp7214.youtubemusicremote'),
     },
     {
       name: 'YouTube Music Desktop',
@@ -147,6 +162,7 @@ export default async function fetchProjects(): Promise<Project[]> {
         'It allows you to control YouTube Music from your desktop.',
         'It is available on GitHub.',
       ],
+      downloads: await gitHubDownloads('DerTyp7214', 'youtube-music', '', true),
     },
     {
       name: 'Color Utils C',
