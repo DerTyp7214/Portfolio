@@ -101,25 +101,29 @@ export async function cacheImageLocally(props: {
   file?: string
   imageName: string
   path?: string
+  svg?: boolean
   newWidth?: number
   newHeight?: number
 }) {
-  const { url, file, imageName, path, newWidth, newHeight } = props
+  const { url, file, imageName: name, path, svg, newWidth, newHeight } = props
+
+  const imageName = `${name.replace(/[^a-zA-Z0-9+#]/g, '_')}-${
+    process.env.NEXT_PUBLIC_RUN_ID
+  }`
 
   const internalPath = path ? `${path}/` : ''
 
+  const log = (...message: string[]) =>
+    console.log([chalk.bgYellow(chalk.black(`[Image]`)), ...message].join(' '))
+
   try {
-    const relativeUrl = `/images/cached-${
-      process.env.NEXT_PUBLIC_RUN_ID
-    }/${internalPath}${imageName}.${
-      (url ?? file)?.endsWith('svg') ? 'svg' : 'webp'
+    const relativeUrl = `/images/cached/${internalPath}${imageName}.${
+      svg || (url ?? file)?.endsWith('svg') ? 'svg' : 'webp'
     }`
     const absoluteUrl = `${process.cwd()}/public${relativeUrl}`
-    const publicRelativeUrl = `/images/cached-${
-      process.env.NEXT_PUBLIC_RUN_ID
-    }/${internalPath}${encodeURIComponent(imageName)}.${
-      (url ?? file)?.endsWith('svg') ? 'svg' : 'webp'
-    }`
+    const publicRelativeUrl = `/images/cached/${internalPath}${encodeURIComponent(
+      imageName
+    )}.${svg || (url ?? file)?.endsWith('svg') ? 'svg' : 'webp'}`
 
     if (existsSync(absoluteUrl)) return publicRelativeUrl
 
@@ -131,16 +135,40 @@ export async function cacheImageLocally(props: {
 
     if (!buffer) return url ?? file ?? ''
 
-    if (url) console.log(chalk.blue(`Downloading ${url}`))
-    else console.log(chalk.blue(`Caching ${file}`))
+    const key = (url ?? file)?.split('/').pop() ?? ''
+    const fileName = relativeUrl.replace('/images/cached/', '')
 
-    if (file?.endsWith('.svg')) {
+    if (url)
+      log(
+        chalk.blue('Dwnld'),
+        chalk.white(`  - ${new URL(url).host} ... ${key}`)
+      )
+    else if (file) log(chalk.blue('Cache'), chalk.white(`  - ${file}`))
+
+    mkdirSync(`${process.cwd()}/public/images/cached/${internalPath}`, {
+      recursive: true,
+    })
+
+    if ((file && svg) || file?.endsWith('.svg')) {
       fs.writeFileSync(absoluteUrl, buffer)
+
+      const size = fs.fstatSync(fs.openSync(absoluteUrl, 'r')).size
+
+      log(chalk.green('Cached'), chalk.white(`- ${key} -> ${fileName}`))
+      log(chalk.cyan(`${(size ?? 0) / 1000} KB`))
+      log()
+
       return publicRelativeUrl
     }
 
-    if (url?.endsWith('.svg')) {
+    if ((url && svg) || url?.endsWith('.svg')) {
       fs.writeFileSync(absoluteUrl, buffer)
+
+      const size = fs.fstatSync(fs.openSync(absoluteUrl, 'r')).size
+
+      log(chalk.green('Cached'), chalk.white(`\t- ${key} -> ${fileName}`))
+      log(chalk.cyan(`${(size ?? 0) / 1000} KB`))
+      log()
       return publicRelativeUrl
     }
 
@@ -153,25 +181,16 @@ export async function cacheImageLocally(props: {
       background: { r: 255, g: 255, b: 255, alpha: 0 },
     })
 
-    mkdirSync(
-      `${process.cwd()}/public/images/cached-${
-        process.env.NEXT_PUBLIC_RUN_ID
-      }/${internalPath}`,
-      {
-        recursive: true,
-      }
-    )
-
     const output = await resizedImage.webp().toFile(absoluteUrl)
     const size = output.size / 1000
 
-    console.log(
-      chalk.green(`Saved ${url ?? file} to ${relativeUrl} (${size} KB)`)
-    )
+    log(chalk.green('Cached'), chalk.white(`\t- ${key} -> ${fileName}`))
+    log(chalk.cyan(`${size} KB`))
+    log()
 
     return publicRelativeUrl
   } catch (e) {
-    console.log(chalk.red(`Failed to download ${url}\n`))
+    log(chalk.red('Failed'), chalk.white(`\t- download ${url}\n${e}\n\n`))
 
     return url ?? file ?? ''
   }

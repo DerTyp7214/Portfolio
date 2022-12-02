@@ -20,6 +20,7 @@ export default async function fetchBadges(): Promise<CodersRankBadge[]> {
             ? badge.language
             : `${badge.badgeFamily}-${badge.badgeType}`,
         path: 'badges',
+        svg: true,
         newWidth: 60,
         newHeight: 60,
       }),
@@ -33,6 +34,7 @@ export default async function fetchBadges(): Promise<CodersRankBadge[]> {
             ? `${badge.language}-small`
             : `${badge.values.language}-small`,
         path: 'badges',
+        svg: true,
         newWidth: 20,
         newHeight: 20,
       }),

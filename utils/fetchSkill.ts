@@ -31,6 +31,7 @@ export default async function fetchSkill({
         )}`,
         imageName: `${type}-${skill}`,
         path: 'skills',
+        svg: true,
         newWidth: 90,
         newHeight: 90,
       }),
@@ -56,6 +57,7 @@ export default async function fetchSkill({
           skill
         )}`,
         imageName: `${type}-${skill}`,
+        svg: true,
         path: 'skills',
         newWidth: 90,
         newHeight: 90,
