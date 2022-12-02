@@ -35,7 +35,7 @@ export default async function fetchSkills(): Promise<Skill[]> {
   )
 
   const technologiesRequests = technologies.map((technology) =>
-    fetchSkill({ skill: technology, type: 'technology' }).then(async (res) =>
+    fetchSkill({ skill: technology, type: 'technology' }).then((res) =>
       res ? { ...res, name: technology } : null
     )
   )

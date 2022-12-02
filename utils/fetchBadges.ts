@@ -31,8 +31,8 @@ export default async function fetchBadges(): Promise<CodersRankBadge[]> {
             : `https://icon-widget.codersrank.io/api/${badge.values.language}`,
         imageName:
           badge.version === 'v1'
-            ? `${badge.language}-small`
-            : `${badge.values.language}-small`,
+            ? `${badge.language}`
+            : `${badge.values.language}`,
         path: 'badges',
         svg: true,
         newWidth: 20,
