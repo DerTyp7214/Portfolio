@@ -133,12 +133,18 @@ export async function cacheImageLocally(props: {
 
     process.env.TOTAL_SIZE = ((isNaN(current) ? 0 : current) + size).toString()
 
-    if (process.env.GITHUB_OUTPUT)
-      fs.appendFileSync(
-        process.env.GITHUB_OUTPUT,
-        `size=${sizeToHumanReadable(size)}\n`
-      )
-    else
+    if (process.env.GITHUB_OUTPUT) {
+      let env = fs.readFileSync(process.env.GITHUB_OUTPUT, 'utf-8')
+      if (env.includes('size=')) {
+        env = env.replace(
+          /size=[0-9A-z. ]+/g,
+          `size=${sizeToHumanReadable(Number(process.env.TOTAL_SIZE))}`
+        )
+      } else {
+        env += `size=${sizeToHumanReadable(Number(process.env.TOTAL_SIZE))}\n`
+      }
+      fs.writeFileSync(process.env.GITHUB_OUTPUT, env)
+    } else
       log(
         chalk.hex('#b560ca')('Total'),
         sizeToHumanReadable(Number(process.env.TOTAL_SIZE))
