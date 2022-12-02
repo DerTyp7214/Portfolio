@@ -14,6 +14,7 @@
 
 # production
 /build
+/public/images/cached
 
 # misc
 .DS_Store

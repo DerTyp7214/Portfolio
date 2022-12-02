@@ -1,3 +1,9 @@
+import { request } from 'https'
+import { existsSync, mkdirSync } from 'fs'
+import sharp from 'sharp'
+import chalk from 'chalk'
+import fs from 'fs'
+
 const regex =
   />([0-9K+]{0,})<\/div><div class="[A-Za-z0-9]{0,10}">Downloads<\/div>/g
 
@@ -76,5 +82,88 @@ export async function gitHubDownloads(
     }
   } catch (e) {
     return 0
+  }
+}
+
+export async function getImageBuffer(url: string) {
+  return new Promise<Buffer>((resolve, reject) => {
+    request(url, (res) => {
+      const chunks: Uint8Array[] = []
+      res.on('data', (chunk) => chunks.push(chunk))
+      res.on('end', () => resolve(Buffer.concat(chunks)))
+      res.on('error', reject)
+    }).end()
+  })
+}
+
+export async function cacheImageLocally(props: {
+  url?: string
+  file?: string
+  imageName: string
+  path?: string
+  newWidth?: number
+  newHeight?: number
+}) {
+  const { url, file, imageName, path, newWidth, newHeight } = props
+
+  const internalPath = path ? `${path}/` : ''
+
+  try {
+    const relativeUrl = `/images/cached/${internalPath}${imageName}.${
+      (url ?? file)?.endsWith('svg') ? 'svg' : 'webp'
+    }`
+    const absoluteUrl = `${process.cwd()}/public${relativeUrl}`
+    const publicRelativeUrl = `/images/cached/${internalPath}/${encodeURIComponent(
+      imageName
+    )}.${(url ?? file)?.endsWith('svg') ? 'svg' : 'webp'}`
+
+    if (existsSync(absoluteUrl)) return publicRelativeUrl
+
+    const buffer = url
+      ? await getImageBuffer(url)
+      : file
+      ? fs.readFileSync(file)
+      : null
+
+    if (!buffer) return url ?? file ?? ''
+
+    if (url) console.log(chalk.blue(`Downloading ${url}`))
+    else console.log(chalk.blue(`Caching ${file}`))
+
+    if (file?.endsWith('.svg')) {
+      fs.writeFileSync(absoluteUrl, buffer)
+      return publicRelativeUrl
+    }
+
+    if (url?.endsWith('.svg')) {
+      fs.writeFileSync(absoluteUrl, buffer)
+      return publicRelativeUrl
+    }
+
+    const image = sharp(buffer)
+    const metadata = await image.metadata()
+    const { width, height } = metadata
+    const resizedImage = image.resize(newWidth ?? width, newHeight ?? height, {
+      fit: 'contain',
+      position: 'center',
+      background: { r: 255, g: 255, b: 255, alpha: 0 },
+    })
+
+    mkdirSync(`${process.cwd()}/public/images/cached/${internalPath}`, {
+      recursive: true,
+    })
+
+    const output = await resizedImage.webp().toFile(absoluteUrl)
+    const size = output.size / 1000
+
+    console.log(
+      chalk.green(`Saved ${url ?? file} to ${relativeUrl} (${size} KB)`)
+    )
+
+    return publicRelativeUrl
+  } catch (e) {
+    console.log(chalk.red(`Failed to download ${url}\n`))
+
+    return url ?? file ?? ''
   }
 }

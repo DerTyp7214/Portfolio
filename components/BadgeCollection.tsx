@@ -20,6 +20,7 @@ export default function BadgeCollection({ badges }: Props) {
   ) as CodersRankBadgeV2[]
 
   const getBadeImage = (badge: CodersRankBadgeV1 | CodersRankBadgeV2) => {
+    if (badge.imageUrl) return badge.imageUrl
     if (badge.version === 'v1') {
       return `https://icon-widget.codersrank.io/api/${badge.language}`
     } else {
@@ -53,7 +54,7 @@ export default function BadgeCollection({ badges }: Props) {
                         className='flex flex-row space-x-2 items-center mt-2 mb-1'>
                         <div className='w-4 h-4 inline relative'>
                           <Image
-                            src={`https://icon-widget.codersrank.io/api/${value}`}
+                            src={(badge as any).smallImageUrl}
                             alt={value}
                             fill
                           />

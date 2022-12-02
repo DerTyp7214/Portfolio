@@ -35,6 +35,8 @@ export interface Project {
   playStoreUrl?: string
   keypoints: string[]
   downloads?: string | number | null
+  playStoreIcon?: string
+  githubIcon?: string
 }
 
 export interface ContactInfo {
@@ -69,6 +71,8 @@ export interface CodersRankBadgeV2 {
   }
   version: 'v2'
   visibility: string
+  imageUrl?: string
+  smallImageUrl?: string
 }
 
 export interface CodersRankBadgeV1 {
@@ -78,6 +82,8 @@ export interface CodersRankBadgeV1 {
   rank: number
   version: 'v1'
   visibility: string
+  imageUrl?: string
+  smallImageUrl?: string
 }
 
 export type CodersRankBadge = CodersRankBadgeV1 | CodersRankBadgeV2

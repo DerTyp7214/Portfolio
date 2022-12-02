@@ -104,7 +104,10 @@ export default function ProjectCard({ project }: Props) {
           {project.githubUrl && (
             <Link href={project.githubUrl} target='_blank'>
               <Image
-                src='https://github.githubassets.com/favicons/favicon.svg'
+                src={
+                  project.githubIcon ??
+                  'https://github.githubassets.com/favicons/favicon.svg'
+                }
                 alt='Github'
                 className='h-6 w-6'
                 width='6'
@@ -115,8 +118,11 @@ export default function ProjectCard({ project }: Props) {
           {project.playStoreUrl && (
             <Link href={project.playStoreUrl} target='_blank'>
               <Image
-                src='https://www.gstatic.com/android/market_images/web/favicon_v3.ico'
-                alt='Github'
+                src={
+                  project.playStoreIcon ??
+                  'https://www.gstatic.com/android/market_images/web/favicon_v3.ico'
+                }
+                alt='PlayStore'
                 className='h-6 w-6'
                 width='6'
                 height='6'
