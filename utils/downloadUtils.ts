@@ -130,8 +130,12 @@ export async function cacheImageLocally(props: {
 
   const setSize = (size: number) => {
     const current = Number(process.env.TOTAL_SIZE)
+    const totalCount = Number(process.env.TOTAL_COUNT)
 
     process.env.TOTAL_SIZE = ((isNaN(current) ? 0 : current) + size).toString()
+    process.env.TOTAL_COUNT = (
+      (isNaN(totalCount) ? 0 : totalCount) + 1
+    ).toString()
 
     if (process.env.GITHUB_OUTPUT) {
       let env = fs.readFileSync(process.env.GITHUB_OUTPUT, 'utf-8')
@@ -140,9 +144,13 @@ export async function cacheImageLocally(props: {
           /size=[0-9A-z. ]+/g,
           `size=${sizeToHumanReadable(Number(process.env.TOTAL_SIZE))}`
         )
-      } else {
+      } else
         env += `size=${sizeToHumanReadable(Number(process.env.TOTAL_SIZE))}\n`
-      }
+
+      if (env.includes('count=')) {
+        env = env.replace(/count=[0-9]+/g, `count=${process.env.TOTAL_COUNT}`)
+      } else env += `count=${process.env.TOTAL_COUNT}\n`
+      
       fs.writeFileSync(process.env.GITHUB_OUTPUT, env)
     } else
       log(
