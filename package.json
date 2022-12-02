@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@actions/core": "^1.10.0",
     "@heroicons/react": "^2.0.13",
     "chalk": "^5.1.2",
     "eslint": "8.27.0",

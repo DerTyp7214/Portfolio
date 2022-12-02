@@ -1,5 +1,6 @@
 import { request } from 'https'
 import { existsSync, mkdirSync } from 'fs'
+import core from '@actions/core'
 import sharp from 'sharp'
 import chalk from 'chalk'
 import fs from 'fs'
@@ -85,6 +86,18 @@ export async function gitHubDownloads(
   }
 }
 
+export function sizeToHumanReadable(size: number) {
+  if (size < 1000) {
+    return `${size} B`
+  } else if (size < 1000000) {
+    return `${(size / 1000).toFixed(1)} KB`
+  } else if (size < 1000000000) {
+    return `${(size / 1000000).toFixed(1)} MB`
+  } else {
+    return `${(size / 1000000000).toFixed(1)} GB`
+  }
+}
+
 export async function getImageBuffer(url: string) {
   return new Promise<Buffer>((resolve, reject) => {
     request(url, (res) => {
@@ -115,6 +128,23 @@ export async function cacheImageLocally(props: {
 
   const log = (...message: string[]) =>
     console.log([chalk.bgYellow(chalk.black(`[Image]`)), ...message].join(' '))
+
+  const setSize = (size: number) => {
+    const current = Number(process.env.TOTAL_SIZE)
+
+    process.env.TOTAL_SIZE = ((isNaN(current) ? 0 : current) + size).toString()
+
+    if (core)
+      core.setOutput(
+        'size',
+        sizeToHumanReadable(Number(process.env.TOTAL_SIZE))
+      )
+    else
+      log(
+        chalk.hex('#b560ca')('Total'),
+        sizeToHumanReadable(Number(process.env.TOTAL_SIZE))
+      )
+  }
 
   try {
     const relativeUrl = `/images/cached/${internalPath}${imageName}.${
@@ -155,7 +185,8 @@ export async function cacheImageLocally(props: {
       const size = fs.fstatSync(fs.openSync(absoluteUrl, 'r')).size
 
       log(chalk.green('Cached'), chalk.white(`- ${key} -> ${fileName}`))
-      log(chalk.cyan(`${(size ?? 0) / 1000} KB`))
+      log(chalk.cyan(sizeToHumanReadable(size)))
+      setSize(size)
       log()
 
       return publicRelativeUrl
@@ -167,8 +198,10 @@ export async function cacheImageLocally(props: {
       const size = fs.fstatSync(fs.openSync(absoluteUrl, 'r')).size
 
       log(chalk.green('Cached'), chalk.white(`\t- ${key} -> ${fileName}`))
-      log(chalk.cyan(`${(size ?? 0) / 1000} KB`))
+      log(chalk.cyan(sizeToHumanReadable(size ?? 0)))
+      setSize(size)
       log()
+
       return publicRelativeUrl
     }
 
@@ -182,10 +215,10 @@ export async function cacheImageLocally(props: {
     })
 
     const output = await resizedImage.webp().toFile(absoluteUrl)
-    const size = output.size / 1000
 
     log(chalk.green('Cached'), chalk.white(`\t- ${key} -> ${fileName}`))
-    log(chalk.cyan(`${size} KB`))
+    log(chalk.cyan(sizeToHumanReadable(output.size)))
+    setSize(output.size)
     log()
 
     return publicRelativeUrl

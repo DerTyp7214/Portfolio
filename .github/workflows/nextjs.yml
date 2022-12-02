@@ -81,6 +81,7 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@main
 
       - name: Build with Next.js
+        id: buildNextJS
         run: pnpm next build
         env:
           NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
@@ -113,6 +114,7 @@ jobs:
           echo "| Version | ${{ steps.package-version.outputs.current-version}} |" >> $GITHUB_STEP_SUMMARY
           echo "| Commit | [${{ steps.commit.outputs.short }}](https://github.com/DerTyp7214/Portfoio/commit/${{ steps.commit.outputs.hash }}) |" >> $GITHUB_STEP_SUMMARY
           echo "| Job | [${{ github.run_id }}](https://github.com/DerTyp7214/Portfoio/actions/runs/${{ github.run_id }}) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Size | ${{ steps.buildNextJS.outputs.size }} |" >> $GITHUB_STEP_SUMMARY
 
   # Deployment job
   deploy:
