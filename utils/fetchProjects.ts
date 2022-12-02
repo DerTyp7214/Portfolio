@@ -226,6 +226,8 @@ export default async function fetchProjects(): Promise<Project[]> {
         url: project.imageUrl,
         imageName: project.name,
         path: 'projects',
+        newWidth: 250,
+        newHeight: 250,
       }),
       playStoreIcon: await cacheImageLocally({
         file: 'public/playStore.svg',
