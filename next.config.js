@@ -1,7 +1,25 @@
+const withBundleAnalyzer = process.env.ANALYZE ? require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+}) : (config) => config;
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  compress: true,
+  headers: async () => {
+    return [
+      {
+        headers: [
+          {
+            key: 'cache-control',
+            value: 'public, max-age=86400, immutable',
+          },
+        ],
+        source: '/(.*)',
+      },
+    ]
+  },
   images: {
     unoptimized: true,
     domains: [
@@ -16,4 +34,4 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+module.exports = withBundleAnalyzer(nextConfig)

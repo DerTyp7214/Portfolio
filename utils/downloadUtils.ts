@@ -109,13 +109,17 @@ export async function cacheImageLocally(props: {
   const internalPath = path ? `${path}/` : ''
 
   try {
-    const relativeUrl = `/images/cached/${internalPath}${imageName}.${
+    const relativeUrl = `/images/cached-${
+      process.env.NEXT_PUBLIC_RUN_ID
+    }/${internalPath}${imageName}.${
       (url ?? file)?.endsWith('svg') ? 'svg' : 'webp'
     }`
     const absoluteUrl = `${process.cwd()}/public${relativeUrl}`
-    const publicRelativeUrl = `/images/cached/${internalPath}/${encodeURIComponent(
-      imageName
-    )}.${(url ?? file)?.endsWith('svg') ? 'svg' : 'webp'}`
+    const publicRelativeUrl = `/images/cached-${
+      process.env.NEXT_PUBLIC_RUN_ID
+    }/${internalPath}${encodeURIComponent(imageName)}.${
+      (url ?? file)?.endsWith('svg') ? 'svg' : 'webp'
+    }`
 
     if (existsSync(absoluteUrl)) return publicRelativeUrl
 
@@ -149,9 +153,14 @@ export async function cacheImageLocally(props: {
       background: { r: 255, g: 255, b: 255, alpha: 0 },
     })
 
-    mkdirSync(`${process.cwd()}/public/images/cached/${internalPath}`, {
-      recursive: true,
-    })
+    mkdirSync(
+      `${process.cwd()}/public/images/cached-${
+        process.env.NEXT_PUBLIC_RUN_ID
+      }/${internalPath}`,
+      {
+        recursive: true,
+      }
+    )
 
     const output = await resizedImage.webp().toFile(absoluteUrl)
     const size = output.size / 1000
