@@ -89,6 +89,7 @@ jobs:
           NEXT_PUBLIC_GIT_HASH_SHORT: ${{ steps.commit.outputs.short }}
           NEXT_PUBLIC_RUN_ID: ${{ github.run_id }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_OUTPUT: ${{ env.GITHUB_OUTPUT }}
 
       - name: Static HTML export with Next.js
         run: pnpm next export
@@ -114,7 +115,7 @@ jobs:
           echo "| Version | ${{ steps.package-version.outputs.current-version}} |" >> $GITHUB_STEP_SUMMARY
           echo "| Commit | [${{ steps.commit.outputs.short }}](https://github.com/DerTyp7214/Portfoio/commit/${{ steps.commit.outputs.hash }}) |" >> $GITHUB_STEP_SUMMARY
           echo "| Job | [${{ github.run_id }}](https://github.com/DerTyp7214/Portfoio/actions/runs/${{ github.run_id }}) |" >> $GITHUB_STEP_SUMMARY
-          echo "| Size | ${{ steps.buildNextJS.outputs.size }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Cached Image Size | ${{ steps.buildNextJS.outputs.size }} |" >> $GITHUB_STEP_SUMMARY
 
   # Deployment job
   deploy:

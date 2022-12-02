@@ -1,6 +1,5 @@
 import { request } from 'https'
 import { existsSync, mkdirSync } from 'fs'
-import core from '@actions/core'
 import sharp from 'sharp'
 import chalk from 'chalk'
 import fs from 'fs'
@@ -134,10 +133,10 @@ export async function cacheImageLocally(props: {
 
     process.env.TOTAL_SIZE = ((isNaN(current) ? 0 : current) + size).toString()
 
-    if (core)
-      core.setOutput(
-        'size',
-        sizeToHumanReadable(Number(process.env.TOTAL_SIZE))
+    if (process.env.GITHUB_OUTPUT)
+      fs.appendFileSync(
+        process.env.GITHUB_OUTPUT,
+        `size=${sizeToHumanReadable(size)}\n`
       )
     else
       log(
