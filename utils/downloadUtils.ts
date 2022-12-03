@@ -171,7 +171,7 @@ export async function cacheImageLocally(props: {
 
       if (env.includes('duration=')) {
         env = env.replace(
-          /duration=[0-9]+/g,
+          /duration=[0-9A-z. ]+/g,
           `duration=${millisecondsToHumanReadable(
             Number(process.env.TOTAL_DURATION)
           )}`
@@ -184,8 +184,13 @@ export async function cacheImageLocally(props: {
       fs.writeFileSync(process.env.GITHUB_OUTPUT, env)
     } else
       log(
-        chalk.hex('#b560ca')('Total'),
-        sizeToHumanReadable(Number(process.env.TOTAL_SIZE))
+        `Total size: ${sizeToHumanReadable(
+          Number(process.env.TOTAL_SIZE)
+        )}, Total count: ${
+          process.env.TOTAL_COUNT
+        }, Total duration: ${millisecondsToHumanReadable(
+          Number(process.env.TOTAL_DURATION)
+        )}`
       )
   }
 
@@ -254,7 +259,12 @@ export async function cacheImageLocally(props: {
 
       log(chalk.green('Cached'), chalk.white(`- ${key} -> ${fileName}`))
       await finishLoadingImages(publicRelativeUrl)
-      log(chalk.cyan(sizeToHumanReadable(size)))
+      log(
+        chalk.cyan(sizeToHumanReadable(size)),
+        'in',
+        chalk.cyan(duration),
+        'ms'
+      )
       setSize(size, duration)
       log()
 
@@ -270,7 +280,12 @@ export async function cacheImageLocally(props: {
 
       log(chalk.green('Cached'), chalk.white(`\t- ${key} -> ${fileName}`))
       await finishLoadingImages(publicRelativeUrl)
-      log(chalk.cyan(sizeToHumanReadable(size ?? 0)))
+      log(
+        chalk.cyan(sizeToHumanReadable(size)),
+        'in',
+        chalk.cyan(duration),
+        'ms'
+      )
       setSize(size, duration)
       log()
 
@@ -292,7 +307,12 @@ export async function cacheImageLocally(props: {
 
     log(chalk.green('Cached'), chalk.white(`\t- ${key} -> ${fileName}`))
     await finishLoadingImages(publicRelativeUrl)
-    log(chalk.cyan(sizeToHumanReadable(output.size)))
+    log(
+      chalk.cyan(sizeToHumanReadable(output.size)),
+      'in',
+      chalk.cyan(duration),
+      'ms'
+    )
     setSize(output.size, duration)
     log()
 
