@@ -4,6 +4,8 @@ import sharp from 'sharp'
 import chalk from 'chalk'
 import fs from 'fs'
 
+const loadingImages = new Map<string, ((path: string) => Promise<void>)[]>()
+
 const regex =
   />([0-9K+]{0,})<\/div><div class="[A-Za-z0-9]{0,10}">Downloads<\/div>/g
 
@@ -150,7 +152,7 @@ export async function cacheImageLocally(props: {
       if (env.includes('count=')) {
         env = env.replace(/count=[0-9]+/g, `count=${process.env.TOTAL_COUNT}`)
       } else env += `count=${process.env.TOTAL_COUNT}\n`
-      
+
       fs.writeFileSync(process.env.GITHUB_OUTPUT, env)
     } else
       log(
@@ -168,7 +170,34 @@ export async function cacheImageLocally(props: {
       imageName
     )}.${svg || (url ?? file)?.endsWith('svg') ? 'svg' : 'webp'}`
 
+    const key = (url ?? file)?.split('/').pop() ?? ''
+    const fileName = relativeUrl.replace('/images/cached/', '')
+
     if (existsSync(absoluteUrl)) return publicRelativeUrl
+
+    if (loadingImages.has(publicRelativeUrl)) {
+      const imageUrl = await new Promise((resolve) => {
+        loadingImages
+          .get(publicRelativeUrl)
+          ?.push(async (url) => resolve(url)) ?? resolve('')
+      }).catch(() => '')
+
+      log(
+        chalk.hex('#b560ca')('Loaded'),
+        chalk.white(` - ${fileName}`)
+      )
+
+      return (imageUrl as string) ?? ''
+    }
+
+    loadingImages.set(publicRelativeUrl, [])
+
+    const finishLoadingImages = async (url: string) => {
+      await Promise.all(
+        loadingImages.get(publicRelativeUrl)?.map((fn) => fn(url)) ?? []
+      )
+      loadingImages.delete(url)
+    }
 
     const buffer = url
       ? await getImageBuffer(url)
@@ -176,10 +205,10 @@ export async function cacheImageLocally(props: {
       ? fs.readFileSync(file)
       : null
 
-    if (!buffer) return url ?? file ?? ''
-
-    const key = (url ?? file)?.split('/').pop() ?? ''
-    const fileName = relativeUrl.replace('/images/cached/', '')
+    if (!buffer) {
+      await finishLoadingImages('')
+      return url ?? file ?? ''
+    }
 
     if (url)
       log(
@@ -198,6 +227,7 @@ export async function cacheImageLocally(props: {
       const size = fs.fstatSync(fs.openSync(absoluteUrl, 'r')).size
 
       log(chalk.green('Cached'), chalk.white(`- ${key} -> ${fileName}`))
+      await finishLoadingImages(publicRelativeUrl)
       log(chalk.cyan(sizeToHumanReadable(size)))
       setSize(size)
       log()
@@ -211,6 +241,7 @@ export async function cacheImageLocally(props: {
       const size = fs.fstatSync(fs.openSync(absoluteUrl, 'r')).size
 
       log(chalk.green('Cached'), chalk.white(`\t- ${key} -> ${fileName}`))
+      await finishLoadingImages(publicRelativeUrl)
       log(chalk.cyan(sizeToHumanReadable(size ?? 0)))
       setSize(size)
       log()
@@ -230,6 +261,7 @@ export async function cacheImageLocally(props: {
     const output = await resizedImage.webp().toFile(absoluteUrl)
 
     log(chalk.green('Cached'), chalk.white(`\t- ${key} -> ${fileName}`))
+    await finishLoadingImages(publicRelativeUrl)
     log(chalk.cyan(sizeToHumanReadable(output.size)))
     setSize(output.size)
     log()

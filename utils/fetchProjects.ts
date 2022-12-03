@@ -220,29 +220,37 @@ export default async function fetchProjects(): Promise<Project[]> {
           'It is available on GitHub.',
         ],
       },
-    ].map(async (project) => ({
-      ...project,
-      imageUrl: await cacheImageLocally({
-        url: project.imageUrl,
-        imageName: project.name,
-        path: 'projects',
-        newWidth: 250,
-        newHeight: 250,
-      }),
-      playStoreIcon: await cacheImageLocally({
-        file: 'public/playStore.svg',
-        imageName: 'playstore',
-        path: 'favicons',
-        newWidth: 30,
-        newHeight: 30,
-      }),
-      githubIcon: await cacheImageLocally({
-        url: 'https://github.githubassets.com/favicons/favicon.svg',
-        imageName: 'github',
-        path: 'favicons',
-        newWidth: 30,
-        newHeight: 30,
-      }),
-    }))
+    ].map(async (project) => {
+      const images = await Promise.all([
+        cacheImageLocally({
+          url: project.imageUrl,
+          imageName: project.name,
+          path: 'projects',
+          newWidth: 250,
+          newHeight: 250,
+        }),
+        cacheImageLocally({
+          file: 'public/playStore.svg',
+          imageName: 'playStore',
+          path: 'favicons',
+          newWidth: 30,
+          newHeight: 30,
+        }),
+        cacheImageLocally({
+          url: 'https://github.githubassets.com/favicons/favicon.svg',
+          imageName: 'gitHub',
+          path: 'favicons',
+          newWidth: 30,
+          newHeight: 30,
+        }),
+      ])
+
+      return {
+        ...project,
+        imageUrl: images[0],
+        playStoreIcon: images[1],
+        githubIcon: images[2],
+      }
+    })
   )
 }
