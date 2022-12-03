@@ -99,6 +99,18 @@ export function sizeToHumanReadable(size: number) {
   }
 }
 
+export function millisecondsToHumanReadable(time: number) {
+  if (time < 1000) {
+    return `${time} ms`
+  } else if (time < 60000) {
+    return `${(time / 1000).toFixed(1)} s`
+  } else if (time < 3600000) {
+    return `${(time / 60000).toFixed(1)} min`
+  } else {
+    return `${(time / 3600000).toFixed(1)} h`
+  }
+}
+
 export async function getImageBuffer(url: string) {
   return new Promise<Buffer>((resolve, reject) => {
     request(url, (res) => {
@@ -130,13 +142,17 @@ export async function cacheImageLocally(props: {
   const log = (...message: string[]) =>
     console.log([chalk.bgYellow(chalk.black(`[Image]`)), ...message].join(' '))
 
-  const setSize = (size: number) => {
+  const setSize = (size: number, duration: number) => {
     const current = Number(process.env.TOTAL_SIZE)
     const totalCount = Number(process.env.TOTAL_COUNT)
+    const totalDuration = Number(process.env.TOTAL_DURATION)
 
     process.env.TOTAL_SIZE = ((isNaN(current) ? 0 : current) + size).toString()
     process.env.TOTAL_COUNT = (
       (isNaN(totalCount) ? 0 : totalCount) + 1
+    ).toString()
+    process.env.TOTAL_DURATION = (
+      (isNaN(totalDuration) ? 0 : totalDuration) + duration
     ).toString()
 
     if (process.env.GITHUB_OUTPUT) {
@@ -153,6 +169,18 @@ export async function cacheImageLocally(props: {
         env = env.replace(/count=[0-9]+/g, `count=${process.env.TOTAL_COUNT}`)
       } else env += `count=${process.env.TOTAL_COUNT}\n`
 
+      if (env.includes('duration=')) {
+        env = env.replace(
+          /duration=[0-9]+/g,
+          `duration=${millisecondsToHumanReadable(
+            Number(process.env.TOTAL_DURATION)
+          )}`
+        )
+      } else
+        env += `duration=${millisecondsToHumanReadable(
+          Number(process.env.TOTAL_DURATION)
+        )}\n`
+
       fs.writeFileSync(process.env.GITHUB_OUTPUT, env)
     } else
       log(
@@ -161,15 +189,24 @@ export async function cacheImageLocally(props: {
       )
   }
 
-  try {
-    const relativeUrl = `/images/cached/${internalPath}${imageName}.${
-      svg || (url ?? file)?.endsWith('svg') ? 'svg' : 'webp'
-    }`
-    const absoluteUrl = `${process.cwd()}/public${relativeUrl}`
-    const publicRelativeUrl = `/images/cached/${internalPath}${encodeURIComponent(
-      imageName
-    )}.${svg || (url ?? file)?.endsWith('svg') ? 'svg' : 'webp'}`
+  const relativeUrl = `/images/cached/${internalPath}${imageName}.${
+    svg || (url ?? file)?.endsWith('svg') ? 'svg' : 'webp'
+  }`
+  const absoluteUrl = `${process.cwd()}/public${relativeUrl}`
+  const publicRelativeUrl = `/images/cached/${internalPath}${encodeURIComponent(
+    imageName
+  )}.${svg || (url ?? file)?.endsWith('svg') ? 'svg' : 'webp'}`
 
+  const finishLoadingImages = async (url: string) => {
+    await Promise.all(
+      loadingImages.get(publicRelativeUrl)?.map((fn) => fn(url)) ?? []
+    )
+    loadingImages.delete(url)
+  }
+
+  const startTime = Date.now()
+
+  try {
     const key = (url ?? file)?.split('/').pop() ?? ''
     const fileName = relativeUrl.replace('/images/cached/', '')
 
@@ -182,33 +219,12 @@ export async function cacheImageLocally(props: {
           ?.push(async (url) => resolve(url)) ?? resolve('')
       }).catch(() => '')
 
-      log(
-        chalk.hex('#b560ca')('Loaded'),
-        chalk.white(` - ${fileName}`)
-      )
+      log(chalk.hex('#b560ca')('Loaded'), chalk.white(` - ${fileName}`))
 
       return (imageUrl as string) ?? ''
     }
 
     loadingImages.set(publicRelativeUrl, [])
-
-    const finishLoadingImages = async (url: string) => {
-      await Promise.all(
-        loadingImages.get(publicRelativeUrl)?.map((fn) => fn(url)) ?? []
-      )
-      loadingImages.delete(url)
-    }
-
-    const buffer = url
-      ? await getImageBuffer(url)
-      : file
-      ? fs.readFileSync(file)
-      : null
-
-    if (!buffer) {
-      await finishLoadingImages('')
-      return url ?? file ?? ''
-    }
 
     if (url)
       log(
@@ -217,6 +233,14 @@ export async function cacheImageLocally(props: {
       )
     else if (file) log(chalk.blue('Cache'), chalk.white(`  - ${file}`))
 
+    const buffer = url
+      ? await getImageBuffer(url)
+      : file
+      ? fs.readFileSync(file)
+      : null
+
+    if (!buffer) throw new Error('No buffer')
+
     mkdirSync(`${process.cwd()}/public/images/cached/${internalPath}`, {
       recursive: true,
     })
@@ -224,12 +248,14 @@ export async function cacheImageLocally(props: {
     if ((file && svg) || file?.endsWith('.svg')) {
       fs.writeFileSync(absoluteUrl, buffer)
 
+      const duration = Date.now() - startTime
+
       const size = fs.fstatSync(fs.openSync(absoluteUrl, 'r')).size
 
       log(chalk.green('Cached'), chalk.white(`- ${key} -> ${fileName}`))
       await finishLoadingImages(publicRelativeUrl)
       log(chalk.cyan(sizeToHumanReadable(size)))
-      setSize(size)
+      setSize(size, duration)
       log()
 
       return publicRelativeUrl
@@ -238,12 +264,14 @@ export async function cacheImageLocally(props: {
     if ((url && svg) || url?.endsWith('.svg')) {
       fs.writeFileSync(absoluteUrl, buffer)
 
+      const duration = Date.now() - startTime
+
       const size = fs.fstatSync(fs.openSync(absoluteUrl, 'r')).size
 
       log(chalk.green('Cached'), chalk.white(`\t- ${key} -> ${fileName}`))
       await finishLoadingImages(publicRelativeUrl)
       log(chalk.cyan(sizeToHumanReadable(size ?? 0)))
-      setSize(size)
+      setSize(size, duration)
       log()
 
       return publicRelativeUrl
@@ -260,16 +288,19 @@ export async function cacheImageLocally(props: {
 
     const output = await resizedImage.webp().toFile(absoluteUrl)
 
+    const duration = Date.now() - startTime
+
     log(chalk.green('Cached'), chalk.white(`\t- ${key} -> ${fileName}`))
     await finishLoadingImages(publicRelativeUrl)
     log(chalk.cyan(sizeToHumanReadable(output.size)))
-    setSize(output.size)
+    setSize(output.size, duration)
     log()
 
     return publicRelativeUrl
   } catch (e) {
     log(chalk.red('Failed'), chalk.white(`\t- download ${url}\n${e}\n\n`))
 
+    await finishLoadingImages('')
     return url ?? file ?? ''
   }
 }
