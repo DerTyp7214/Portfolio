@@ -17,6 +17,7 @@ export default function SkillModal({ skill, show, onClose }: Props) {
     ([_, value]) =>
       value &&
       !value.toString().startsWith('http') &&
+      !value.toString().startsWith('/images') &&
       value !== true &&
       value !== false
   )

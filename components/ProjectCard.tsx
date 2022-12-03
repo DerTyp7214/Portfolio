@@ -20,7 +20,7 @@ export default function ProjectCard({ project }: Props) {
   }
 
   return (
-    <article className='relative flex flex-col rounded-lg items-center space-y-7 flex-shrink-0 snap-center w-[90vw] max-w-[500px] md:w-[600px] md:max-w-none xl:w-[900px] bg-secondaryBackground p-10 opacity-60 hover:opacity-100 transition-all duration-200 overflow-hidden'>
+    <article className='relative flex flex-col rounded-lg items-center space-y-7 flex-shrink-0 snap-center w-[90vw] max-w-[500px] md:w-[600px] md:max-w-none xl:w-[900px] bg-secondaryBackground p-10 opacity-80 hover:opacity-100 transition-all duration-200 overflow-hidden'>
       <SkillModal
         show={showModal}
         skill={currentSkill}
@@ -42,7 +42,8 @@ export default function ProjectCard({ project }: Props) {
         style={{
           transitionProperty: 'width, height',
         }}
-        className='w-32 h-32 rounded-3xl xl:w-[200px] xl:h-[200px] duration-200 overflow-hidden relative'>
+        onClick={() => window.open(project.githubUrl, '_blank')}
+        className='w-32 h-32 rounded-3xl xl:w-[200px] xl:h-[200px] duration-200 overflow-hidden relative cursor-pointer'>
         <Image src={project.imageUrl} alt={project.name} fill />
       </motion.div>
 
@@ -109,9 +110,9 @@ export default function ProjectCard({ project }: Props) {
                   'https://github.githubassets.com/favicons/favicon.svg'
                 }
                 alt='Github'
-                className='h-6 w-6'
-                width='6'
-                height='6'
+                className='h-9 w-9'
+                width='9'
+                height='9'
               />
             </Link>
           )}
@@ -123,9 +124,9 @@ export default function ProjectCard({ project }: Props) {
                   'https://www.gstatic.com/android/market_images/web/favicon_v3.ico'
                 }
                 alt='PlayStore'
-                className='h-6 w-6'
-                width='6'
-                height='6'
+                className='h-9 w-9'
+                width='9'
+                height='9'
               />
             </Link>
           )}

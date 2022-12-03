@@ -233,15 +233,15 @@ export default async function fetchProjects(): Promise<Project[]> {
           file: 'public/playStore.svg',
           imageName: 'playStore',
           path: 'favicons',
-          newWidth: 30,
-          newHeight: 30,
+          newWidth: 120,
+          newHeight: 120,
         }),
         cacheImageLocally({
           url: 'https://github.githubassets.com/favicons/favicon.svg',
           imageName: 'gitHub',
           path: 'favicons',
-          newWidth: 30,
-          newHeight: 30,
+          newWidth: 120,
+          newHeight: 120,
         }),
       ])
 
