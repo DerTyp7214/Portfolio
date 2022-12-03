@@ -34,6 +34,7 @@ export default function Header({ socials }: Props) {
               fgColor='gray'
               bgColor='transparent'
               target='_blank'
+              className='hover:brightness-150 hover:scale-125 transition-all duration-200'
             />
           ))}
         </motion.div>
@@ -52,13 +53,13 @@ export default function Header({ socials }: Props) {
           transition={{
             duration: 0.8,
           }}
-          className='flex flex-row items-center text-gray-300 cursor-pointer'>
+          className='flex flex-row items-center text-gray-300 cursor-pointer hover:brightness-150 transition-all duration-200 group'>
           <SocialIcon
             url='#contact'
-            className='cursor-pointer'
             network='email'
             fgColor='gray'
             bgColor='transparent'
+            className='group-hover:scale-125 transition-all duration-200'
           />
           <Link href='#contact'>
             <p className='uppercase hidden md:inline-flex text-sm text-gray-400'>
