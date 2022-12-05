@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "rimraf public/images/cached && next dev",
+    "new-color": "rimraf .next && node themeUtils/generateNewColors.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -11,6 +12,7 @@
   "dependencies": {
     "@heroicons/react": "^2.0.13",
     "chalk": "^5.1.2",
+    "color": "^4.2.3",
     "eslint": "8.27.0",
     "eslint-config-next": "13.0.3",
     "framer-motion": "^7.6.7",

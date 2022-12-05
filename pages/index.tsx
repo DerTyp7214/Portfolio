@@ -33,6 +33,7 @@ import fetchGithubContributions from '../utils/fetchGithubContributions'
 
 import 'react-toastify/dist/ReactToastify.css'
 import { getFormatedDate } from '../utils/stringUtils'
+import { lerpColor } from '../utils/colorUtils'
 
 type Props = {
   pageInfo: PageInfo
@@ -128,7 +129,7 @@ export default function Home({
           <Link
             href='#profile'
             className='h-10 w-10 rounded-full hover:h-11 hover:w-11 transition-all overflow-hidden'>
-            <ArrowUpIcon className='filter text-white/30 hover:text-white transition-all duration-300 cursor-pointer' />
+            <ArrowUpIcon className='filter text-white/40 hover:text-white transition-all duration-300 cursor-pointer' />
           </Link>
         </div>
       </footer>
@@ -139,16 +140,20 @@ export default function Home({
       <div id='modal-root'></div>
       <ReactTooltip
         html
-        backgroundColor='#56606b'
+        backgroundColor={lerpColor(
+          process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND ?? '#434d57',
+          '#9c9c9c',
+          0.3
+        )}
         multiline
         className='max-w-[200px] text-center'
       />
       <ToastContainer
         position='bottom-right'
         autoClose={5000}
-        progressStyle={{ background: '#ff7ef9' }}
+        progressStyle={{ background: process.env.NEXT_PUBLIC_COLOR_ACCENT }}
         toastStyle={{
-          background: '#2f373f80',
+          background: `${process.env.NEXT_PUBLIC_COLOR_BACKGROUND}80`,
           borderRadius: '1rem',
           paddingRight: '10px',
           backdropFilter: 'blur(20px)',

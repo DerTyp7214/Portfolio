@@ -237,7 +237,7 @@ export default async function fetchProjects(): Promise<Project[]> {
           newHeight: 120,
         }),
         cacheImageLocally({
-          url: 'https://github.githubassets.com/favicons/favicon.svg',
+          url: 'https://github.githubassets.com/favicons/favicon-dark.svg',
           imageName: 'gitHub',
           path: 'favicons',
           newWidth: 120,

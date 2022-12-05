@@ -28,12 +28,7 @@ export default function ActivityChart({ chartData }: Props) {
   if (first.weekday() !== 1)
     for (let i = 0; i < first.weekday(); i++)
       days.push(
-        <rect
-          key={i}
-          width={rectSize}
-          height={rectSize}
-          fill='transparent'
-        />
+        <rect key={i} width={rectSize} height={rectSize} fill='transparent' />
       )
 
   for (let i = 0; i < 365; i++) {
@@ -51,7 +46,11 @@ export default function ActivityChart({ chartData }: Props) {
         rx={2}
         width={rectSize}
         height={rectSize}
-        fill={lerpColor('#434d57', '#ff7ef9', value / maxVal)}
+        fill={lerpColor(
+          process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND || '#434d57',
+          process.env.NEXT_PUBLIC_COLOR_ACCENT || '#ff7ef9',
+          value / maxVal
+        )}
         data-tip={`${first.format('DD/MM/YYYY')} - <b>${value} activities</b>`}
       />
     )

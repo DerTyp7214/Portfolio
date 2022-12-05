@@ -9,6 +9,7 @@ specifiers:
   '@types/sharp': ^0.31.0
   autoprefixer: ^10.4.13
   chalk: ^5.1.2
+  color: ^4.2.3
   eslint: 8.27.0
   eslint-config-next: 13.0.3
   framer-motion: ^7.6.7
@@ -32,6 +33,7 @@ specifiers:
 dependencies:
   '@heroicons/react': 2.0.13_react@18.2.0
   chalk: 5.1.2
+  color: 4.2.3
   eslint: 8.27.0
   eslint-config-next: 13.0.3_e3uo4sehh4zr4i6m57mkkxxv7y
   framer-motion: 7.6.7_biqbaboplfbrettd7655fr4n2y

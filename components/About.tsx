@@ -12,11 +12,11 @@ export default function About({ profileInfo }: Props) {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 1.5 }}
       className='relative min-h-screen flex flex-col text-center md:text-left md:flex-row max-w-7xl px-10 justify-evenly mx-auto items-center'>
-      <h3 className='absolute top-24 uppercase tracking-[20px] text-gray-500 text-2xl xl:ml-10'>
+      <h3 className='absolute top-24 uppercase tracking-[20px] text-white/30 text-2xl xl:ml-10'>
         About
       </h3>
 
-      <motion.img
+      <motion.div
         initial={{
           x: -200,
           opacity: 0,
@@ -32,12 +32,21 @@ export default function About({ profileInfo }: Props) {
         style={{
           transitionProperty: 'width, height, borderRadius',
         }}
-        src={profileInfo.avatarUrl}
-        alt='avatar'
-        className='mb-10 mt-36 md:mt-0 md:mb-0 flex-shrink-0 w-56 h-56 rounded-[50%] duration-200 md:rounded-lg md:w-64 md:h-95 xl:w-[500px] xl:h-[600px] object-cover'
-      />
+        className='mb-10 mt-36 md:mt-10 md:mb-0 flex-shrink-0 w-56 h-56 md:w-64 md:h-95 xl:w-[500px] xl:h-[600px] overflow-hidden relative'>
+        <div className='rounded-[50%] duration-200 md:rounded-xl w-full h-full bg-accent absolute top-0 left-0 z-0'>
+          <h1 className='absolute bottom-[50%] md:bottom-[75%] right-[50%] md:right-[25%] translate-y-[50%] translate-x-[50%] text-sm md:text-lg text-background text-center rotate-[-45deg] md:rotate-0'>
+            Accent
+          </h1>
+        </div>
+        <div className='rounded-[50%] duration-200 md:rounded-xl w-[46%] h-[46%] bg-secondaryBackground absolute top-[2%] left-[2%] z-10 items-center flex justify-center border-accent border-4'>
+          <h1 className='text-accent text-center text-sm md:text-lg'>Secondary Background</h1>
+        </div>
+        <div className='rounded-[50%] duration-200 md:rounded-xl w-[46%] h-[46%] bg-background absolute bottom-[2%] right-[2%] z-10 items-center flex justify-center border-accent border-4'>
+          <h1 className='text-accent text-center text-sm md:text-lg'>Background</h1>
+        </div>
+      </motion.div>
 
-      <div className='space-y-10 px-0 md:px-10 md:mt-36'>
+      <div className='space-y-10 px-0 md:px-10'>
         <h4 className='text-4xl font-semibold'>
           Here is a{' '}
           <span className='underline decoration-accent/50'>little</span>{' '}
@@ -45,19 +54,42 @@ export default function About({ profileInfo }: Props) {
         </h4>
 
         <p className='text-base'>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus
-          ex ac dui tincidunt, sed blandit sapien pulvinar. Integer porta
-          vulputate erat, ac tristique felis suscipit a. Aenean pulvinar
-          placerat diam, varius vehicula lacus feugiat sed. Maecenas ornare
-          mauris diam, vitae blandit tellus faucibus vel. In in condimentum
-          enim, id maximus ipsum. Etiam molestie maximus efficitur. Etiam nec
-          turpis in lacus gravida fringilla. Maecenas a vulputate odio.
-          Curabitur commodo placerat purus, quis ornare nulla porttitor tempor.
-          Nunc quis neque viverra, vestibulum diam eu, mollis nisl. Sed sed
-          neque nibh. Etiam vehicula auctor erat, eu ultrices massa lacinia
-          eget. Donec fringilla tincidunt tincidunt. Nulla tincidunt elit neque.
-          Orci varius natoque penatibus et magnis dis parturient montes,
-          nascetur ridiculus mus.
+          I had not idea what to write here, so I made the website to use daily
+          new generated colors. The colors are generated from a small script
+          which generates one accent color and 2 background colors. I used{' '}
+          <a
+            href='https://tailwindcss.com/'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='underline decoration-accent/50'>
+            Tailwind CSS
+          </a>{' '}
+          for the styling,{' '}
+          <a
+            href='https://framer.com/motion/'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='underline decoration-accent/50'>
+            Framer Motion
+          </a>{' '}
+          for the animations,{' '}
+          <a
+            href='https://nextjs.org/'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='underline decoration-accent/50'>
+            Next.js
+          </a>{' '}
+          for the routing and{' '}
+          <a
+            href='https://www.typescriptlang.org/'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='underline decoration-accent/50'>
+            TypeScript
+          </a>{' '}
+          for the type checking. The website is hosted on GitHub pages and build
+          daily with GitHub Actions.
         </p>
       </div>
     </motion.div>

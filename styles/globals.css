@@ -18,11 +18,11 @@
     }
 
     .heroButton {
-        @apply px-6 py-2 border border-background rounded-full uppercase text-xs tracking-widest text-gray-500 transition-all hover:border-accent/40 hover:text-accent/40
+        @apply px-6 py-2 border border-background rounded-full uppercase text-xs tracking-widest text-white/30 transition-all hover:border-accent/40 hover:text-accent
     }
 
     .contactInput {
-        @apply outline-none bg-slate-400/10 rounded-md border-b-2 px-6 py-5 border-transparent text-gray-500 placeholder-gray-500 transition-all focus:border-accent/40 focus:text-accent/40 hover:border-accent/40
+        @apply outline-none bg-slate-400/10 rounded-md border-b-2 px-6 py-5 border-transparent text-white/30 placeholder-white/30 transition-all focus:border-accent focus:text-accent hover:border-accent
     }
 }
 

@@ -86,7 +86,7 @@ export default function ProjectCard({ project }: Props) {
                 fill
               />
               <div className='absolute top-0 left-0 w-full h-full peer z-40' />
-              <span className='absolute p-1 top-[-30%] select-none rounded-[5px] opacity-0 peer-hover:opacity-100 transition-all bg-white/40 text-black backdrop-blur-[5px] z-30'>
+              <span className='absolute p-1 top-[-30%] select-none rounded-[5px] opacity-0 peer-hover:opacity-100 transition-all bg-white/50 text-black backdrop-blur-[5px] z-30'>
                 {skill.name}
               </span>
             </div>
@@ -107,7 +107,7 @@ export default function ProjectCard({ project }: Props) {
               <Image
                 src={
                   project.githubIcon ??
-                  'https://github.githubassets.com/favicons/favicon.svg'
+                  'https://github.githubassets.com/favicons/favicon-dark.svg'
                 }
                 alt='Github'
                 className='h-9 w-9'
