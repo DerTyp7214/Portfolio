@@ -1,4 +1,6 @@
+import { ClipboardIcon } from '@heroicons/react/24/outline'
 import { motion } from 'framer-motion'
+import { toast } from 'react-toastify'
 import { ProfileInfo } from '../types/types'
 
 type Props = {
@@ -32,17 +34,78 @@ export default function About({ profileInfo }: Props) {
         style={{
           transitionProperty: 'width, height, borderRadius',
         }}
-        className='mb-10 mt-36 md:mt-10 md:mb-0 flex-shrink-0 w-56 h-56 md:w-64 md:h-95 xl:w-[500px] xl:h-[600px] overflow-hidden relative'>
-        <div className='rounded-[50%] duration-200 md:rounded-xl w-full h-full bg-accent absolute top-0 left-0 z-0'>
-          <h1 className='absolute bottom-[50%] md:bottom-[75%] right-[50%] md:right-[25%] translate-y-[50%] translate-x-[50%] text-sm md:text-lg text-background text-center rotate-[-45deg] md:rotate-0'>
+        className='transition-all duration-200 mb-10 mt-36 md:mt-10 md:mb-0 flex-shrink-0 w-56 h-56 md:w-64 md:h-95 xl:w-[500px] xl:h-[600px] overflow-hidden relative'>
+        <div className='rounded-[50%] transition-all duration-200 md:rounded-xl w-full h-full bg-accent absolute top-0 left-0 z-0'>
+          <h1
+            className='transition-all duration-200 absolute bottom-[50%] md:bottom-[75%] right-[50%] md:right-[25%] translate-y-[50%] translate-x-[50%] text-sm md:text-lg text-background text-center rotate-[-45deg] md:rotate-0 cursor-pointer'
+            onClick={() => {
+              navigator.clipboard.writeText(
+                process.env.NEXT_PUBLIC_COLOR_ACCENT ?? ''
+              )
+              toast('Color copied to clipboard', {
+                type: 'info',
+                icon: () => <ClipboardIcon className='h-6 w-6' />,
+              })
+            }}>
             Accent
+            <span className='hidden md:block text-sm xl:text-lg'>
+              {process.env.NEXT_PUBLIC_COLOR_ACCENT}
+            </span>
           </h1>
         </div>
-        <div className='rounded-[50%] duration-200 md:rounded-xl w-[46%] h-[46%] bg-secondaryBackground absolute top-[2%] left-[2%] z-10 items-center flex justify-center border-accent border-4'>
-          <h1 className='text-accent text-center text-sm md:text-lg'>Secondary Background</h1>
+        <div className='rounded-[50%] transition-all duration-200 md:rounded-xl w-[46%] h-[46%] bg-secondaryBackground absolute top-[2%] left-[2%] z-10 items-center flex justify-center border-accent border-4'>
+          <h1
+            className='transition-all duration-200 text-accent text-center text-sm md:text-lg cursor-pointer'
+            onClick={() => {
+              navigator.clipboard.writeText(
+                process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND ?? ''
+              )
+              toast('Color copied to clipboard', {
+                type: 'info',
+                icon: () => <ClipboardIcon className='h-6 w-6' />,
+              })
+            }}>
+            Secondary Background
+            <span className='hidden md:block text-sm xl:text-lg'>
+              {process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND}
+            </span>
+          </h1>
         </div>
-        <div className='rounded-[50%] duration-200 md:rounded-xl w-[46%] h-[46%] bg-background absolute bottom-[2%] right-[2%] z-10 items-center flex justify-center border-accent border-4'>
-          <h1 className='text-accent text-center text-sm md:text-lg'>Background</h1>
+        <div className='rounded-[50%] transition-all duration-200 md:rounded-xl w-[46%] h-[46%] bg-background absolute bottom-[2%] right-[2%] z-10 items-center flex justify-center border-accent border-4'>
+          <h1
+            className='transition-all duration-200 text-accent text-center text-sm md:text-lg cursor-pointer'
+            onClick={() => {
+              navigator.clipboard.writeText(
+                process.env.NEXT_PUBLIC_COLOR_BACKGROUND ?? ''
+              )
+              toast('Color copied to clipboard', {
+                type: 'info',
+                icon: () => <ClipboardIcon className='h-6 w-6' />,
+              })
+            }}>
+            Background
+            <span className='hidden md:block text-sm xl:text-lg'>
+              {process.env.NEXT_PUBLIC_COLOR_BACKGROUND}
+            </span>
+          </h1>
+        </div>
+        <div className='rounded-[50%] transition-all duration-200 md:rounded-xl w-[46%] h-[46%] bg-tertiary absolute bottom-[2%] left-[2%] z-10 items-center flex justify-center border-accent border-4'>
+          <h1
+            className='transition-all duration-200 text-background text-center text-sm md:text-lg cursor-pointer'
+            onClick={() => {
+              navigator.clipboard.writeText(
+                process.env.NEXT_PUBLIC_COLOR_TERTIARY ?? ''
+              )
+              toast('Color copied to clipboard', {
+                type: 'info',
+                icon: () => <ClipboardIcon className='h-6 w-6' />,
+              })
+            }}>
+            Tertiary
+            <span className='hidden md:block text-sm xl:text-lg'>
+              {process.env.NEXT_PUBLIC_COLOR_TERTIARY}
+            </span>
+          </h1>
         </div>
       </motion.div>
 

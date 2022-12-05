@@ -10,6 +10,7 @@ module.exports = {
         background: process.env.NEXT_PUBLIC_COLOR_BACKGROUND,
         secondaryBackground: process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND,
         accent: process.env.NEXT_PUBLIC_COLOR_ACCENT,
+        tertiary: process.env.NEXT_PUBLIC_COLOR_TERTIARY,
       },
     },
   },

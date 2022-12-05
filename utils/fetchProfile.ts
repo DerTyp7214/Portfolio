@@ -8,8 +8,8 @@ export default async function fetchProfileInfo(): Promise<ProfileInfo> {
       url: 'https://avatars.githubusercontent.com/u/37804065?v=4',
       imageName: 'avatar',
       path: 'profile',
-      newWidth: 600,
-      newHeight: 600,
+      newWidth: 150,
+      newHeight: 150,
     }),
   }
 }
