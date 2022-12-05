@@ -1,4 +1,3 @@
-import React from 'react'
 import { CONTRIBUTION_LEVELS, GitHubContributions } from '../types/types'
 import { lerpColor } from '../utils/colorUtils'
 

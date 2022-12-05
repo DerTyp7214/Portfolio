@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { URLSearchParams } from 'next/dist/compiled/@edge-runtime/primitives/url'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CodersRankBadge, GitHubContributions, Skill } from '../types/types'
 import BadgeCollection from './BadgeCollection'
 import ContributionChart from './ContributionChart'

@@ -1,5 +1,4 @@
 import moment from 'moment'
-import React from 'react'
 import { CodersRankActivities } from '../types/types'
 import { lerpColor } from '../utils/colorUtils'
 

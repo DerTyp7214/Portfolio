@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Project, Skill } from '../types/types'
 import SkillModal from './SkillModal'
 

@@ -1,6 +1,6 @@
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import { motion } from 'framer-motion'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 
 type Props = {

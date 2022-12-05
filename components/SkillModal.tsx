@@ -1,6 +1,5 @@
 import { ClipboardIcon } from '@heroicons/react/24/outline'
 import { ShareIcon } from '@heroicons/react/24/solid'
-import React from 'react'
 import { toast } from 'react-toastify'
 import { Skill } from '../types/types'
 import { capitalize } from '../utils/stringUtils'
