@@ -96,6 +96,17 @@ export default function Home({
         <meta name='og:description' content={pageInfo.description} />
         <meta name='og:image' content={pageInfo.ogImageUrl} />
         <meta name='og:url' content={process.env.NEXT_PUBLIC_BASE_URL} />
+
+        <meta
+          name='theme-color'
+          media='(prefers-color-scheme: light)'
+          content={process.env.NEXT_PUBLIC_COLOR_ACCENT}
+        />
+        <meta
+          name='theme-color'
+          media='(prefers-color-scheme: dark)'
+          content={process.env.NEXT_PUBLIC_COLOR_BACKGROUND}
+        />
       </Head>
 
       <Header socials={socials} />
