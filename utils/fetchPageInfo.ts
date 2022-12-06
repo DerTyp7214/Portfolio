@@ -13,6 +13,6 @@ export default async function fetchPageInfo(): Promise<PageInfo> {
     }),
     description:
       'Josua Lengwenath (DerTyp7214) is a developer from Germany. He is a full stack developer and loves to create new things.',
-    ogImageUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/og-image.png`,
+    ogImageUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/og-image.png?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
   }
 }
