@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 import { Project, Skill } from '../types/types'
 import SkillModal from './SkillModal'
@@ -20,7 +20,7 @@ export default function ProjectCard({ project }: Props) {
   }
 
   return (
-    <article className='relative flex flex-col rounded-lg items-center space-y-7 flex-shrink-0 snap-center w-[90vw] max-w-[500px] md:w-[600px] md:max-w-none xl:w-[900px] bg-secondaryBackground p-10 opacity-80 hover:opacity-100 transition-all duration-200 overflow-hidden'>
+    <article className='relative flex flex-col rounded-lg items-center space-y-7 flex-shrink-0 snap-center w-[90vw] max-w-[500px] md:w-[600px] md:max-w-none xl:w-[900px] bg-secondaryBackground/70 p-10 transition-all duration-200 overflow-hidden backdrop-blur-sm hover:backdrop-blur-md hover:bg-secondaryBackground/90'>
       <SkillModal
         show={showModal}
         skill={currentSkill}

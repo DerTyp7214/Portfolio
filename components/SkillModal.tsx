@@ -32,7 +32,7 @@ export default function SkillModal({ skill, show, onClose }: Props) {
                 title: skill.name,
                 text: `${window.location.origin}/?skill=${skill.name}#skills`,
               }
-              if (navigator.canShare(shareData)) {
+              if (navigator?.canShare?.(shareData)) {
                 navigator.share(shareData)
                 toast('Link shared', {
                   type: 'info',

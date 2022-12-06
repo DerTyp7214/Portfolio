@@ -10,9 +10,6 @@ type Props = {
 export default function About({ profileInfo }: Props) {
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 1.5 }}
       className='relative min-h-screen flex flex-col text-center md:text-left md:flex-row max-w-7xl px-10 justify-evenly mx-auto items-center'>
       <h3 className='absolute top-24 uppercase tracking-[20px] text-white/30 text-2xl xl:ml-10'>
         About
@@ -37,7 +34,7 @@ export default function About({ profileInfo }: Props) {
         className='transition-all duration-200 mb-10 mt-36 md:mt-10 md:mb-0 flex-shrink-0 w-56 h-56 md:w-64 md:h-95 xl:w-[500px] xl:h-[600px] overflow-hidden relative'>
         <div className='rounded-[50%] transition-all duration-200 md:rounded-xl w-full h-full bg-accent absolute top-0 left-0 z-0'>
           <h1
-            className='transition-all duration-200 absolute bottom-[50%] md:bottom-[75%] right-[50%] md:right-[25%] translate-y-[50%] translate-x-[50%] text-sm md:text-lg text-background text-center rotate-[-45deg] md:rotate-0 cursor-pointer'
+            className='transition-all duration-200 absolute bottom-[50%] md:bottom-[75%] right-[50%] md:right-[25%] translate-y-[50%] translate-x-[50%] text-sm md:text-lg text-background text-center rotate-[-45deg] md:rotate-0 cursor-pointer select-none'
             onClick={() => {
               navigator.clipboard.writeText(
                 process.env.NEXT_PUBLIC_COLOR_ACCENT ?? ''
@@ -55,7 +52,7 @@ export default function About({ profileInfo }: Props) {
         </div>
         <div className='rounded-[50%] transition-all duration-200 md:rounded-xl w-[46%] h-[46%] bg-secondaryBackground absolute top-[2%] left-[2%] z-10 items-center flex justify-center border-accent border-4'>
           <h1
-            className='transition-all duration-200 text-accent text-center text-sm md:text-lg cursor-pointer'
+            className='transition-all duration-200 text-accent text-center text-sm md:text-lg cursor-pointer select-none'
             onClick={() => {
               navigator.clipboard.writeText(
                 process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND ?? ''
@@ -73,7 +70,7 @@ export default function About({ profileInfo }: Props) {
         </div>
         <div className='rounded-[50%] transition-all duration-200 md:rounded-xl w-[46%] h-[46%] bg-background absolute bottom-[2%] right-[2%] z-10 items-center flex justify-center border-accent border-4'>
           <h1
-            className='transition-all duration-200 text-accent text-center text-sm md:text-lg cursor-pointer'
+            className='transition-all duration-200 text-accent text-center text-sm md:text-lg cursor-pointer select-none'
             onClick={() => {
               navigator.clipboard.writeText(
                 process.env.NEXT_PUBLIC_COLOR_BACKGROUND ?? ''
@@ -91,7 +88,7 @@ export default function About({ profileInfo }: Props) {
         </div>
         <div className='rounded-[50%] transition-all duration-200 md:rounded-xl w-[46%] h-[46%] bg-tertiary absolute bottom-[2%] left-[2%] z-10 items-center flex justify-center border-accent border-4'>
           <h1
-            className='transition-all duration-200 text-background text-center text-sm md:text-lg cursor-pointer'
+            className='transition-all duration-200 text-background text-center text-sm md:text-lg cursor-pointer select-none'
             onClick={() => {
               navigator.clipboard.writeText(
                 process.env.NEXT_PUBLIC_COLOR_TERTIARY ?? ''

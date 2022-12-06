@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import { ProfileInfo } from '../types/types'
 import { motion } from 'framer-motion'
-import { Cursor, useTypewriter } from 'react-simple-typewriter'
-import BackgroundCircles from './BackgroundCircles'
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
+import { Cursor, useTypewriter } from 'react-simple-typewriter'
+import { ProfileInfo } from '../types/types'
+import BackgroundCircles from './BackgroundCircles'
 
 type Props = {
   profileInfo: ProfileInfo

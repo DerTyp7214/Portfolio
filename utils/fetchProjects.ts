@@ -1,10 +1,10 @@
 import { Project, Skill } from '../types/types'
-import fetchSkill from './fetchSkill'
 import {
   cacheImageLocally,
   gitHubDownloads,
-  playStoreDownloads,
+  playStoreDownloads
 } from './downloadUtils'
+import fetchSkill from './fetchSkill'
 
 const languageSkills = [
   'Kotlin',

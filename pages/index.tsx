@@ -1,9 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
+import { ArrowUpIcon } from '@heroicons/react/24/solid'
 import Head from 'next/head'
 import Link from 'next/link'
 import { GetStaticProps } from 'next/types'
+import { useState } from 'react'
+import { ToastContainer } from 'react-toastify'
+import ReactTooltip from 'react-tooltip'
+import About from '../components/About'
+import ContactMe from '../components/ContactMe'
+import Header from '../components/Header'
+import Profile from '../components/Profile'
+import Projects from '../components/Projects'
+import Skills from '../components/Skills'
 import {
-  CodersRankActivities,
   CodersRankBadge,
   ContactInfo,
   GitHubContributions,
@@ -11,29 +20,20 @@ import {
   ProfileInfo,
   Project,
   Skill,
-  Social,
+  Social
 } from '../types/types'
-import { ArrowUpIcon } from '@heroicons/react/24/solid'
-import { ToastContainer } from 'react-toastify'
-import About from '../components/About'
-import ContactMe from '../components/ContactMe'
-import Header from '../components/Header'
-import Profile from '../components/Profile'
-import Projects from '../components/Projects'
-import Skills from '../components/Skills'
+import { lerpColor } from '../utils/colorUtils'
+import fetchBadges from '../utils/fetchBadges'
 import fetchContactInfo from '../utils/fetchContactInfo'
+import fetchGithubContributions from '../utils/fetchGithubContributions'
 import fetchPageInfo from '../utils/fetchPageInfo'
 import fetchProfileInfo from '../utils/fetchProfile'
 import fetchProjects from '../utils/fetchProjects'
 import fetchSkills from '../utils/fetchSkills'
 import fetchSocials from '../utils/fetchSocials'
-import fetchBadges from '../utils/fetchBadges'
-import ReactTooltip from 'react-tooltip'
-import fetchGithubContributions from '../utils/fetchGithubContributions'
+import { getFormatedDate } from '../utils/stringUtils'
 
 import 'react-toastify/dist/ReactToastify.css'
-import { getFormatedDate } from '../utils/stringUtils'
-import { lerpColor } from '../utils/colorUtils'
 
 type Props = {
   pageInfo: PageInfo
@@ -56,6 +56,8 @@ export default function Home({
   contributions,
   badges,
 }: Props) {
+  const [scrollPosition, setScrollPosition] = useState(0)
+
   const versionInfo = (
     <div className='mb-1 mr-2 text-right text-sm opacity-20'>
       <p>
@@ -87,7 +89,16 @@ export default function Home({
   )
 
   return (
-    <div className='h-screen bg-background text-white overflow-y-scroll scroll-smooth overflow-x-hidden z-0 customScroll'>
+    <div
+      className='h-screen bg-background text-white overflow-y-scroll scroll-smooth overflow-x-hidden z-0 customScroll'
+      style={{
+        backgroundPositionX: '50%',
+        backgroundPositionY: -scrollPosition * 0.04 + 'px',
+        backgroundImage: 'url(/pattern.svg)',
+      }}
+      onScroll={(event) => {
+        setScrollPosition(event.currentTarget.scrollTop)
+      }}>
       <Head>
         <title>{pageInfo.title}</title>
         <link rel='icon' href={pageInfo.favIconUrl} />
@@ -108,7 +119,6 @@ export default function Home({
           content={process.env.NEXT_PUBLIC_COLOR_BACKGROUND}
         />
       </Head>
-
       <Header socials={socials} />
 
       <section id='profile' className='snap-center mb-20'>
@@ -162,9 +172,15 @@ export default function Home({
       <ToastContainer
         position='bottom-right'
         autoClose={5000}
-        progressStyle={{ background: process.env.NEXT_PUBLIC_COLOR_ACCENT }}
+        progressStyle={{
+          background: process.env.NEXT_PUBLIC_COLOR_TERTIARY,
+        }}
         toastStyle={{
-          background: `${process.env.NEXT_PUBLIC_COLOR_BACKGROUND}80`,
+          background: `${lerpColor(
+            process.env.NEXT_PUBLIC_COLOR_BACKGROUND ?? '#1e1e1e',
+            process.env.NEXT_PUBLIC_COLOR_ACCENT ?? '#FFFFFF',
+            0.1
+          )}80`,
           borderRadius: '1rem',
           paddingRight: '10px',
           backdropFilter: 'blur(20px)',

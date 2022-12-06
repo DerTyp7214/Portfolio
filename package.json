@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.13",
+    "@svgr/webpack": "^6.5.1",
     "chalk": "^5.1.2",
     "color": "^4.2.3",
     "eslint": "8.27.0",
@@ -22,6 +23,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.39.4",
     "react-indiana-drag-scroll": "^2.2.0",
+    "react-scroll-parallax": "^3.3.2",
     "react-simple-typewriter": "^4.0.5",
     "react-social-icons": "^5.15.0",
     "react-toastify": "^9.1.1",

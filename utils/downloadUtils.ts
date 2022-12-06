@@ -1,8 +1,7 @@
-import { request } from 'https'
-import { existsSync, mkdirSync } from 'fs'
-import sharp from 'sharp'
 import chalk from 'chalk'
-import fs from 'fs'
+import fs, { existsSync, mkdirSync } from 'fs'
+import { request } from 'https'
+import sharp from 'sharp'
 
 const loadingImages = new Map<string, ((path: string) => Promise<void>)[]>()
 

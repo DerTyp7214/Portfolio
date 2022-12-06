@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import {
   CodersRankLanguage,
   CodersRankTechnology,
-  Skill,
+  Skill
 } from '../../../../types/types'
 
 export default async function handler(

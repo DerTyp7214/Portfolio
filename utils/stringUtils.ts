@@ -11,3 +11,4 @@ function getFormatedDate(date: Date) {
 }
 
 export { capitalize, getFormatedDate }
+

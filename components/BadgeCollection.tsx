@@ -3,7 +3,7 @@ import Image from 'next/image'
 import {
   CodersRankBadge,
   CodersRankBadgeV1,
-  CodersRankBadgeV2,
+  CodersRankBadgeV2
 } from '../types/types'
 
 type Props = {
