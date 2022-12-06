@@ -1,7 +1,7 @@
 export interface PageInfo {
   title: string
   favIconUrl: string
-  description: string
+  description?: string
   ogImageUrl: string
 }
 

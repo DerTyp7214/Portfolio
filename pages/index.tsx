@@ -104,9 +104,11 @@ export default function Home({
         <link rel='icon' href={pageInfo.favIconUrl} />
 
         <meta name='og:title' content={pageInfo.title} />
-        <meta name='og:description' content={pageInfo.description} />
         <meta name='og:image' content={pageInfo.ogImageUrl} />
         <meta name='og:url' content={process.env.NEXT_PUBLIC_BASE_URL} />
+        {pageInfo.description && (
+          <meta name='og:description' content={pageInfo.description} />
+        )}
 
         <meta
           name='theme-color'
