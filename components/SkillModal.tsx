@@ -24,7 +24,7 @@ export default function SkillModal({ skill, show, onClose }: Props) {
   return (
     <Modal show={show && !!skill} onClose={onClose} title={skill?.name}>
       {skill && (
-        <div className='flex flex-col items-center justify-start lg:justify-center p-4 h-full overflow-auto'>
+        <div className='flex flex-col items-center justify-start lg:justify-center p-4 h-full overflow-auto select-none'>
           <ShareIcon
             className='absolute top-4 right-14 w-6 h-6 cursor-pointer'
             onClick={() => {

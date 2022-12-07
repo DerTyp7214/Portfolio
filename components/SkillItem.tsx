@@ -28,7 +28,7 @@ export default function SkillItem({ skill, directionLeft, onClick }: Props) {
       }}
       viewport={{ once: true }}
       className='group relative flex cursor-pointer'>
-      <div className='rounded-3xl border border-white/30 bg-secondaryBackground flex flex-col items-center justify-center overflow-hidden'>
+      <div className='rounded-3xl border border-white/30 bg-secondaryBackground/80 flex flex-col items-center justify-center overflow-hidden backdrop-blur-md'>
         <div className='flex justify-center items-center object-contain w-16 h-16 md:w-22 md:h-22 xl:w-26 xl:h-26 filter group-hover:blur-[3px] group-hover:grayscale-[.7] transition duration-300 ease-in-out m-4 relative'>
           <Image
             src={skill.imageUrl}

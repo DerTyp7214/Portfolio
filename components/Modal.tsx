@@ -63,7 +63,7 @@ export default function Modal({ show, children, onClose, title }: Props) {
               className='absolute top-3 right-3 w-8 h-8 cursor-pointer'
               onClick={close}
             />
-            <h1 className='text-3xl font-bold text-white ml-4 mt-2 absolute'>
+            <h1 className='text-3xl font-bold text-white ml-4 mt-2 absolute select-none'>
               {title}
             </h1>
             <div className='w-full h-full flex flex-col items-center justify-center overflow-hidden pt-20'>
