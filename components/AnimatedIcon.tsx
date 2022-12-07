@@ -22,9 +22,11 @@ export default function AnimatedIcon({
   autoplay,
   state,
   progressInterval = 1000 / 60,
+  className,
+  onClick,
   animationListener,
   ...props
-}: Props & React.HTMLAttributes<HTMLVideoElement>) {
+}: Props & React.HTMLAttributes<HTMLElement>) {
   const videoPlayerRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
@@ -71,10 +73,17 @@ export default function AnimatedIcon({
   }, [state, icon, speed, progressInterval, animationListener])
 
   return (
-    <video
-      {...props}
-      ref={videoPlayerRef}
-      autoPlay={autoplay}
-      className={`cursor-pointer ${props.className ?? ''}`}></video>
+    <div
+      className={`cursor-pointer ${
+        className ?? ''
+      } relative select-none transition-all duration-200`}
+      onClick={onClick}>
+      <video
+        {...props}
+        ref={videoPlayerRef}
+        autoPlay={autoplay}
+        className='z-0'></video>
+      <div className='absolute top-0 left-0 h-full w-full z-10'></div>
+    </div>
   )
 }
