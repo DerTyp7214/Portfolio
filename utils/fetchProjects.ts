@@ -51,7 +51,9 @@ export default async function fetchProjects(): Promise<Project[]> {
             'RboardThemeManagerV3',
             'tags/latest-release',
             true
-          )) + 12000, // 12k downloads from Play Store before it was removed
+          )) +
+          12000 + // 12k downloads from Play Store before it was removed
+          15000, // 15k downloads from GitHub before it realized that they get reset every time a new release is made :)
       },
       {
         name: 'Rboard Theme Creator',

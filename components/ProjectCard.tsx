@@ -62,7 +62,7 @@ export default function ProjectCard({ project }: Props) {
             .reduce((a, b) => [a, <span key={b.toString()}>&</span>, b] as any)}
         </p>
         {!!project.downloads && (
-          <p className='text-md font-light mt-1'>
+          <p className='text-md font-light mt-1' data-tip="Not a exact number. Gitlab is not tracked and github can be ~10% more then shown here.">
             <b>
               {typeof project.downloads === 'number'
                 ? new Intl.NumberFormat('en-Us').format(project.downloads)
