@@ -10,7 +10,7 @@ const randomColor = Color.rgb(
 
 const accentDark = randomColor.saturate(1.1).mix(Color.rgb(255, 255, 255)).lightness(70)
 const accent = accentDark.negate().rotate(180)
-const desaturatedAccentDark = accent.desaturate(.5)
+const desaturatedAccentDark = accentDark.desaturate(.5)
 const desaturatedAccent = desaturatedAccentDark.negate().rotate(180)
 const tertiaryDark = accentDark.rotate(180)
 const tertiary = tertiaryDark.negate().rotate(180)
@@ -35,11 +35,11 @@ NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND=${secondaryBackground.hex()}
 const modifySvgColors = async () => {
     const svg = fs.readFileSync('./public/assets/og-image.svg', 'utf8')
     const newSvg = svg
-        .replace(/%accent%/g, accent.hex())
-        .replace(/%desaturated_accent%/g, desaturatedAccent.hex())
-        .replace(/%tertiary%/g, tertiary.hex())
-        .replace(/%background%/g, background.hex())
-        .replace(/%secondary_background%/g, secondaryBackground.hex())
+        .replace(/%accent%/g, accentDark.hex())
+        .replace(/%desaturated_accent%/g, desaturatedAccentDark.hex())
+        .replace(/%tertiary%/g, tertiaryDark.hex())
+        .replace(/%background%/g, backgroundDark.hex())
+        .replace(/%secondary_background%/g, secondaryBackgroundDark.hex())
 
     await sharp(Buffer.from(newSvg))
         .png()
