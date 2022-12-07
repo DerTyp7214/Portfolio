@@ -67,7 +67,7 @@ export default function ContactMe({ contactInfo }: Props) {
 
           <button
             type='submit'
-            className='bg-accent dark:bg-accentDark py-5 px-10 rounded-md text-black font-bold text-lg transition-all hover:bg-accent/80 active:bg-accent/60 dark:hover:bg-accentDark/80 dark:active:bg-accentDark/60'>
+            className='bg-accent dark:bg-accentDark py-5 px-10 rounded-md text-white dark:text-black font-bold text-lg transition-all hover:bg-accent/80 active:bg-accent/60 dark:hover:bg-accentDark/80 dark:active:bg-accentDark/60'>
             Submit
           </button>
         </form>
