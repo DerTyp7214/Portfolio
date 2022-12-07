@@ -26,9 +26,11 @@ async function reverseIcon(path) {
             res()
         })
         .on('progress', (progress) => {
-            process.stdout.clearLine()
-            process.stdout.cursorTo(0)
-            process.stdout.write(`Processing: ${progress.currentFps} fps | ${progress.frames} frames | ${humanFileSize(progress.targetSize * 1024)} | ${progress.timemark}`)
+            if (process.stdout) {
+                process.stdout.clearLine?.()
+                process.stdout.cursorTo?.(0)
+                process.stdout.write?.(`Processing: ${progress.currentFps} fps | ${progress.frames} frames | ${humanFileSize(progress.targetSize * 1024)} | ${progress.timemark}`)
+            }
         })
         .on('end', () => {
             console.log(`\nDone: ${newPath}`)
