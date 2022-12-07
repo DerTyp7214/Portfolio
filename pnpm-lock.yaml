@@ -16,6 +16,7 @@ specifiers:
   eslint-config-next: 13.0.3
   fluent-ffmpeg: ^2.1.2
   framer-motion: ^7.6.7
+  lottie-react: ^2.3.1
   moment: ^2.29.4
   next: 13.0.3
   postcss: ^8.4.19
@@ -44,6 +45,7 @@ dependencies:
   eslint-config-next: 13.0.3_e3uo4sehh4zr4i6m57mkkxxv7y
   fluent-ffmpeg: 2.1.2
   framer-motion: 7.6.7_biqbaboplfbrettd7655fr4n2y
+  lottie-react: 2.3.1_biqbaboplfbrettd7655fr4n2y
   moment: 2.29.4
   next: 13.0.3_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
@@ -3488,6 +3490,21 @@ packages:
     hasBin: true
     dependencies:
       js-tokens: 4.0.0
+    dev: false
+
+  /lottie-react/2.3.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-8cxd6XZZtECT6LoAhCftRdYrEpHxiouvB5EPiYA+TtCG5LHNYAdMS9IVIHcxKtWnpo7x16QfCLj1XLXZpaN81A==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      lottie-web: 5.10.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /lottie-web/5.10.0:
+    resolution: {integrity: sha512-q2hfqKrGXNkwjSSZjKxf3fWMi0e3ZBc03qBkVWoGbwUJ7BcG+9YXjMPtmmhitzk8Nc6VQ5PRnh9yInPdfq0PZg==}
     dev: false
 
   /lru-cache/6.0.0:

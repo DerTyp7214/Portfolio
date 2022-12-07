@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "rimraf public/images/cached && next dev",
     "new-color": "rimraf .next && node themeUtils/generateNewColors.js",
-    "prepareIcons": "node themeUtils/prepareIcons.js",
-    "preBuild": "npm run new-color && npm run prepareIcons",
+    "preBuild": "npm run new-color",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -21,6 +20,7 @@
     "eslint-config-next": "13.0.3",
     "fluent-ffmpeg": "^2.1.2",
     "framer-motion": "^7.6.7",
+    "lottie-react": "^2.3.1",
     "moment": "^2.29.4",
     "next": "13.0.3",
     "react": "18.2.0",
