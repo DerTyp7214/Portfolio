@@ -136,7 +136,7 @@ export default function Home({
         </section>
 
         <section id='about' className='snap-center mt-20 mb-20'>
-          <About profileInfo={profileInfo} />
+          <About profileInfo={profileInfo} darkMode={darkMode} />
         </section>
 
         <section id='projects' className='snap-center mt-20 mb-20'>
