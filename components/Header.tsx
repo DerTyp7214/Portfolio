@@ -6,7 +6,7 @@ import { SocialIcon } from 'react-social-icons'
 import { Social } from '../types/types'
 import AnimatedIcon from './AnimatedIcon'
 
-import sunOutline from '../assets/sun_outline.json'
+import sunOutline from '../assets/sun_outline'
 
 type Props = {
   socials: Social[]

@@ -80,7 +80,7 @@ export default function About({ darkMode }: Props) {
           id='secondaryBackground'
           className='rounded-[50%] transition-all duration-200 md:rounded-xl w-[46%] h-[46%] bg-secondaryBackground dark:bg-secondaryBackgroundDark absolute top-[2%] left-[2%] z-10 items-center flex justify-center border-accent dark:border-accentDark border-4'>
           <h1
-            className='transition-all duration-200 text-accent dark:text-accentDark text-center text-sm md:text-lg cursor-pointer select-none'
+            className='transition-all duration-200 text-tertiary dark:text-accentDark text-center text-sm md:text-lg cursor-pointer select-none'
             onClick={() => {
               if (secondaryBackgroundColor)
                 navigator.clipboard.writeText(secondaryBackgroundColor)
@@ -99,7 +99,7 @@ export default function About({ darkMode }: Props) {
           id='background'
           className='rounded-[50%] transition-all duration-200 md:rounded-xl w-[46%] h-[46%] bg-background dark:bg-backgroundDark absolute bottom-[2%] right-[2%] z-10 items-center flex justify-center border-accent dark:border-accentDark border-4'>
           <h1
-            className='transition-all duration-200 text-accent dark:text-accentDark text-center text-sm md:text-lg cursor-pointer select-none'
+            className='transition-all duration-200 text-tertiary dark:text-accentDark text-center text-sm md:text-lg cursor-pointer select-none'
             onClick={() => {
               if (backgroundColor)
                 navigator.clipboard.writeText(backgroundColor)
@@ -116,7 +116,7 @@ export default function About({ darkMode }: Props) {
         </div>
         <div
           id='tertiary'
-          className='rounded-[50%] transition-all duration-200 md:rounded-xl w-[46%] h-[46%] bg-tertiary absolute bottom-[2%] left-[2%] z-10 items-center flex justify-center border-accent dark:border-accentDark border-4'>
+          className='rounded-[50%] transition-all duration-200 md:rounded-xl w-[46%] h-[46%] bg-tertiary dark:bg-tertiaryDark absolute bottom-[2%] left-[2%] z-10 items-center flex justify-center border-accent dark:border-accentDark border-4'>
           <h1
             className='transition-all duration-200 text-white/80 dark:text-black/80 text-center text-sm md:text-lg cursor-pointer select-none'
             onClick={() => {
