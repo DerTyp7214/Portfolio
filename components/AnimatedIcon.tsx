@@ -1,55 +1,40 @@
-import { useEffect, useRef, useState } from 'react'
+import { useLottie } from 'lottie-react'
+import { useEffect } from 'react'
 
 type Props = {
-  animationLocation: string
+  animationData: { [key: string]: any }
   speed?: number
   state?: 0 | 1
 }
 
 export default function AnimatedIcon({
-  animationLocation,
+  animationData,
   speed = 1,
   state,
   className,
   onClick,
   ...props
 }: Props & React.HTMLAttributes<HTMLElement>) {
-  const lottiePlayer = useRef<HTMLElement>(null)
-
-  const [playerElement, setPlayerElement] = useState<any>(null)
-
-  useEffect(() => {
-    const player = lottiePlayer.current as any
-
-    if (player) {
-      if (state === 1) player.setDirection(-1)
-      else player.setDirection(1)
-
-      player.setSpeed(speed)
-      player.setLooping(false)
-      player.play()
-    }
-  }, [speed, state])
+  const { View, play, setSpeed, setDirection } = useLottie({
+    animationData,
+    loop: false,
+    className,
+  })
 
   useEffect(() => {
-    if (window) {
-      require('@dotlottie/player-component')
+    if (state === 1) setDirection(-1)
+    else if (state === 0) setDirection(1)
 
-      setPlayerElement(
-        <dotlottie-player
-          ref={lottiePlayer}
-          src={animationLocation}
-        />
-      )
-    }
-  }, [animationLocation])
+    setSpeed(speed)
+    play()
+  }, [play, setDirection, setSpeed, speed, state])
 
   return (
     <div
-      className={`cursor-pointer relative select-none transition-all duration-200 ${className}`}
+      className='cursor-pointer relative select-none transition-all duration-200'
       onClick={onClick}
       {...props}>
-      {playerElement}
+      {View}
     </div>
   )
 }
