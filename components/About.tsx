@@ -7,9 +7,10 @@ import { getBackgroundColor, rgbStringToHex } from '../utils/colorUtils'
 
 type Props = {
   profileInfo: ProfileInfo
+  darkMode: boolean
 }
 
-export default function About({}: Props) {
+export default function About({ darkMode }: Props) {
   const [accentColor, setAccentColor] = useState(
     process.env.NEXT_PUBLIC_COLOR_ACCENT
   )
@@ -32,7 +33,7 @@ export default function About({}: Props) {
         rgbStringToHex(getBackgroundColor('secondaryBackground'))
       )
     }
-  }, [])
+  }, [darkMode])
 
   return (
     <motion.div className='relative min-h-screen flex flex-col text-center md:text-left md:flex-row max-w-7xl px-10 justify-evenly mx-auto items-center'>
