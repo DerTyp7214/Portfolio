@@ -11,6 +11,6 @@ export default async function fetchPageInfo(): Promise<PageInfo> {
       newWidth: 120,
       newHeight: 120,
     }),
-    ogImageUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/og-image.png?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
+    ogImageUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/assets/og-image.png?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
   }
 }

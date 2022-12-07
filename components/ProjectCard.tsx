@@ -20,7 +20,7 @@ export default function ProjectCard({ project }: Props) {
   }
 
   return (
-    <article className='relative flex flex-col rounded-lg items-center space-y-7 flex-shrink-0 snap-center w-[90vw] max-w-[500px] md:w-[600px] md:max-w-none xl:w-[900px] bg-secondaryBackground/70 p-10 transition-all duration-200 overflow-hidden backdrop-blur-sm hover:backdrop-blur-md hover:bg-secondaryBackground/90'>
+    <article className='relative flex flex-col rounded-lg items-center space-y-7 flex-shrink-0 snap-center w-[90vw] max-w-[500px] md:w-[600px] md:max-w-none xl:w-[900px] bg-secondaryBackground/70 dark:bg-secondaryBackgroundDark/70 p-10 transition-all duration-200 overflow-hidden backdrop-blur-sm hover:backdrop-blur-md hover:bg-secondaryBackground/90'>
       <SkillModal
         show={showModal}
         skill={currentSkill}
@@ -62,7 +62,9 @@ export default function ProjectCard({ project }: Props) {
             .reduce((a, b) => [a, <span key={b.toString()}>&</span>, b] as any)}
         </p>
         {!!project.downloads && (
-          <p className='text-md font-light mt-1' data-tip="Not a exact number. Gitlab is not tracked and github can be ~10% more then shown here.">
+          <p
+            className='text-md font-light mt-1'
+            data-tip='Not a exact number. Gitlab is not tracked and github can be ~10% more then shown here.'>
             <b>
               {typeof project.downloads === 'number'
                 ? new Intl.NumberFormat('en-Us').format(project.downloads)
@@ -78,7 +80,7 @@ export default function ProjectCard({ project }: Props) {
             <div
               key={index}
               onClick={() => openModal(skill)}
-              className='h-12 w-12 rounded-[5px] bg-background/50 relative flex justify-center items-center cursor-pointer'>
+              className='h-12 w-12 rounded-[5px] bg-background/50 dark:bg-backgroundDark/50 relative flex justify-center items-center cursor-pointer'>
               <Image
                 className='p-2 filter z-20'
                 src={skill.imageUrl}
@@ -110,7 +112,7 @@ export default function ProjectCard({ project }: Props) {
                   'https://github.githubassets.com/favicons/favicon-dark.svg'
                 }
                 alt='Github'
-                className='h-9 w-9'
+                className='h-9 w-9 invert dark:invert-0'
                 width='9'
                 height='9'
               />

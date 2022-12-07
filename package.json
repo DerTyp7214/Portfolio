@@ -5,17 +5,21 @@
   "scripts": {
     "dev": "rimraf public/images/cached && next dev",
     "new-color": "rimraf .next && node themeUtils/generateNewColors.js",
+    "prepareIcons": "node themeUtils/prepareIcons.js",
+    "preBuild": "npm run new-color && npm run prepareIcons",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@heroicons/react": "^2.0.13",
     "@svgr/webpack": "^6.5.1",
     "chalk": "^5.1.2",
     "color": "^4.2.3",
     "eslint": "8.27.0",
     "eslint-config-next": "13.0.3",
+    "fluent-ffmpeg": "^2.1.2",
     "framer-motion": "^7.6.7",
     "moment": "^2.29.4",
     "next": "13.0.3",

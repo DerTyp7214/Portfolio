@@ -1,17 +1,42 @@
 import { ClipboardIcon } from '@heroicons/react/24/outline'
 import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { ProfileInfo } from '../types/types'
+import { getBackgroundColor, rgbStringToHex } from '../utils/colorUtils'
 
 type Props = {
   profileInfo: ProfileInfo
 }
 
-export default function About({ profileInfo }: Props) {
+export default function About({}: Props) {
+  const [accentColor, setAccentColor] = useState(
+    process.env.NEXT_PUBLIC_COLOR_ACCENT
+  )
+  const [tertiaryColor, setTertiaryColor] = useState(
+    process.env.NEXT_PUBLIC_COLOR_TERTIARY
+  )
+  const [backgroundColor, setBackgroundColor] = useState(
+    process.env.NEXT_PUBLIC_COLOR_BACKGROUND
+  )
+  const [secondaryBackgroundColor, setSecondaryBackgroundColor] = useState(
+    process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND
+  )
+
+  useEffect(() => {
+    if (window) {
+      setAccentColor(rgbStringToHex(getBackgroundColor('accent')))
+      setTertiaryColor(rgbStringToHex(getBackgroundColor('tertiary')))
+      setBackgroundColor(rgbStringToHex(getBackgroundColor('background')))
+      setSecondaryBackgroundColor(
+        rgbStringToHex(getBackgroundColor('secondaryBackground'))
+      )
+    }
+  }, [])
+
   return (
-    <motion.div
-      className='relative min-h-screen flex flex-col text-center md:text-left md:flex-row max-w-7xl px-10 justify-evenly mx-auto items-center'>
-      <h3 className='absolute top-24 uppercase tracking-[20px] text-white/30 text-2xl xl:ml-10'>
+    <motion.div className='relative min-h-screen flex flex-col text-center md:text-left md:flex-row max-w-7xl px-10 justify-evenly mx-auto items-center'>
+      <h3 className='absolute top-24 uppercase tracking-[20px] text-black/50 dark:text-white/30 text-2xl xl:ml-10'>
         About
       </h3>
 
@@ -32,13 +57,13 @@ export default function About({ profileInfo }: Props) {
           transitionProperty: 'width, height, borderRadius',
         }}
         className='transition-all duration-200 mb-10 mt-36 md:mt-10 md:mb-0 flex-shrink-0 w-56 h-56 md:w-64 md:h-95 xl:w-[500px] xl:h-[600px] overflow-hidden relative'>
-        <div className='rounded-[50%] transition-all duration-200 md:rounded-xl w-full h-full bg-accent absolute top-0 left-0 z-0'>
+        <div
+          id='accent'
+          className='rounded-[50%] transition-all duration-200 md:rounded-xl w-full h-full bg-accent dark:bg-accentDark absolute top-0 left-0 z-0'>
           <h1
-            className='transition-all duration-200 absolute bottom-[50%] md:bottom-[75%] right-[50%] md:right-[25%] translate-y-[50%] translate-x-[50%] text-sm md:text-lg text-background text-center rotate-[-45deg] md:rotate-0 cursor-pointer select-none'
+            className='transition-all duration-200 absolute bottom-[50%] md:bottom-[75%] right-[50%] md:right-[25%] translate-y-[50%] translate-x-[50%] text-sm md:text-lg text-white/80 dark:text-black/80 text-center rotate-[-45deg] md:rotate-0 cursor-pointer select-none'
             onClick={() => {
-              navigator.clipboard.writeText(
-                process.env.NEXT_PUBLIC_COLOR_ACCENT ?? ''
-              )
+              if (accentColor) navigator.clipboard.writeText(accentColor)
               toast('Color copied to clipboard', {
                 type: 'info',
                 icon: () => <ClipboardIcon className='h-6 w-6' />,
@@ -46,17 +71,18 @@ export default function About({ profileInfo }: Props) {
             }}>
             Accent
             <span className='hidden md:block text-sm xl:text-lg'>
-              {process.env.NEXT_PUBLIC_COLOR_ACCENT}
+              {accentColor}
             </span>
           </h1>
         </div>
-        <div className='rounded-[50%] transition-all duration-200 md:rounded-xl w-[46%] h-[46%] bg-secondaryBackground absolute top-[2%] left-[2%] z-10 items-center flex justify-center border-accent border-4'>
+        <div
+          id='secondaryBackground'
+          className='rounded-[50%] transition-all duration-200 md:rounded-xl w-[46%] h-[46%] bg-secondaryBackground dark:bg-secondaryBackgroundDark absolute top-[2%] left-[2%] z-10 items-center flex justify-center border-accent dark:border-accentDark border-4'>
           <h1
-            className='transition-all duration-200 text-accent text-center text-sm md:text-lg cursor-pointer select-none'
+            className='transition-all duration-200 text-accent dark:text-accentDark text-center text-sm md:text-lg cursor-pointer select-none'
             onClick={() => {
-              navigator.clipboard.writeText(
-                process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND ?? ''
-              )
+              if (secondaryBackgroundColor)
+                navigator.clipboard.writeText(secondaryBackgroundColor)
               toast('Color copied to clipboard', {
                 type: 'info',
                 icon: () => <ClipboardIcon className='h-6 w-6' />,
@@ -64,17 +90,18 @@ export default function About({ profileInfo }: Props) {
             }}>
             Secondary Background
             <span className='hidden md:block text-sm xl:text-lg'>
-              {process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND}
+              {secondaryBackgroundColor}
             </span>
           </h1>
         </div>
-        <div className='rounded-[50%] transition-all duration-200 md:rounded-xl w-[46%] h-[46%] bg-background absolute bottom-[2%] right-[2%] z-10 items-center flex justify-center border-accent border-4'>
+        <div
+          id='background'
+          className='rounded-[50%] transition-all duration-200 md:rounded-xl w-[46%] h-[46%] bg-background dark:bg-backgroundDark absolute bottom-[2%] right-[2%] z-10 items-center flex justify-center border-accent dark:border-accentDark border-4'>
           <h1
-            className='transition-all duration-200 text-accent text-center text-sm md:text-lg cursor-pointer select-none'
+            className='transition-all duration-200 text-accent dark:text-accentDark text-center text-sm md:text-lg cursor-pointer select-none'
             onClick={() => {
-              navigator.clipboard.writeText(
-                process.env.NEXT_PUBLIC_COLOR_BACKGROUND ?? ''
-              )
+              if (backgroundColor)
+                navigator.clipboard.writeText(backgroundColor)
               toast('Color copied to clipboard', {
                 type: 'info',
                 icon: () => <ClipboardIcon className='h-6 w-6' />,
@@ -82,17 +109,17 @@ export default function About({ profileInfo }: Props) {
             }}>
             Background
             <span className='hidden md:block text-sm xl:text-lg'>
-              {process.env.NEXT_PUBLIC_COLOR_BACKGROUND}
+              {backgroundColor}
             </span>
           </h1>
         </div>
-        <div className='rounded-[50%] transition-all duration-200 md:rounded-xl w-[46%] h-[46%] bg-tertiary absolute bottom-[2%] left-[2%] z-10 items-center flex justify-center border-accent border-4'>
+        <div
+          id='tertiary'
+          className='rounded-[50%] transition-all duration-200 md:rounded-xl w-[46%] h-[46%] bg-tertiary absolute bottom-[2%] left-[2%] z-10 items-center flex justify-center border-accent dark:border-accentDark border-4'>
           <h1
-            className='transition-all duration-200 text-background text-center text-sm md:text-lg cursor-pointer select-none'
+            className='transition-all duration-200 text-white/80 dark:text-black/80 text-center text-sm md:text-lg cursor-pointer select-none'
             onClick={() => {
-              navigator.clipboard.writeText(
-                process.env.NEXT_PUBLIC_COLOR_TERTIARY ?? ''
-              )
+              if (tertiaryColor) navigator.clipboard.writeText(tertiaryColor)
               toast('Color copied to clipboard', {
                 type: 'info',
                 icon: () => <ClipboardIcon className='h-6 w-6' />,
@@ -100,7 +127,7 @@ export default function About({ profileInfo }: Props) {
             }}>
             Tertiary
             <span className='hidden md:block text-sm xl:text-lg'>
-              {process.env.NEXT_PUBLIC_COLOR_TERTIARY}
+              {tertiaryColor}
             </span>
           </h1>
         </div>
@@ -109,7 +136,9 @@ export default function About({ profileInfo }: Props) {
       <div className='space-y-10 px-0 md:px-10'>
         <h4 className='text-4xl font-semibold'>
           Here is a{' '}
-          <span className='underline decoration-accent/50'>little</span>{' '}
+          <span className='underline decoration-accent/50 dark:decoration-accentDark/50'>
+            little
+          </span>{' '}
           background
         </h4>
 
@@ -121,7 +150,7 @@ export default function About({ profileInfo }: Props) {
             href='https://tailwindcss.com/'
             target='_blank'
             rel='noopener noreferrer'
-            className='underline decoration-accent/50'>
+            className='underline decoration-accent/50 dark:decoration-accentDark/50'>
             Tailwind CSS
           </a>{' '}
           for the styling,{' '}
@@ -129,7 +158,7 @@ export default function About({ profileInfo }: Props) {
             href='https://framer.com/motion/'
             target='_blank'
             rel='noopener noreferrer'
-            className='underline decoration-accent/50'>
+            className='underline decoration-accent/50 dark:decoration-accentDark/50'>
             Framer Motion
           </a>{' '}
           for the animations,{' '}
@@ -137,7 +166,7 @@ export default function About({ profileInfo }: Props) {
             href='https://nextjs.org/'
             target='_blank'
             rel='noopener noreferrer'
-            className='underline decoration-accent/50'>
+            className='underline decoration-accent/50 dark:decoration-accentDark/50'>
             Next.js
           </a>{' '}
           for the routing and{' '}
@@ -145,7 +174,7 @@ export default function About({ profileInfo }: Props) {
             href='https://www.typescriptlang.org/'
             target='_blank'
             rel='noopener noreferrer'
-            className='underline decoration-accent/50'>
+            className='underline decoration-accent/50 dark:decoration-accentDark/50'>
             TypeScript
           </a>{' '}
           for the type checking. The website is hosted on GitHub pages and build

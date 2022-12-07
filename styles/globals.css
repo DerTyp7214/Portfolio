@@ -4,13 +4,13 @@
 
 @layer base {
     .customScroll {
-        @apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-accent/50 hover:scrollbar-thumb-accent
+        @apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-accent/50 hover:scrollbar-thumb-accent dark:scrollbar-thumb-accentDark/50 dark:hover:scrollbar-thumb-accentDark
     }
 }
 
 @layer components {
     .customScroll {
-        @apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-accent/50 hover:scrollbar-thumb-accent
+        @apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-accent/50 hover:scrollbar-thumb-accent dark:scrollbar-thumb-accentDark/50 dark:hover:scrollbar-thumb-accentDark
     }
 
     .hiddenScroll {
@@ -18,11 +18,11 @@
     }
 
     .heroButton {
-        @apply px-6 py-2 border border-background rounded-full uppercase text-xs tracking-widest text-white/30 transition-all hover:border-accent/40 hover:text-accent
+        @apply ml-1 mr-1 px-6 py-2 border border-black/20 dark:border-white/10 rounded-full uppercase text-xs tracking-widest text-black/50 dark:text-white/30 transition-all hover:border-accent/80 hover:text-accent dark:hover:border-accentDark/80 dark:hover:text-accentDark
     }
 
     .contactInput {
-        @apply outline-none bg-white/5 rounded-md border-b-2 px-6 py-5 border-transparent text-white/30 placeholder-white/30 transition-all focus:border-accent focus:text-accent hover:border-accent backdrop-blur-sm
+        @apply outline-none bg-black/5 dark:bg-white/5 rounded-md border-b-2 px-6 py-5 border-transparent text-black/50 dark:text-white/30 placeholder-black/30 dark:placeholder-white/30 transition-all focus:border-accent focus:text-accent hover:border-accent dark:focus:border-accentDark dark:focus:text-accentDark dark:hover:border-accentDark backdrop-blur-sm
     }
 }
 

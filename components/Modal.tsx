@@ -58,12 +58,12 @@ export default function Modal({ show, children, onClose, title }: Props) {
               }
             }}
             transition={{ duration: 0.3 }}
-            className='modal-content fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-secondaryBackground/80 rounded-2xl shadow-2xl shadow-black/50'>
+            className='modal-content fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-secondaryBackground/80 dark:bg-secondaryBackgroundDark/80 rounded-2xl shadow-2xl shadow-black/50'>
             <XMarkIcon
               className='absolute top-3 right-3 w-8 h-8 cursor-pointer'
               onClick={close}
             />
-            <h1 className='text-3xl font-bold text-white ml-4 mt-2 absolute select-none'>
+            <h1 className='text-3xl font-bold text-black dark:text-white ml-4 mt-2 absolute select-none'>
               {title}
             </h1>
             <div className='w-full h-full flex flex-col items-center justify-center overflow-hidden pt-20'>

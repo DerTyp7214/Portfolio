@@ -47,7 +47,7 @@ export default function ActivityChart({ chartData }: Props) {
         width={rectSize}
         height={rectSize}
         fill={lerpColor(
-          process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND || '#434d57',
+          process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND_DARK || '#434d57',
           process.env.NEXT_PUBLIC_COLOR_ACCENT || '#ff7ef9',
           value / maxVal
         )}

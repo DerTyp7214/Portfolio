@@ -35,7 +35,7 @@ export default function BadgeCollection({ badges }: Props) {
         {v2Badges.map((badge, index) => (
           <div
             key={index}
-            className='flex flex-col items-center bg-secondaryBackground/40 w-32 p-2 m-2 rounded-md cursor-default backdrop-blur-sm hover:bg-secondaryBackground/80 transition-all duration-200 ease-in-out'
+            className='flex flex-col items-center bg-secondaryBackground/40 dark:bg-secondaryBackgroundDark/40 w-32 p-2 m-2 rounded-md cursor-default backdrop-blur-sm hover:bg-secondaryBackground/80 dark:hover:bg-secondaryBackgroundDark/80 transition-all duration-200 ease-in-out'
             data-tip={badge.description}>
             <div className='w-14 h-14 relative'>
               <Image src={getBadeImage(badge)} alt={badge.description} fill />

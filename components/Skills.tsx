@@ -40,11 +40,11 @@ export default function Skills({ skills, gitHubContributions, badges }: Props) {
   return (
     <motion.div
       className='flex relative text-center flex-row max-w-[2000px] px-10 min-h-screen justify-center space-y-0 mx-auto items-start'>
-      <h3 className='absolute top-24 uppercase tracking-[20px] text-white/30 text-2xl'>
+      <h3 className='absolute top-24 uppercase tracking-[20px] text-black/50 dark:text-white/30 text-2xl'>
         Skills
       </h3>
 
-      <h3 className='absolute top-36 uppercase tracking-[3px] text-white/30 text-sm'>
+      <h3 className='absolute top-36 uppercase tracking-[3px] text-black/50 dark:text-white/30 text-sm'>
         Hover over a skill for some informations
       </h3>
 

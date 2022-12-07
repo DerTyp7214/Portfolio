@@ -53,7 +53,7 @@ export default function SkillModal({ skill, show, onClose }: Props) {
               })
             }}
           />
-          <h1 className='text-5xl font-bold text-white mb-10 underline decoration-accent/40'>
+          <h1 className='text-5xl font-bold text-black dark:text-white mb-10 underline decoration-accent/40 dark:decoration-accentDark/40'>
             {skill.name}
           </h1>
           <div className='grid grid-cols-2 space-x-4'>
@@ -61,8 +61,10 @@ export default function SkillModal({ skill, show, onClose }: Props) {
               <div
                 key={key}
                 className='flex flex-col items-center justify-center overflow-hidden'>
-                <h1 className='text-3xl font-bold text-white'>{value}</h1>
-                <p className='text-white/60 text-center'>
+                <h1 className='text-3xl font-bold text-black dark:text-white'>
+                  {value}
+                </h1>
+                <p className='text-black/60 dark:text-white/60 text-center'>
                   {capitalize(key.split(/(?=[A-Z])/).join(' '))}
                 </p>
               </div>
@@ -71,7 +73,7 @@ export default function SkillModal({ skill, show, onClose }: Props) {
 
           <div className='flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4 items-center justify-center mt-10'>
             <button
-              className='text-lg border-2 border-accent/20 rounded-3xl hover:border-accent/40 hover:bg-accent/10 hover:rounded-2xl transition-all duration-200 p-2'
+              className='text-lg border-2 border-accent/20 dark:border-accentDark/20 rounded-3xl hover:border-accent/40 dark:hover:border-accentDark/40 hover:bg-accent/10 dark:hover:bg-accentDark/10 hover:rounded-2xl transition-all duration-200 p-2'
               onClick={() => {
                 window.open(
                   `https://profile.codersrank.io/leaderboard/developer?technology=${skill.name}`,
@@ -81,7 +83,7 @@ export default function SkillModal({ skill, show, onClose }: Props) {
               CodersRank Leaderboards (World)
             </button>
             <button
-              className='text-lg border-2 border-accent/20 rounded-3xl hover:border-accent/40 hover:bg-accent/10 hover:rounded-2xl transition-all duration-200 p-2'
+              className='text-lg border-2 border-accent/20 dark:border-accentDark/20 rounded-3xl hover:border-accent/40 dark:hover:border-accentDark/40 hover:bg-accent/10 dark:hover:bg-accentDark/10 hover:rounded-2xl transition-all duration-200 p-2'
               onClick={() => {
                 window.open(
                   `https://profile.codersrank.io/leaderboard/developer?technology=${skill.name}&country=Germany`,

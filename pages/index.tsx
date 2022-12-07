@@ -56,10 +56,11 @@ export default function Home({
   contributions,
   badges,
 }: Props) {
+  const [darkMode, setDarkMode] = useState(true)
   const [scrollPosition, setScrollPosition] = useState(0)
 
   const versionInfo = (
-    <div className='mb-1 mr-2 text-right text-sm opacity-20'>
+    <div className='mb-1 mr-2 text-right text-sm opacity-60 dark:opacity-20'>
       <p>
         <Link
           target='_blank'
@@ -89,114 +90,134 @@ export default function Home({
   )
 
   return (
-    <div
-      className='h-screen bg-background text-white overflow-y-scroll scroll-smooth overflow-x-hidden z-0 customScroll'
-      style={{
-        backgroundPositionX: '50%',
-        backgroundPositionY: -scrollPosition * 0.04 + 'px',
-        backgroundImage: 'url(/pattern.svg)',
-      }}
-      onScroll={(event) => {
-        setScrollPosition(event.currentTarget.scrollTop)
-      }}>
-      <Head>
-        <title>{pageInfo.title}</title>
-        <link rel='icon' href={pageInfo.favIconUrl} />
+    <div className={darkMode ? 'dark' : ''}>
+      <div
+        className='h-screen bg-background dark:bg-backgroundDark text-black dark:text-white overflow-y-scroll scroll-smooth overflow-x-hidden z-0 customScroll selection:bg-accent/40 dark:selection:bg-accentDark/40 selection:text-black/90'
+        style={{
+          backgroundPositionX: '50%',
+          backgroundPositionY: -scrollPosition * 0.04 + 'px',
+          backgroundImage: darkMode
+            ? 'url(/assets/pattern-dark.svg)'
+            : 'url(/assets/pattern.svg)',
+        }}
+        onScroll={(event) => {
+          setScrollPosition(event.currentTarget.scrollTop)
+        }}>
+        <Head>
+          <title>{pageInfo.title}</title>
+          <link rel='icon' href={pageInfo.favIconUrl} />
 
-        <meta name='og:title' content={pageInfo.title} />
-        <meta name='og:image' content={pageInfo.ogImageUrl} />
-        <meta name='og:url' content={process.env.NEXT_PUBLIC_BASE_URL} />
-        {pageInfo.description && (
-          <meta name='og:description' content={pageInfo.description} />
-        )}
+          <meta name='og:title' content={pageInfo.title} />
+          <meta name='og:image' content={pageInfo.ogImageUrl} />
+          <meta name='og:url' content={process.env.NEXT_PUBLIC_BASE_URL} />
+          {pageInfo.description && (
+            <meta name='og:description' content={pageInfo.description} />
+          )}
 
-        <meta
-          name='theme-color'
-          media='(prefers-color-scheme: light)'
-          content={process.env.NEXT_PUBLIC_COLOR_ACCENT}
+          <meta
+            name='theme-color'
+            media='(prefers-color-scheme: light)'
+            content={process.env.NEXT_PUBLIC_COLOR_ACCENT}
+          />
+          <meta
+            name='theme-color'
+            media='(prefers-color-scheme: dark)'
+            content={process.env.NEXT_PUBLIC_COLOR_BACKGROUND}
+          />
+        </Head>
+        <Header
+          socials={socials}
+          darkMode={darkMode}
+          onDarkModeChange={(darkMode) => setDarkMode(darkMode)}
         />
-        <meta
-          name='theme-color'
-          media='(prefers-color-scheme: dark)'
-          content={process.env.NEXT_PUBLIC_COLOR_BACKGROUND}
-        />
-      </Head>
-      <Header socials={socials} />
 
-      <section id='profile' className='snap-center mb-20'>
-        <Profile profileInfo={profileInfo} />
-      </section>
+        <section id='profile' className='snap-center mb-20'>
+          <Profile profileInfo={profileInfo} />
+        </section>
 
-      <section id='about' className='snap-center mt-20 mb-20'>
-        <About profileInfo={profileInfo} />
-      </section>
+        <section id='about' className='snap-center mt-20 mb-20'>
+          <About profileInfo={profileInfo} />
+        </section>
 
-      <section id='projects' className='snap-center mt-20 mb-20'>
-        <Projects projects={projects} />
-      </section>
+        <section id='projects' className='snap-center mt-20 mb-20'>
+          <Projects projects={projects} />
+        </section>
 
-      <section id='skills' className='snap-start mt-20 mb-20'>
-        <Skills
-          skills={skills}
-          gitHubContributions={contributions}
-          badges={badges}
-        />
-      </section>
+        <section id='skills' className='snap-start mt-20 mb-20'>
+          <Skills
+            skills={skills}
+            gitHubContributions={contributions}
+            badges={badges}
+          />
+        </section>
 
-      <section id='contact' className='snap-start mt-20'>
-        <ContactMe contactInfo={contactInfo} />
-      </section>
+        <section id='contact' className='snap-start mt-20'>
+          <ContactMe contactInfo={contactInfo} />
+        </section>
 
-      <footer className='sticky bottom-0 z-50 w-min m-auto'>
-        <div className='flex items-center justify-center pb-5'>
-          <Link
-            href='#profile'
-            className='h-10 w-10 rounded-full hover:h-11 hover:w-11 transition-all overflow-hidden'>
-            <ArrowUpIcon className='filter text-white/40 hover:text-white transition-all duration-300 cursor-pointer' />
-          </Link>
+        <footer className='sticky bottom-0 z-50 w-min m-auto'>
+          <div className='flex items-center justify-center pb-5'>
+            <Link
+              href='#profile'
+              className='h-10 w-10 rounded-full hover:h-11 hover:w-11 transition-all overflow-hidden'>
+              <ArrowUpIcon className='filter text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white transition-all duration-300 cursor-pointer' />
+            </Link>
+          </div>
+        </footer>
+        <div className='absolute bottom-0 right-1 hidden lg:block'>
+          {versionInfo}
         </div>
-      </footer>
-      <div className='absolute bottom-0 right-1 hidden lg:block'>
-        {versionInfo}
-      </div>
-      <div className='block lg:hidden'>{versionInfo}</div>
-      <div id='modal-root'></div>
-      <ReactTooltip
-        html
-        backgroundColor={lerpColor(
-          process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND ?? '#434d57',
-          '#9c9c9c',
-          0.3
-        )}
-        multiline
-        className='max-w-[200px] text-center'
-      />
-      <ToastContainer
-        position='bottom-right'
-        autoClose={5000}
-        progressStyle={{
-          background: process.env.NEXT_PUBLIC_COLOR_TERTIARY,
-        }}
-        toastStyle={{
-          background: `${lerpColor(
-            process.env.NEXT_PUBLIC_COLOR_BACKGROUND ?? '#1e1e1e',
-            process.env.NEXT_PUBLIC_COLOR_ACCENT ?? '#FFFFFF',
+        <div className='block lg:hidden'>{versionInfo}</div>
+        <div id='modal-root'></div>
+        <ReactTooltip
+          html
+          backgroundColor={lerpColor(
+            (darkMode
+              ? process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND_DARK
+              : process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND) ??
+              '#434d57',
+            darkMode ? '#FFFFFF' : '#000000',
             0.1
-          )}80`,
-          borderRadius: '1rem',
-          paddingRight: '10px',
-          backdropFilter: 'blur(20px)',
-        }}
-        toastClassName='transition-all duration-200 m-2'
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={false}
-        pauseOnHover
-        theme='dark'
-      />
+          )}
+          textColor={darkMode ? '#FFFFFF' : '#000000'}
+          multiline
+          className='max-w-[200px] text-center'
+        />
+        <ToastContainer
+          position='bottom-right'
+          autoClose={5000}
+          progressStyle={{
+            background: darkMode
+              ? process.env.NEXT_PUBLIC_COLOR_TERTIARY_DARK
+              : process.env.NEXT_PUBLIC_COLOR_TERTIARY,
+          }}
+          toastStyle={{
+            background: `${lerpColor(
+              (darkMode
+                ? process.env.NEXT_PUBLIC_COLOR_BACKGROUND_DARK
+                : process.env.NEXT_PUBLIC_COLOR_BACKGROUND) ?? '#1e1e1e',
+              (darkMode
+                ? process.env.NEXT_PUBLIC_COLOR_ACCENT_DARK
+                : process.env.NEXT_PUBLIC_COLOR_ACCENT) ?? '#FFFFFF',
+              0.1
+            )}80`,
+            borderRadius: '1rem',
+            paddingRight: '10px',
+            backdropFilter: 'blur(20px)',
+          }}
+          toastClassName='transition-all duration-200 m-2'
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable={false}
+          pauseOnHover
+          closeButton={false}
+          bodyClassName='text-black dark:text-white'
+          theme={darkMode ? 'dark' : 'light'}
+        />
+      </div>
     </div>
   )
 }

@@ -1,5 +1,4 @@
 import { CONTRIBUTION_LEVELS, GitHubContributions } from '../types/types'
-import { lerpColor } from '../utils/colorUtils'
 
 type Props = {
   chartData: GitHubContributions
@@ -14,21 +13,34 @@ export default function ContributionChart({ chartData }: Props) {
   chartData.contributions?.forEach((contribution, index) => {
     const days: JSX.Element[] = []
     contribution.forEach((value, index) => {
+      const factor = CONTRIBUTION_LEVELS[value.contributionLevel] / 4
+
       days.push(
-        <rect
-          key={index}
-          x={0}
-          y={index * (rectSize + rectSpacing)}
-          rx={2}
-          width={rectSize}
-          height={rectSize}
-          fill={lerpColor(
-            process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND || '#434d57',
-            process.env.NEXT_PUBLIC_COLOR_ACCENT || '#ff7ef9',
-            CONTRIBUTION_LEVELS[value.contributionLevel] / 4
-          )}
-          data-tip={`${value.date} - <b>${value.contributionCount} activities</b>`}
-        />
+        <g key={index}>
+          <rect
+            key={`${index}-background`}
+            x={0}
+            y={index * (rectSize + rectSpacing)}
+            rx={2}
+            width={rectSize}
+            height={rectSize}
+            fill={'currentColor'}
+          />
+          <rect
+            key={`${index}-accent`}
+            x={0}
+            y={index * (rectSize + rectSpacing)}
+            rx={2}
+            width={rectSize}
+            height={rectSize}
+            className='text-accent dark:text-accentDark'
+            fill={'currentColor'}
+            style={{
+              opacity: factor === Infinity ? 0 : factor,
+            }}
+            data-tip={`${value.date} - <b>${value.contributionCount} activities</b>`}
+          />
+        </g>
       )
     })
     weeks.push(
@@ -48,9 +60,9 @@ export default function ContributionChart({ chartData }: Props) {
         </span>{' '}
         in the last year
       </h1>
-      <div className='flex flex-row space-x-3'>
+      <div className='flex flex-row space-x-3 text-secondaryBackground dark:text-secondaryBackgroundDark'>
         <div
-          className='relative flex flex-col items-end font-thin text-sm'
+          className='relative flex flex-col items-end font-thin text-sm text-black/50 dark:text-white/50'
           style={{ fontSize: `${rectSpacing / 2 + rectSize}px` }}>
           <span style={{ marginTop: `${rectSize}px` }}>Mon</span>
           <span

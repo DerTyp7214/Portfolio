@@ -17,7 +17,7 @@ export default function Projects({ projects }: Props) {
   return (
     <motion.div
       className='min-h-screen flex flex-row relative overflow-hidden text-left max-w-full justify-evenly mx-auto items-start'>
-      <h3 className='absolute top-24 uppercase tracking-[20px] text-white/30 text-2xl'>
+      <h3 className='absolute top-24 uppercase tracking-[20px] text-black/50 dark:text-white/30 text-2xl'>
         Projects
       </h3>
 

@@ -21,15 +21,17 @@ export default function ContactMe({ contactInfo }: Props) {
   }
 
   return (
-    <motion.div
-      className='h-screen flex relative text-center flex-row max-w-[90vw] px-10 justify-evenly mx-auto items-start md:items-center'>
-      <h3 className='absolute top-24 uppercase tracking-[20px] text-white/30 text-2xl'>
+    <motion.div className='h-screen flex relative text-center flex-row max-w-[90vw] px-10 justify-evenly mx-auto items-start md:items-center'>
+      <h3 className='absolute top-24 uppercase tracking-[20px] text-black/50 dark:text-white/30 text-2xl'>
         Contact
       </h3>
 
       <div className='flex flex-col space-y-10 mt-44 md:mt-32 lg:mt-16 xl:mt-8 2xl:mt-0 max-w-[90vw]'>
         <h4 className='text-4xl font-semibold text-center'>
-          Contact <span className='decoration-accent/50 underline'>Me.</span>
+          Contact{' '}
+          <span className='decoration-accent/50 dark:decoration-accentDark/50 underline'>
+            Me.
+          </span>
         </h4>
 
         <form
@@ -65,7 +67,7 @@ export default function ContactMe({ contactInfo }: Props) {
 
           <button
             type='submit'
-            className='bg-accent py-5 px-10 rounded-md text-black font-bold text-lg transition-all hover:bg-accent/80 active:bg-accent/60'>
+            className='bg-accent dark:bg-accentDark py-5 px-10 rounded-md text-black font-bold text-lg transition-all hover:bg-accent/80 active:bg-accent/60 dark:hover:bg-accentDark/80 dark:active:bg-accentDark/60'>
             Submit
           </button>
         </form>
