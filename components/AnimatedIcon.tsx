@@ -39,13 +39,10 @@ export default function AnimatedIcon({
         <dotlottie-player
           ref={lottiePlayer}
           src={animationLocation}
-          autoplay={false}
-          loop={false}
-          speed={speed}
         />
       )
     }
-  }, [])
+  }, [animationLocation])
 
   return (
     <div
