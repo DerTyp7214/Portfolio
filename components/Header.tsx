@@ -15,6 +15,19 @@ type Props = {
 export default function Header({ socials, darkMode, onDarkModeChange }: Props) {
   const [iconState, setIconState] = useState(darkMode ? 1 : 0)
 
+  const icon = (
+    <AnimatedIcon
+      icon='sun_outline'
+      className='w-[50px] h-[50px] p-[7px] md:p-0 md:w-14 md:h-14 opacity-50 invert dark:invert-0 hover:scale-125 hover:opacity-100'
+      speed={2}
+      state={iconState}
+      onClick={() => {
+        onDarkModeChange(iconState === 0)
+        setIconState((state) => (state === 0 ? 1 : 0))
+      }}
+    />
+  )
+
   return (
     <header className='sticky z-50 top-0 bg-background/70 dark:bg-backgroundDark/70 backdrop-blur-[5px]'>
       <div className='p-5 flex items-start justify-between max-w-7xl mx-auto xl:items-center'>
@@ -43,6 +56,7 @@ export default function Header({ socials, darkMode, onDarkModeChange }: Props) {
               className='text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white hover:scale-125 transition-all duration-200'
             />
           ))}
+          <div className='inline-block md:hidden'>{icon}</div>
         </motion.div>
 
         <motion.div
@@ -58,17 +72,9 @@ export default function Header({ socials, darkMode, onDarkModeChange }: Props) {
           }}
           transition={{
             duration: 0.8,
-          }}>
-          <AnimatedIcon
-            icon='sun_outline'
-            className='w-14 h-14 opacity-40 invert dark:invert-0'
-            speed={2}
-            state={iconState}
-            onClick={() => {
-              onDarkModeChange(iconState === 0)
-              setIconState((state) => (state === 0 ? 1 : 0))
-            }}
-          />
+          }}
+          className='hidden md:block'>
+          {icon}
         </motion.div>
 
         <motion.div
