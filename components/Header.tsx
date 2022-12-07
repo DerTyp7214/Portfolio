@@ -6,8 +6,6 @@ import { SocialIcon } from 'react-social-icons'
 import { Social } from '../types/types'
 import AnimatedIcon from './AnimatedIcon'
 
-import sunOutline from '../assets/sun_outline'
-
 type Props = {
   socials: Social[]
   darkMode: boolean
@@ -19,8 +17,8 @@ export default function Header({ socials, darkMode, onDarkModeChange }: Props) {
 
   const icon = (
     <AnimatedIcon
-      animationData={sunOutline}
-      className='w-12 h-12 p-[7px] md:p-0 md:w-14 md:h-14 opacity-50 dark:opacity-60 hover:scale-125 hover:opacity-100 invert dark:invert-0 transition-all duration-200'
+      animationLocation='/assets/sun_outline.lottie'
+      className='w-12 h-12 p-[7px] md:p-0 md:w-14 md:h-14 opacity-50 dark:opacity-60 hover:scale-125 hover:opacity-100 dark:hover:opacity-100 invert dark:invert-0 transition-all duration-200'
       speed={1}
       state={iconState}
       onClick={() => {
