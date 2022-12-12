@@ -46,10 +46,19 @@ export default function App({ Component, pageProps }: AppProps) {
           <meta name='og:image' content={pageInfo.ogImageUrl} />
           <meta name='og:url' content={process.env.NEXT_PUBLIC_BASE_URL} />
           {project ? (
-            <meta name='og:description' content={project.keypoints.join(' ')} />
+            <>
+              <meta
+                name='og:description'
+                content={project.keypoints.join(' ')}
+              />
+              <meta name='description' content={project.keypoints.join(' ')} />
+            </>
           ) : (
             pageInfo.description && (
-              <meta name='og:description' content={pageInfo.description} />
+              <>
+                <meta name='og:description' content={pageInfo.description} />
+                <meta name='description' content={pageInfo.description} />
+              </>
             )
           )}
 
