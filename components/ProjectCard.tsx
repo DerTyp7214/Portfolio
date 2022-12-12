@@ -26,26 +26,27 @@ export default function ProjectCard({ project }: Props) {
         skill={currentSkill}
         onClose={() => ShowModal(false)}
       />
-      <motion.div
-        initial={{
-          y: -80,
-          opacity: 0,
-        }}
-        whileInView={{
-          y: 0,
-          opacity: 1,
-        }}
-        transition={{
-          duration: 0.8,
-        }}
-        viewport={{ once: true }}
-        style={{
-          transitionProperty: 'width, height',
-        }}
-        onClick={() => window.open(project.githubUrl, '_blank')}
-        className='w-32 h-32 rounded-3xl xl:w-[200px] xl:h-[200px] duration-200 overflow-hidden relative cursor-pointer'>
-        <Image src={project.imageUrl} alt={project.name} fill />
-      </motion.div>
+      <Link href={`/projects/${project.id}`}>
+        <motion.div
+          initial={{
+            y: -80,
+            opacity: 0,
+          }}
+          whileInView={{
+            y: 0,
+            opacity: 1,
+          }}
+          transition={{
+            duration: 0.8,
+          }}
+          viewport={{ once: true }}
+          style={{
+            transitionProperty: 'width, height',
+          }}
+          className='w-32 h-32 rounded-3xl xl:w-[200px] xl:h-[200px] duration-200 overflow-hidden relative cursor-pointer'>
+          <Image src={project.imageUrl} alt={project.name} fill />
+        </motion.div>
+      </Link>
 
       <div className='px-0 md:px-10 max-w-full'>
         <h4 className='text-4xl font-light'>{project.name}</h4>
@@ -65,12 +66,7 @@ export default function ProjectCard({ project }: Props) {
           <p
             className='text-md font-light mt-1'
             data-tip='Not a exact number. Gitlab is not tracked and github can be ~10% more then shown here.'>
-            <b>
-              {typeof project.downloads === 'number'
-                ? new Intl.NumberFormat('en-Us').format(project.downloads)
-                : project.downloads}
-              +{' '}
-            </b>
+            <b>{project.downloads} </b>
             Downloads
           </p>
         )}

@@ -8,6 +8,19 @@ const loadingImages = new Map<string, ((path: string) => Promise<void>)[]>()
 const regex =
   />([0-9K+]{0,})<\/div><div class="[A-Za-z0-9]{0,10}">Downloads<\/div>/g
 
+export function roundDownloads(downloads: number) {
+  if (isNaN(downloads)) return null
+  const format = Intl.NumberFormat('en-Us').format
+
+  if (downloads < 1000) {
+    return format(downloads)
+  } else if (downloads < 1000000) {
+    return `${format(Math.round(downloads / 1000))}K+`
+  } else {
+    return `${format(Math.round(downloads / 1000000))}M+`
+  }
+}
+
 export function stringToNumber(number: string) {
   if (number.includes('K')) {
     return parseInt(number.replace('K', '')) * 1000

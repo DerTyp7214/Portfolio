@@ -2,7 +2,8 @@ import { Project, Skill } from '../types/types'
 import {
   cacheImageLocally,
   gitHubDownloads,
-  playStoreDownloads
+  playStoreDownloads,
+  roundDownloads
 } from './downloadUtils'
 import fetchSkill from './fetchSkill'
 
@@ -54,6 +55,24 @@ export default async function fetchProjects(): Promise<Project[]> {
           )) +
           12000 + // 12k downloads from Play Store before it was removed
           15000, // 15k downloads from GitHub before it realized that they get reset every time a new release is made :)
+        downloadUrl:
+          'https://github.com/DerTyp7214/RboardThemeManagerV3/releases/latest/download/app-release.apk',
+        alternativeDownload: {
+          name: 'Download (Below Android 12)',
+          url: 'https://github.com/DerTyp7214/RboardThemeManagerV3/releases/download/latest-rCompatible/app-release.apk',
+        },
+        extraLinks: [
+          {
+            name: 'Telegram',
+            url: 'https://t.me/gboardthemes',
+            iconUrl: await cacheImageLocally({
+              url: 'https://telegram.org/img/t_logo.png',
+              imageName: 'telegram',
+              newWidth: 32,
+              newHeight: 32,
+            }),
+          },
+        ],
       },
       {
         name: 'Rboard Theme Creator',
@@ -78,6 +97,8 @@ export default async function fetchProjects(): Promise<Project[]> {
             'tags/latest-release',
             true
           )),
+        downloadUrl:
+          'https://github.com/DerTyp7214/RboardThemeCreator/releases/latest/download/app-release.apk',
       },
       {
         name: 'Rboard Patcher',
@@ -103,6 +124,8 @@ export default async function fetchProjects(): Promise<Project[]> {
             'tags/latest-release',
             true
           )),
+        downloadUrl:
+          'https://github.com/DerTyp7214/RboardPatcher/releases/latest/download/app-release.apk',
       },
       {
         name: 'Rboard IME Tester',
@@ -126,6 +149,8 @@ export default async function fetchProjects(): Promise<Project[]> {
             'tags/latest-release',
             true
           )),
+        downloadUrl:
+          'https://github.com/DerTyp7214/RboardIMETester/releases/latest/download/app-release.apk',
       },
       {
         name: 'Mixplorer Theme Creator',
@@ -150,6 +175,8 @@ export default async function fetchProjects(): Promise<Project[]> {
             'tags/latest-release',
             true
           )),
+        downloadUrl:
+          'https://github.com/DerTyp7214/MixplorerThemeCreator/releases/latest/download/app-release.apk',
       },
       {
         name: 'Overlayer',
@@ -190,6 +217,8 @@ export default async function fetchProjects(): Promise<Project[]> {
             'tags/latest-release',
             true
           )),
+        downloadUrl:
+          'https://github.com/DerTyp7214/YouTubeMusicRemote/releases/latest/download/app-release.apk',
       },
       {
         name: 'YouTube Music Desktop',
@@ -209,6 +238,8 @@ export default async function fetchProjects(): Promise<Project[]> {
           '',
           true
         ),
+        downloadUrl:
+          'https://github.com/DerTyp7214/youtube-music/releases/latest',
       },
       {
         name: 'Color Utils C',
@@ -252,6 +283,8 @@ export default async function fetchProjects(): Promise<Project[]> {
         imageUrl: images[0],
         playStoreIcon: images[1],
         githubIcon: images[2],
+        id: project.name.replace(/ /g, '-').toLowerCase(),
+        downloads: roundDownloads(project.downloads),
       }
     })
   )

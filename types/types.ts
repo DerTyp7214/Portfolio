@@ -27,6 +27,7 @@ export interface Skill {
 }
 
 export interface Project {
+  id: string
   name: string
   imageUrl: string
   authors: string[]
@@ -37,6 +38,16 @@ export interface Project {
   downloads?: string | number | null
   playStoreIcon?: string
   githubIcon?: string
+  downloadUrl?: string
+  alternativeDownload?: {
+    name: string
+    url: string
+  }
+  extraLinks?: {
+    iconUrl: string
+    name: string
+    url: string
+  }[]
 }
 
 export interface ContactInfo {

@@ -15,7 +15,7 @@ export default function Modal({ show, children, onClose, title }: Props) {
   const [internalVisible, setInternalVisible] = useState(show)
 
   useEffect(() => {
-    setIsBrowser(true)
+    setIsBrowser(window !== undefined)
   }, [])
 
   useEffect(() => {
