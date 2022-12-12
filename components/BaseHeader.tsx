@@ -4,7 +4,7 @@ import { useState } from 'react'
 import AnimatedIcon from './AnimatedIcon'
 
 import animationData from '../assets/sun_outline.json'
-import { useAppContext } from '../pages/appContext'
+import { useAppContext } from './appContext'
 
 type Props = {
   leftContent?: React.ReactNode

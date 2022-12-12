@@ -28,7 +28,7 @@ import fetchSkills from '../utils/fetchSkills'
 import fetchSocials from '../utils/fetchSocials'
 
 import 'react-toastify/dist/ReactToastify.css'
-import { useAppContext } from './appContext'
+import { useAppContext } from '../components/appContext'
 
 type Props = {
   pageInfo: PageInfo
