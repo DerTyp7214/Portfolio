@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 import Link from 'next/link'
 import { Cursor, useTypewriter } from 'react-simple-typewriter'
 import { ProfileInfo } from '../types/types'
@@ -26,11 +25,10 @@ export default function Profile({ profileInfo }: Props) {
       <BackgroundCircles />
 
       <motion.div className='relative rounded-full w-32 h-32 border-4 border-accent dark:border-accentDark overflow-hidden'>
-        <Image
-          className='filter grayscale-[.6] object-cover'
+        <img
+          className='filter grayscale-[.6] object-cover absolute top-0 left-0 w-full h-full'
           src={profileInfo.avatarUrl}
           alt='avatar'
-          fill
         />
       </motion.div>
 

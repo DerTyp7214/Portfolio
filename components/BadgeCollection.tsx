@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from 'next/image'
 import {
   CodersRankBadge,
   CodersRankBadgeV1,
@@ -38,7 +37,11 @@ export default function BadgeCollection({ badges }: Props) {
             className='flex flex-col items-center bg-secondaryBackground/40 dark:bg-secondaryBackgroundDark/40 w-32 p-2 m-2 rounded-md cursor-default backdrop-blur-sm hover:bg-secondaryBackground/80 dark:hover:bg-secondaryBackgroundDark/80 transition-all duration-200 ease-in-out'
             data-tip={badge.description}>
             <div className='w-14 h-14 relative'>
-              <Image src={getBadeImage(badge)} alt={badge.description} fill />
+              <img
+                src={getBadeImage(badge)}
+                alt={badge.description}
+                className='absolute top-0 left-0 w-full h-full'
+              />
             </div>
             <p className='text-xs mt-2'>
               {badge.badgeType.split(/(?=[A-Z])/).join(' ')}
@@ -52,10 +55,10 @@ export default function BadgeCollection({ badges }: Props) {
                         key={key}
                         className='flex flex-row space-x-2 items-center mt-2 mb-1'>
                         <div className='w-4 h-4 inline relative'>
-                          <Image
+                          <img
                             src={(badge as any).smallImageUrl}
                             alt={value}
-                            fill
+                            className='absolute top-0 left-0 w-full h-full'
                           />
                         </div>
                         <p key={key} className='text-sm font-bold'>

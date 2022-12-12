@@ -1,5 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
 import { HomeIcon } from '@heroicons/react/24/outline'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { GetStaticProps } from 'next/types'
@@ -37,6 +37,7 @@ function ProjectPage({ projects }: Props) {
   const [showModal, ShowModal] = useState(false)
 
   const [currentSkill, setCurrentSkill] = useState<Skill | null>(null)
+
   const {
     query: { project: projectId },
   } = useRouter()
@@ -73,7 +74,11 @@ function ProjectPage({ projects }: Props) {
                   transitionProperty: 'width, height',
                 }}
                 className='w-16 h-16 sm:w-32 sm:h-32 rounded-xl duration-200 overflow-hidden relative cursor-pointer mr-5'>
-                <Image src={project.imageUrl} alt={project.name} fill />
+                <img
+                  src={project.imageUrl}
+                  alt={project.name}
+                  className='absolute top-0 left-0 w-full h-full'
+                />
               </div>
             </BlurredBachkgroundComponent>
             <div>
@@ -119,7 +124,7 @@ function ProjectPage({ projects }: Props) {
                   target='_blank'
                   key={index}
                   className='flex flex-col text-xs sm:text-md lg:text-lg justify-between mr-10 cursor-pointer'>
-                  <Image
+                  <img
                     src={link.iconUrl}
                     alt={link.name}
                     width={20}
@@ -162,11 +167,10 @@ function ProjectPage({ projects }: Props) {
                 key={index}
                 onClick={() => openModal(skill)}
                 className='m-1 h-12 w-12 rounded-[5px] bg-secondaryBackground/50 dark:bg-secondaryBackgroundDark/50 relative flex justify-center items-center cursor-pointer'>
-                <Image
-                  className='p-2 filter z-20'
+                <img
+                  className='p-2 filter z-20 absolute top-0 left-0 w-full h-full'
                   src={skill.imageUrl}
                   alt={skill.name}
-                  fill
                 />
                 <div className='absolute top-0 left-0 w-full h-full peer z-40' />
                 <span className='absolute p-1 top-[-30%] select-none rounded-[5px] opacity-0 peer-hover:opacity-100 transition-all bg-white/50 text-black backdrop-blur-[5px] z-30'>
@@ -191,7 +195,11 @@ function ProjectPage({ projects }: Props) {
               transitionProperty: 'width, height',
             }}
             className='rounded-3xl w-[200px] h-[200px] duration-200 overflow-hidden relative cursor-pointer'>
-            <Image src={project.imageUrl} alt={project.name} fill />
+            <img
+              src={project.imageUrl}
+              alt={project.name}
+              className='absolute top-0 left-0 w-full h-full'
+            />
           </div>
         </BlurredBachkgroundComponent>
       </div>

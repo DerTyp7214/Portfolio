@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 import { Skill } from '../types/types'
 
 type Props = {
@@ -30,11 +29,12 @@ export default function SkillItem({ skill, directionLeft, onClick }: Props) {
       className='group relative flex cursor-pointer'>
       <div className='rounded-3xl border border-black/30 dark:border-white/30 bg-secondaryBackground/80 dark:bg-secondaryBackgroundDark/80 flex flex-col items-center justify-center overflow-hidden backdrop-blur-md'>
         <div className='flex justify-center items-center object-contain w-16 h-16 md:w-22 md:h-22 xl:w-26 xl:h-26 filter group-hover:blur-[3px] group-hover:grayscale-[.7] transition duration-300 ease-in-out m-4 relative'>
-          <Image
+          <img
             src={skill.imageUrl}
             alt={skill.name}
             width='100'
             height='100'
+            className='absolute top-0 left-0 w-full h-full'
           />
         </div>
       </div>

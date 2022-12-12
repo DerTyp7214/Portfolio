@@ -14,6 +14,7 @@ specifiers:
   color: ^4.2.3
   eslint: 8.27.0
   eslint-config-next: 13.0.3
+  favicon-badge: ^2.0.0
   fluent-ffmpeg: ^2.1.2
   framer-motion: ^7.6.7
   lottie-react: ^2.3.1
@@ -43,6 +44,7 @@ dependencies:
   color: 4.2.3
   eslint: 8.27.0
   eslint-config-next: 13.0.3_e3uo4sehh4zr4i6m57mkkxxv7y
+  favicon-badge: 2.0.0
   fluent-ffmpeg: 2.1.2
   framer-motion: 7.6.7_biqbaboplfbrettd7655fr4n2y
   lottie-react: 2.3.1_biqbaboplfbrettd7655fr4n2y
@@ -2985,6 +2987,10 @@ packages:
     resolution: {integrity: sha512-YpkpUnK8od0o1hmeSc7UUs/eB/vIPWJYjKck2QKIzAf71Vm1AAQ3EbuZB3g2JIy+pg+ERD0vqI79KyZiB2e2Nw==}
     dependencies:
       reusify: 1.0.4
+
+  /favicon-badge/2.0.0:
+    resolution: {integrity: sha512-So7q2qfQfUHwwFMbIEPGGxyB55O93Bd8TKnyERvsMfE6XQ2g3XEbbBXrt8T1/SFqRhAiSOgeakh1Tt6e9bR0Ag==}
+    dev: false
 
   /file-entry-cache/6.0.1:
     resolution: {integrity: sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==}

@@ -1,5 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Project, Skill } from '../types/types'
@@ -44,7 +44,11 @@ export default function ProjectCard({ project }: Props) {
             transitionProperty: 'width, height',
           }}
           className='w-32 h-32 rounded-3xl xl:w-[200px] xl:h-[200px] duration-200 overflow-hidden relative cursor-pointer'>
-          <Image src={project.imageUrl} alt={project.name} fill />
+          <img
+            src={project.imageUrl}
+            alt={project.name}
+            className='absolute top-0 left-0 w-full h-full'
+          />
         </motion.div>
       </Link>
 
@@ -63,10 +67,10 @@ export default function ProjectCard({ project }: Props) {
             .reduce((a, b) => [a, <span key={b.toString()}>&</span>, b] as any)}
         </p>
         {!!project.downloads && (
-          <p
-            className='text-md font-light mt-1'
-            data-tip='Not a exact number. Gitlab is not tracked and github can be ~10% more then shown here.'>
-            <b>{project.downloads} </b>
+          <p className='text-md font-light mt-1'>
+            <b data-tip='Not a exact number. Gitlab is not tracked and github can be ~10% more then shown here.'>
+              {project.downloads}{' '}
+            </b>
             Downloads
           </p>
         )}
@@ -77,11 +81,10 @@ export default function ProjectCard({ project }: Props) {
               key={index}
               onClick={() => openModal(skill)}
               className='h-12 w-12 rounded-[5px] bg-background/50 dark:bg-backgroundDark/50 relative flex justify-center items-center cursor-pointer'>
-              <Image
-                className='p-2 filter z-20'
+              <img
+                className='p-2 filter z-20 absolute top-0 left-0 w-full h-full'
                 src={skill.imageUrl}
                 alt={skill.name}
-                fill
               />
               <div className='absolute top-0 left-0 w-full h-full peer z-40' />
               <span className='absolute p-1 top-[-30%] select-none rounded-[5px] opacity-0 peer-hover:opacity-100 transition-all bg-white/50 text-black backdrop-blur-[5px] z-30'>
@@ -102,7 +105,7 @@ export default function ProjectCard({ project }: Props) {
         <div className='absolute flex flex-row space-x-2 bottom-4'>
           {project.githubUrl && (
             <Link href={project.githubUrl} target='_blank'>
-              <Image
+              <img
                 src={
                   project.githubIcon ??
                   'https://github.githubassets.com/favicons/favicon-dark.svg'
@@ -116,7 +119,7 @@ export default function ProjectCard({ project }: Props) {
           )}
           {project.playStoreUrl && (
             <Link href={project.playStoreUrl} target='_blank'>
-              <Image
+              <img
                 src={
                   project.playStoreIcon ??
                   'https://www.gstatic.com/android/market_images/web/favicon_v3.ico'
