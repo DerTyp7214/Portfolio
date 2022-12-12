@@ -95,7 +95,7 @@ export default function SkillModal({ skill, show, onClose }: Props) {
             </button>
           </div>
 
-          <p className='m-10'>{skill.description}</p>
+          <p className='m-2 mt-10 sm:m-10'>{skill.description}</p>
         </div>
       )}
     </Modal>
