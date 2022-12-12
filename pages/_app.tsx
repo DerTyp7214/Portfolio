@@ -1,18 +1,9 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 import { AppWrapper } from '../components/appContext'
 import '../styles/globals.css'
 import { PageInfo, Project } from '../types/types'
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'favicon-badge': any
-    }
-  }
-}
 
 export default function App({ Component, pageProps }: AppProps) {
   const {
@@ -27,10 +18,6 @@ export default function App({ Component, pageProps }: AppProps) {
     query: { project: projectId },
   } = useRouter()
 
-  useEffect(() => {
-    if (window) require('favicon-badge')
-  }, [])
-
   const project = projects?.find((project) => project.id === projectId)
 
   return (
@@ -43,12 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
               : pageInfo.title}
           </title>
           {project?.imageUrl ? (
-            <favicon-badge
-              badge
-              badgeSize={8}
-              src={project.imageUrl}
-              badgeBackgroundSrc={pageInfo.favIconUrl}
-            />
+            <link rel='icon' href={project.imageUrl} />
           ) : (
             <link rel='icon' href={pageInfo.favIconUrl} />
           )}
