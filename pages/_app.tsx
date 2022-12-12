@@ -37,7 +37,11 @@ export default function App({ Component, pageProps }: AppProps) {
     <AppWrapper>
       {pageInfo ? (
         <Head>
-          <title>{`${project?.name} - ${pageInfo.title}`}</title>
+          <title>
+            {project?.name
+              ? `${project?.name} - ${pageInfo.title}`
+              : pageInfo.title}
+          </title>
           {project?.imageUrl ? (
             <favicon-badge
               badge
@@ -51,7 +55,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
           <meta
             name='og:title'
-            content={`${project?.name} - ${pageInfo.title}`}
+            content={
+              project?.name
+                ? `${project?.name} - ${pageInfo.title}`
+                : pageInfo.title
+            }
           />
           <meta name='og:image' content={pageInfo.ogImageUrl} />
           <meta name='og:url' content={process.env.NEXT_PUBLIC_BASE_URL} />
