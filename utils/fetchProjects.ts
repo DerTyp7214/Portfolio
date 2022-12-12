@@ -7,26 +7,15 @@ import {
   roundDownloads
 } from './downloadUtils'
 import fetchSkill from './fetchSkill'
-
-const languageSkills = [
-  'Kotlin',
-  'JavaScript',
-  'C',
-  'JSON',
-  'HTML',
-  'CSS',
-  'Java',
-  'C++',
-  'TypeScript',
-]
-
-const technologySkills = ['ReactJS', 'NodeJS', 'ExpressJS', 'Electron', 'Gson']
+import { languages, technologies, wikiMappping } from './fetchSkills'
 
 export default async function fetchProjects(): Promise<Project[]> {
   const skillData = await Promise.all([
-    ...languageSkills.map((skill) => fetchSkill({ skill, type: 'language' })),
-    ...technologySkills.map((skill) =>
-      fetchSkill({ skill, type: 'technology' })
+    ...languages.map((skill) =>
+      fetchSkill({ skill, type: 'language', wiki: wikiMappping[skill] })
+    ),
+    ...technologies.map((skill) =>
+      fetchSkill({ skill, type: 'technology', wiki: wikiMappping[skill] })
     ),
   ])
 

@@ -1,7 +1,7 @@
 import { Skill } from '../types/types'
 import fetchSkill from './fetchSkill'
 
-const languages = [
+export const languages = [
   'Kotlin',
   'JavaScript',
   'CSS',
@@ -16,7 +16,7 @@ const languages = [
   'C#',
 ]
 
-const technologies = [
+export const technologies = [
   'ReactJS',
   'NodeJS',
   'ExpressJS',
@@ -27,7 +27,7 @@ const technologies = [
   'GitHub',
 ]
 
-const wikiMappping: { [key: string]: string | undefined } = {
+export const wikiMappping: { [key: string]: string | undefined } = {
   'C++': 'C++ (programming language)',
   'C#': 'C Sharp (programming language)',
   C: 'C (programming language)',
