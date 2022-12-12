@@ -1,6 +1,7 @@
 import { Project, Skill } from '../types/types'
 import {
   cacheImageLocally,
+  createFaviconWithBadge,
   gitHubDownloads,
   playStoreDownloads,
   roundDownloads
@@ -278,13 +279,24 @@ export default async function fetchProjects(): Promise<Project[]> {
         }),
       ])
 
+      const id = project.name.replace(/ /g, '-').toLowerCase()
+
       return {
         ...project,
         imageUrl: images[0],
         playStoreIcon: images[1],
         githubIcon: images[2],
-        id: project.name.replace(/ /g, '-').toLowerCase(),
+        id: id,
         downloads: roundDownloads(project.downloads),
+        faviconUrl: await createFaviconWithBadge(
+          {
+            url: project.imageUrl,
+          },
+          {
+            file: 'public/favicon.png',
+          },
+          `${id}-favicon`
+        ),
       }
     })
   )

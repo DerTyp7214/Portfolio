@@ -39,6 +39,7 @@ export interface Project {
   playStoreIcon?: string
   githubIcon?: string
   downloadUrl?: string
+  faviconUrl?: string
   alternativeDownload?: {
     name: string
     url: string

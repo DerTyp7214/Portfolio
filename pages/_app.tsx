@@ -29,8 +29,8 @@ export default function App({ Component, pageProps }: AppProps) {
               ? `${project?.name} - ${pageInfo.title}`
               : pageInfo.title}
           </title>
-          {project?.imageUrl ? (
-            <link rel='icon' href={project.imageUrl} />
+          {project?.faviconUrl ? (
+            <link rel='icon' href={project.faviconUrl} />
           ) : (
             <link rel='icon' href={pageInfo.favIconUrl} />
           )}

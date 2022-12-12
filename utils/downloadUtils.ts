@@ -134,6 +134,122 @@ export async function getImageBuffer(url: string) {
   })
 }
 
+export async function createFaviconWithBadge(
+  favicon: { url?: string; file?: string },
+  badge: { url?: string; file?: string },
+  imageName: string
+) {
+  const startTime = Date.now()
+  const relativeUrl = `/images/cached/favicons/${imageName}.webp`
+  const absoluteUrl = `${process.cwd()}/public${relativeUrl}`
+
+  const faviconBuffer = favicon.url
+    ? await getImageBuffer(favicon.url)
+    : favicon.file
+    ? fs.readFileSync(favicon.file)
+    : null
+
+  if (!faviconBuffer) throw new Error('No favicon buffer')
+
+  const badgeBuffer = badge.url
+    ? await getImageBuffer(badge.url)
+    : badge.file
+    ? fs.readFileSync(badge.file)
+    : null
+
+  if (!badgeBuffer) throw new Error('No badge buffer')
+
+  const rect = Buffer.from(
+    '<svg><rect x="0" y="0" width="200" height="200" rx="25" ry="25"/></svg>'
+  )
+
+  const image = await sharp(
+    await sharp(faviconBuffer)
+      .resize(200, 200)
+      .composite([
+        {
+          input: rect,
+          blend: 'dest-in',
+        },
+      ])
+      .toBuffer()
+  )
+    .extend({
+      top: 10,
+      bottom: 10,
+      left: 10,
+      right: 10,
+      background: { r: 255, g: 255, b: 255, alpha: 0 },
+    })
+    .composite([
+      {
+        input: await sharp(badgeBuffer).resize(100, 100).toBuffer(),
+        gravity: 'southeast',
+      },
+    ])
+    .webp()
+    .toFile(absoluteUrl)
+
+  setSize(image.size, Date.now() - startTime)
+
+  return relativeUrl
+}
+
+const log = (...message: string[]) =>
+  console.log([chalk.bgYellow(chalk.black(`[Image]`)), ...message].join(' '))
+
+const setSize = (size: number, duration: number) => {
+  const current = Number(process.env.TOTAL_SIZE)
+  const totalCount = Number(process.env.TOTAL_COUNT)
+  const totalDuration = Number(process.env.TOTAL_DURATION)
+
+  process.env.TOTAL_SIZE = ((isNaN(current) ? 0 : current) + size).toString()
+  process.env.TOTAL_COUNT = (
+    (isNaN(totalCount) ? 0 : totalCount) + 1
+  ).toString()
+  process.env.TOTAL_DURATION = (
+    (isNaN(totalDuration) ? 0 : totalDuration) + duration
+  ).toString()
+
+  if (process.env.GITHUB_OUTPUT) {
+    let env = fs.readFileSync(process.env.GITHUB_OUTPUT, 'utf-8')
+    if (env.includes('size=')) {
+      env = env.replace(
+        /size=[0-9A-z. ]+/g,
+        `size=${sizeToHumanReadable(Number(process.env.TOTAL_SIZE))}`
+      )
+    } else
+      env += `size=${sizeToHumanReadable(Number(process.env.TOTAL_SIZE))}\n`
+
+    if (env.includes('count=')) {
+      env = env.replace(/count=[0-9]+/g, `count=${process.env.TOTAL_COUNT}`)
+    } else env += `count=${process.env.TOTAL_COUNT}\n`
+
+    if (env.includes('duration=')) {
+      env = env.replace(
+        /duration=[0-9A-z. ]+/g,
+        `duration=${millisecondsToHumanReadable(
+          Number(process.env.TOTAL_DURATION)
+        )}`
+      )
+    } else
+      env += `duration=${millisecondsToHumanReadable(
+        Number(process.env.TOTAL_DURATION)
+      )}\n`
+
+    fs.writeFileSync(process.env.GITHUB_OUTPUT, env)
+  } else
+    log(
+      `Total size: ${sizeToHumanReadable(
+        Number(process.env.TOTAL_SIZE)
+      )}, Total count: ${
+        process.env.TOTAL_COUNT
+      }, Total duration: ${millisecondsToHumanReadable(
+        Number(process.env.TOTAL_DURATION)
+      )}`
+    )
+}
+
 export async function cacheImageLocally(props: {
   url?: string
   file?: string
@@ -150,61 +266,6 @@ export async function cacheImageLocally(props: {
   }`
 
   const internalPath = path ? `${path}/` : ''
-
-  const log = (...message: string[]) =>
-    console.log([chalk.bgYellow(chalk.black(`[Image]`)), ...message].join(' '))
-
-  const setSize = (size: number, duration: number) => {
-    const current = Number(process.env.TOTAL_SIZE)
-    const totalCount = Number(process.env.TOTAL_COUNT)
-    const totalDuration = Number(process.env.TOTAL_DURATION)
-
-    process.env.TOTAL_SIZE = ((isNaN(current) ? 0 : current) + size).toString()
-    process.env.TOTAL_COUNT = (
-      (isNaN(totalCount) ? 0 : totalCount) + 1
-    ).toString()
-    process.env.TOTAL_DURATION = (
-      (isNaN(totalDuration) ? 0 : totalDuration) + duration
-    ).toString()
-
-    if (process.env.GITHUB_OUTPUT) {
-      let env = fs.readFileSync(process.env.GITHUB_OUTPUT, 'utf-8')
-      if (env.includes('size=')) {
-        env = env.replace(
-          /size=[0-9A-z. ]+/g,
-          `size=${sizeToHumanReadable(Number(process.env.TOTAL_SIZE))}`
-        )
-      } else
-        env += `size=${sizeToHumanReadable(Number(process.env.TOTAL_SIZE))}\n`
-
-      if (env.includes('count=')) {
-        env = env.replace(/count=[0-9]+/g, `count=${process.env.TOTAL_COUNT}`)
-      } else env += `count=${process.env.TOTAL_COUNT}\n`
-
-      if (env.includes('duration=')) {
-        env = env.replace(
-          /duration=[0-9A-z. ]+/g,
-          `duration=${millisecondsToHumanReadable(
-            Number(process.env.TOTAL_DURATION)
-          )}`
-        )
-      } else
-        env += `duration=${millisecondsToHumanReadable(
-          Number(process.env.TOTAL_DURATION)
-        )}\n`
-
-      fs.writeFileSync(process.env.GITHUB_OUTPUT, env)
-    } else
-      log(
-        `Total size: ${sizeToHumanReadable(
-          Number(process.env.TOTAL_SIZE)
-        )}, Total count: ${
-          process.env.TOTAL_COUNT
-        }, Total duration: ${millisecondsToHumanReadable(
-          Number(process.env.TOTAL_DURATION)
-        )}`
-      )
-  }
 
   const relativeUrl = `/images/cached/${internalPath}${imageName}.${
     svg || (url ?? file)?.endsWith('svg') ? 'svg' : 'webp'
