@@ -111,9 +111,9 @@ function ProjectPage({ projects }: Props) {
             </div>
           </div>
 
-          <div className='flex text-center ml-2 lg:ml-1 flex-wrap space-y-2'>
+          <div className='flex text-center ml-2 lg:ml-1 flex-wrap'>
             {!!project.downloads && (
-              <div className='flex flex-col text-xs sm:text-md lg:text-lg justify-between mr-10'>
+              <div className='flex flex-col text-xs sm:text-md lg:text-lg justify-between mr-10 mt-2'>
                 <span>{project.downloads}</span>
                 <span className='opacity-60'>Downloads</span>
               </div>
@@ -125,7 +125,7 @@ function ProjectPage({ projects }: Props) {
                   href={link.url}
                   target='_blank'
                   key={index}
-                  className='flex flex-col text-xs sm:text-md lg:text-lg justify-between mr-10 cursor-pointer'>
+                  className='flex flex-col text-xs sm:text-md lg:text-lg justify-between mr-10 cursor-pointer mt-2'>
                   <img
                     src={link.iconUrl}
                     alt={link.name}

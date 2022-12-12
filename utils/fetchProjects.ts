@@ -286,6 +286,14 @@ export default async function fetchProjects(): Promise<Project[]> {
           },
           `${id}-favicon`
         ),
+        extraLinks: [
+          ...(project.extraLinks ?? []),
+          {
+            name: 'GitHub',
+            url: project.githubUrl,
+            iconUrl: images[2],
+          },
+        ],
       }
     })
   )
