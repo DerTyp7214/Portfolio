@@ -24,6 +24,7 @@ export interface Skill {
   topCountryRank?: number | null
   imageUrl: string
   language: boolean
+  description?: string | null
 }
 
 export interface Project {

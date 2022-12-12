@@ -20,6 +20,7 @@ const nextConfig = {
       test: /\.svg$/,
       use: ['@svgr/webpack'],
     })
+    config.externals = config.externals || [{ 'isomorphic-fetch': 'fetch' }]
     return config
   }
 }

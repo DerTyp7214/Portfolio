@@ -1,12 +1,26 @@
+import wikijs from 'wikijs'
 import { CodersRankLanguage, CodersRankTechnology, Skill } from '../types/types'
 import { cacheImageLocally } from './downloadUtils'
+
+async function fetchSkillWiki(
+  query: string,
+  language: boolean
+): Promise<string | null | undefined> {
+  const wiki = wikijs()
+  const page = await wiki.page(query).catch(() => null)
+  const summary = await page?.summary()?.catch(() => null)
+
+  return summary ? summary : null
+}
 
 export default async function fetchSkill({
   skill,
   type,
+  wiki,
 }: {
   skill: string
   type: 'technology' | 'language'
+  wiki?: string
 }): Promise<Skill | null> {
   if (type === 'language') {
     const languageData = (await fetch(
@@ -36,6 +50,7 @@ export default async function fetchSkill({
         newHeight: 90,
       }),
       language: true,
+      description: wiki ? await fetchSkillWiki(wiki, true) : null,
     }
   } else {
     const technologyData = (await fetch(
@@ -63,6 +78,7 @@ export default async function fetchSkill({
         newHeight: 90,
       }),
       language: false,
+      description: wiki ? await fetchSkillWiki(wiki, false) : null,
     }
   }
 }

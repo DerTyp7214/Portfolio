@@ -112,10 +112,12 @@ function ProjectPage({ projects }: Props) {
           </div>
 
           <div className='flex text-center ml-2 lg:ml-1 flex-wrap space-y-2'>
-            <div className='flex flex-col text-xs sm:text-md lg:text-lg justify-between mr-10'>
-              <span>{project.downloads}</span>
-              <span className='opacity-60'>Downloads</span>
-            </div>
+            {!!project.downloads && (
+              <div className='flex flex-col text-xs sm:text-md lg:text-lg justify-between mr-10'>
+                <span>{project.downloads}</span>
+                <span className='opacity-60'>Downloads</span>
+              </div>
+            )}
 
             {project.extraLinks?.map((link, index) => {
               return (

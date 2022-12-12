@@ -13,7 +13,8 @@ type Props = {
 
 export default function SkillModal({ skill, show, onClose }: Props) {
   const currentEntries = Object.entries(skill ?? {}).filter(
-    ([_, value]) =>
+    ([key, value]) =>
+      key !== 'description' &&
       value &&
       !value.toString().startsWith('http') &&
       !value.toString().startsWith('/images') &&
@@ -24,7 +25,7 @@ export default function SkillModal({ skill, show, onClose }: Props) {
   return (
     <Modal show={show && !!skill} onClose={onClose} title={skill?.name}>
       {skill && (
-        <div className='flex flex-col items-center justify-start lg:justify-center p-4 h-full overflow-auto select-none'>
+        <div className='flex flex-col items-center justify-start p-4 h-full overflow-auto select-none customScroll'>
           <ShareIcon
             className='absolute top-4 right-14 w-6 h-6 cursor-pointer'
             onClick={() => {
@@ -93,6 +94,8 @@ export default function SkillModal({ skill, show, onClose }: Props) {
               CodersRank Leaderboards (Germany)
             </button>
           </div>
+
+          <p className='m-10'>{skill.description}</p>
         </div>
       )}
     </Modal>
