@@ -157,13 +157,13 @@ export async function createFaviconWithBadge(
     ? fs.readFileSync(badge.file)
     : null
 
-  if (badge.url)
+  if (favicon.url)
     log(
       chalk.blue('Dwnld'),
-      chalk.white(`  - ${new URL(badge.url).host} ... ${imageName}`)
+      chalk.white(`  - ${new URL(favicon.url).host} ... ${imageName}`)
     )
-  else if (badge.file)
-    log(chalk.blue('Cache'), chalk.white(`  - ${badge.file}`))
+  else if (favicon.file)
+    log(chalk.blue('Cache'), chalk.white(`  - ${favicon.file}`))
 
   if (!badgeBuffer) throw new Error('No badge buffer')
 
