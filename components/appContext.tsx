@@ -27,18 +27,16 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
   let state: AppContextType = { darkMode, setDarkMode }
 
   const versionInfo = devMode ? (
-    <div className='mb-1 mr-2 text-right text-sm opacity-60 dark:opacity-20'>
-      <p>
-        <Link
-          target='_blank'
-          href={
-            process.env.NEXT_PUBLIC_GIT_HASH
-              ? `https://github.com/DerTyp7214/Portfoio/commit/${process.env.NEXT_PUBLIC_GIT_HASH}`
-              : 'https://github.com/DerTyp7214/Portfoio/tree/main'
-          }>
-          {getFormatedDate(new Date())}
-        </Link>
-      </p>
+    <div className='mb-1 mr-2 text-right text-sm opacity-60 dark:opacity-20 flex flex-col'>
+      <Link
+        target='_blank'
+        href={
+          process.env.NEXT_PUBLIC_GIT_HASH
+            ? `https://github.com/DerTyp7214/Portfoio/commit/${process.env.NEXT_PUBLIC_GIT_HASH}`
+            : 'https://github.com/DerTyp7214/Portfoio/tree/main'
+        }>
+        {getFormatedDate(new Date())}
+      </Link>
       <p>
         {require('../package.json').version} (
         <Link

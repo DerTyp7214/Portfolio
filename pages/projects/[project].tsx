@@ -189,6 +189,26 @@ function ProjectPage({ projects }: Props) {
               ))}
             </ul>
           </div>
+
+          <div className='flex flex-wrap pt-10'>
+            {projects
+              .filter((p) => p.id !== project.id)
+              .map((p, index) => (
+                <Link
+                  key={index}
+                  href={`/projects/${p.id}`}
+                  className='flex flex-col items-center justify-center w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 rounded-3xl bg-secondaryBackground/50 dark:bg-secondaryBackgroundDark/50 relative cursor-pointer overflow-hidden m-2 transition-all duration-200'>
+                  <img
+                    src={p.imageUrl}
+                    alt={p.name}
+                    className='absolute top-0 left-0 w-full h-full'
+                  />
+                  <span className='absolute text-xs sm:text-base lg:text-lg w-full p-1 bottom-0 pb-3 select-none rounded-[5px] bg-white/50 text-black backdrop-blur-[5px] z-30 transition-all duration-200'>
+                    {p.name}
+                  </span>
+                </Link>
+              ))}
+          </div>
         </div>
 
         <BlurredBachkgroundComponent className='hidden xl:block'>
