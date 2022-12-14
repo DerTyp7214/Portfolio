@@ -27,8 +27,7 @@ export default async function fetchProjects(): Promise<Project[]> {
       {
         name: 'Rboard Theme Manager V3',
         authors: ['DerTyp7214', 'AkosPaha', 'RadekBledowski'],
-        imageUrl:
-          'https://raw.githubusercontent.com/DerTyp7214/RboardThemeManagerV3/staging/app/src/main/ic_launcher-playstore.png',
+        imageUrl: 'assets/parsed/rboardThemeManager.svg',
         skills: getSkills(['Kotlin', 'Gson', 'C', 'C++']),
         githubUrl: 'https://github.com/DerTyp7214/RboardThemeManagerV3',
         keypoints: [
@@ -73,15 +72,14 @@ export default async function fetchProjects(): Promise<Project[]> {
               path: 'icons',
               newWidth: 32,
               newHeight: 32,
-            })
+            }),
           },
         ],
       },
       {
         name: 'Rboard Theme Creator',
         authors: ['DerTyp7214', 'RadekBledowski'],
-        imageUrl:
-          'https://raw.githubusercontent.com/DerTyp7214/RboardThemeCreator/staging/app/src/main/ic_launcher-playstore.png',
+        imageUrl: 'assets/parsed/rboardThemeCreator.svg',
         skills: getSkills(['Kotlin', 'Gson', 'C', 'C++']),
         githubUrl: 'https://github.com/DerTyp7214/RboardThemeCreator',
         playStoreUrl:
@@ -106,8 +104,7 @@ export default async function fetchProjects(): Promise<Project[]> {
       {
         name: 'Rboard Patcher',
         authors: ['DerTyp7214', 'RadekBledowski'],
-        imageUrl:
-          'https://raw.githubusercontent.com/DerTyp7214/RboardPatcher/staging/app/src/main/ic_launcher-playstore.png',
+        imageUrl: 'assets/parsed/rboardPatcher.svg',
         skills: getSkills(['Kotlin', 'Gson', 'C', 'C++']),
         githubUrl: 'https://github.com/DerTyp7214/RboardPatcher',
         playStoreUrl:
@@ -133,8 +130,7 @@ export default async function fetchProjects(): Promise<Project[]> {
       {
         name: 'Rboard IME Tester',
         authors: ['DerTyp7214', 'RadekBledowski'],
-        imageUrl:
-          'https://raw.githubusercontent.com/DerTyp7214/RboardIMETester/staging/app/src/main/ic_launcher-playstore.png',
+        imageUrl: 'assets/parsed/rboardImeTester.svg',
         skills: getSkills(['Kotlin', 'Gson', 'C', 'C++']),
         githubUrl: 'https://github.com/DerTyp7214/RboardIMETester',
         playStoreUrl:
@@ -158,8 +154,7 @@ export default async function fetchProjects(): Promise<Project[]> {
       {
         name: 'Mixplorer Theme Creator',
         authors: ['DerTyp7214', 'RadekBledowski'],
-        imageUrl:
-          'https://raw.githubusercontent.com/DerTyp7214/MixplorerThemeCreator/master/app/src/main/ic_launcher-playstore.png',
+        imageUrl: 'assets/parsed/mixThemeCreator.svg',
         skills: getSkills(['Kotlin', 'Gson', 'C', 'C++']),
         githubUrl: 'https://github.com/DerTyp7214/MixplorerThemeCreator',
         playStoreUrl:
@@ -201,8 +196,7 @@ export default async function fetchProjects(): Promise<Project[]> {
       {
         name: 'YouTube Music Remote',
         authors: ['DerTyp7214'],
-        imageUrl:
-          'https://raw.githubusercontent.com/DerTyp7214/YouTubeMusicRemote/master/app/src/main/ic_launcher-playstore.png',
+        imageUrl: 'assets/parsed/ytmdRemote.svg',
         skills: getSkills(['Kotlin', 'Gson']),
         githubUrl: 'https://github.com/DerTyp7214/YouTubeMusicRemote',
         playStoreUrl:
@@ -259,7 +253,12 @@ export default async function fetchProjects(): Promise<Project[]> {
     ].map(async (project) => {
       const images = await Promise.all([
         cacheImageLocally({
-          url: project.imageUrl,
+          url: project.imageUrl.startsWith('http')
+            ? project.imageUrl
+            : undefined,
+          file: project.imageUrl.startsWith('http')
+            ? undefined
+            : project.imageUrl,
           imageName: project.name,
           path: 'projects',
           newWidth: 250,
@@ -292,7 +291,12 @@ export default async function fetchProjects(): Promise<Project[]> {
         downloads: roundDownloads(project.downloads),
         faviconUrl: await createFaviconWithBadge(
           {
-            url: project.imageUrl,
+            url: project.imageUrl.startsWith('http')
+              ? project.imageUrl
+              : undefined,
+            file: project.imageUrl.startsWith('http')
+              ? undefined
+              : project.imageUrl,
           },
           {
             file: 'public/favicon.png',

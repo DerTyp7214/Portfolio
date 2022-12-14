@@ -1,0 +1,13 @@
+<svg width="432" height="432" viewBox="0 0 432 432" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_913_884)">
+        <rect x="0.270508" y="0.338257" width="432" height="432" fill="%accent_background%" />
+        <rect x="154.569" y="302.139" width="123.404" height="21.1388" rx="5" fill="%desaturated_accent%" />
+        <rect x="133.669" y="265.901" width="19.9039" height="20.1322" rx="5" fill="%desaturated_accent%" />
+        <rect x="133.67" y="229.663" width="19.9039" height="20.1322" rx="5" fill="%desaturated_accent%" />
+        <rect x="170.492" y="265.901" width="19.9039" height="20.1322" rx="5" fill="%desaturated_accent%" />
+        <rect x="242.146" y="265.901" width="19.9039" height="20.1322" rx="5" fill="%desaturated_accent%" />
+        <rect x="278.968" y="229.663" width="19.9039" height="20.1322" rx="5" fill="%desaturated_accent%" />
+        <rect x="278.968" y="265.901" width="19.9039" height="20.1322" rx="5" fill="%desaturated_accent%" />
+        <path d="M164.271 122.338H269.197C271.968 122.338 274.21 124.592 274.197 127.363L273.786 211.18C273.778 212.658 273.118 214.056 271.982 215.001L216.276 261.313L161.059 215.052C159.926 214.102 159.271 212.698 159.271 211.219V127.338C159.271 124.577 161.509 122.338 164.271 122.338ZM219.475 263.993L219.469 263.989C219.471 263.99 219.473 263.992 219.475 263.993Z" stroke="%desaturated_accent%" stroke-width="20" />
+    </g>
+</svg>
