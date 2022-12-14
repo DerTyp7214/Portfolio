@@ -53,14 +53,27 @@ export default async function fetchProjects(): Promise<Project[]> {
         },
         extraLinks: [
           {
+            name: 'Rboard',
+            url: '/rboard',
+            iconUrl: await cacheImageLocally({
+              file: 'public/projects/rboard.svg',
+              imageName: 'rboard',
+              path: 'icons',
+              newWidth: 32,
+              newHeight: 32,
+            }),
+            className: 'invert dark:invert-0',
+          },
+          {
             name: 'Telegram',
             url: 'https://t.me/gboardthemes',
             iconUrl: await cacheImageLocally({
               url: 'https://telegram.org/img/t_logo.png',
               imageName: 'telegram',
+              path: 'icons',
               newWidth: 32,
               newHeight: 32,
-            }),
+            })
           },
         ],
       },
@@ -292,6 +305,7 @@ export default async function fetchProjects(): Promise<Project[]> {
             name: 'GitHub',
             url: project.githubUrl,
             iconUrl: images[2],
+            className: 'invert dark:invert-0',
           },
         ],
       }

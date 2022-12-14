@@ -22,16 +22,37 @@ function BlurredBachkgroundComponent({
   children: React.ReactNode
   className?: string
 }) {
-  // draw children and blurred children as background
   return (
     <div className={`relative ${className}`}>
-      <div className='absolute left-0 top-[10px] blur-[10px] opacity-50 scale-90 dark:brightness-200 hidden sm:block'>
+      <div className='absolute left-0 top-[5px] sm:top-[10px] blur-[3px] sm:blur-[10px] opacity-50 scale-90 dark:brightness-200'>
         {children}
       </div>
       <div className='relative'>{children}</div>
     </div>
   )
 }
+
+const ProjectIcon = ({
+  className,
+  project,
+}: {
+  className: string
+  project: Project
+}) => (
+  <BlurredBachkgroundComponent className={className}>
+    <div
+      style={{
+        transitionProperty: 'width, height',
+      }}
+      className='w-12 h-12 rounded-lg sm:w-32 sm:h-32 sm:rounded-xl duration-200 overflow-hidden relative cursor-pointer mr-5 xl:rounded-3xl xl:w-[200px] xl:h-[200px]'>
+      <img
+        src={project.imageUrl}
+        alt={project.name}
+        className='absolute top-0 left-0 w-full h-full'
+      />
+    </div>
+  </BlurredBachkgroundComponent>
+)
 
 function ProjectPage({ projects }: Props) {
   const [showModal, ShowModal] = useState(false)
@@ -68,24 +89,15 @@ function ProjectPage({ projects }: Props) {
       <div className='m-4 sm:m-10 sm:flex sm:flex-row xl:justify-around'>
         <div className='flex flex-col space-y-5 sm:ml-10 sm:mt-10 sm:mr-10'>
           <div className='flex flex-col space-y-1 sm:space-y-0 sm:flex-row ml-1'>
-            <BlurredBachkgroundComponent className='block xl:hidden'>
-              <div
-                style={{
-                  transitionProperty: 'width, height',
-                }}
-                className='w-16 h-16 sm:w-32 sm:h-32 rounded-xl duration-200 overflow-hidden relative cursor-pointer mr-5'>
-                <img
-                  src={project.imageUrl}
-                  alt={project.name}
-                  className='absolute top-0 left-0 w-full h-full'
-                />
-              </div>
-            </BlurredBachkgroundComponent>
+            <ProjectIcon
+              className='hidden sm:block xl:hidden'
+              project={project}
+            />
             <div>
               <h1 className='text-xl sm:text-2xl md:text-4xl xl:text-6xl'>
                 {project.name}
               </h1>
-              <p className='text-sm sm:text-lg md:text-xl xl:text-2xl fomt-bold mt-1 sm:space-x-2 flex flex-wrap flex-col sm:flex-row text-tertiary dark:text-tertiaryDark'>
+              <p className='text-sm sm:text-lg md:text-xl xl:text-2xl fomt-bold mt-1 sm:space-x-2 flex flex-wrap flex-row text-tertiary dark:text-tertiaryDark'>
                 {project.authors
                   .map((author, index) => (
                     <Link
@@ -103,6 +115,9 @@ function ProjectPage({ projects }: Props) {
                           <span key={b.toString()} className='hidden sm:block'>
                             &
                           </span>
+                          <span key={b.toString()} className='block sm:hidden'>
+                            &nbsp; &nbsp;
+                          </span>
                         </>,
                         b,
                       ] as any
@@ -111,9 +126,17 @@ function ProjectPage({ projects }: Props) {
             </div>
           </div>
 
-          <div className='flex text-center ml-2 lg:ml-1 flex-wrap'>
+          <div
+            className='flex text-center ml-2 lg:ml-1 customScroll overflow-auto pb-2'
+            id='infos'>
+            <style>{`
+              #infos::-webkit-scrollbar {
+                height: 4px;
+              }
+            `}</style>
+            <ProjectIcon className='sm:hidden' project={project} />
             {!!project.downloads && (
-              <div className='flex flex-col text-xs sm:text-md lg:text-lg justify-between mr-10 mt-2'>
+              <div className='flex flex-col text-xs sm:text-md lg:text-lg justify-between pr-7 mt-2'>
                 <span>{project.downloads}</span>
                 <span className='opacity-60'>Downloads</span>
               </div>
@@ -123,15 +146,30 @@ function ProjectPage({ projects }: Props) {
               return (
                 <Link
                   href={link.url}
-                  target='_blank'
+                  target={link.url.startsWith('http') ? '_blank' : '_self'}
                   key={index}
-                  className='flex flex-col text-xs sm:text-md lg:text-lg justify-between mr-10 cursor-pointer mt-2'>
+                  id={link.name}
+                  className='flex flex-col text-xs sm:text-md lg:text-lg justify-between pl-7 pr-7 cursor-pointer mt-2 before:bg-secondaryBackgroundDark/40 dark:before:bg-secondaryBackground/40'>
+                  <style>{`
+                    #${link.name} {
+                      position: relative;
+                    }
+                    #${link.name}::before {
+                      content: '';
+                      display: block;
+                      height: 24px;
+                      left: 0;
+                      position: absolute;
+                      top: calc(50% - 12px);
+                      width: 1px;
+                    }
+                  `}</style>
                   <img
                     src={link.iconUrl}
                     alt={link.name}
                     width={20}
                     height={20}
-                    className='m-auto'
+                    className={`m-auto h-[20px] ${link.className}`}
                   />
                   <span className='opacity-60'>{link.name}</span>
                 </Link>
@@ -211,19 +249,7 @@ function ProjectPage({ projects }: Props) {
           </div>
         </div>
 
-        <BlurredBachkgroundComponent className='hidden xl:block'>
-          <div
-            style={{
-              transitionProperty: 'width, height',
-            }}
-            className='rounded-3xl w-[200px] h-[200px] duration-200 overflow-hidden relative cursor-pointer'>
-            <img
-              src={project.imageUrl}
-              alt={project.name}
-              className='absolute top-0 left-0 w-full h-full'
-            />
-          </div>
-        </BlurredBachkgroundComponent>
+        <ProjectIcon className='hidden xl:block' project={project} />
       </div>
     </div>
   )

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useRef, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 import ReactTooltip from 'react-tooltip'
 import { lerpColor } from '../utils/colorUtils'
@@ -17,8 +17,9 @@ const AppContext = createContext<AppContextType>({
 })
 
 export function AppWrapper({ children }: { children: React.ReactNode }) {
-  const [scrollPosition, setScrollPosition] = useState(0)
   const [darkMode, setDarkMode] = useState(true)
+
+  const scrollDiv = useRef<HTMLDivElement>(null)
 
   const {
     query: { devMode },
@@ -57,16 +58,19 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
   return (
     <div className={darkMode ? 'dark' : ''}>
       <div
+        ref={scrollDiv}
         className='h-screen bg-background dark:bg-backgroundDark text-black dark:text-white overflow-y-scroll scroll-smooth overflow-x-hidden z-0 customScroll selection:bg-accent/40 dark:selection:bg-accentDark/40 selection:text-black/90'
         style={{
           backgroundPositionX: '50%',
-          backgroundPositionY: -scrollPosition * 0.04 + 'px',
           backgroundImage: darkMode
             ? 'url(/assets/pattern-dark.svg)'
             : 'url(/assets/pattern.svg)',
         }}
         onScroll={(event) => {
-          setScrollPosition(event.currentTarget.scrollTop)
+          const current = event.currentTarget as HTMLDivElement
+          const currentScroll = current.scrollTop
+
+          current.style.backgroundPositionY = -currentScroll * 0.04 + 'px'
         }}>
         <AppContext.Provider value={state}>{children}</AppContext.Provider>
         <div className='absolute bottom-0 right-1 hidden lg:block'>

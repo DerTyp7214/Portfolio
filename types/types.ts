@@ -49,6 +49,7 @@ export interface Project {
     iconUrl: string
     name: string
     url: string
+    className?: string
   }[]
 }
 

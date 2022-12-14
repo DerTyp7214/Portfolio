@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import { AppWrapper } from '../components/appContext'
 import '../styles/globals.css'
 import { PageInfo, Project } from '../types/types'
@@ -18,7 +19,13 @@ export default function App({ Component, pageProps }: AppProps) {
     query: { project: projectId },
   } = useRouter()
 
+  const [isSSR, setIsSSR] = useState(true)
+
   const project = projects?.find((project) => project.id === projectId)
+
+  useEffect(() => {
+    setIsSSR(false)
+  }, [])
 
   return (
     <AppWrapper>
@@ -34,6 +41,8 @@ export default function App({ Component, pageProps }: AppProps) {
           ) : (
             <link rel='icon' href={pageInfo.favIconUrl} />
           )}
+
+          {!isSSR && <link rel='canonical' href={window.location.href} />}
 
           <meta
             name='og:title'
