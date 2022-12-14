@@ -137,8 +137,12 @@ export async function getImageBuffer(url: string) {
 export async function createFaviconWithBadge(
   favicon: { url?: string; file?: string },
   badge: { url?: string; file?: string },
-  imageName: string
+  name: string
 ) {
+  const imageName = `${name.replace(/[^a-zA-Z0-9+#]/g, '_')}-${
+    process.env.NEXT_PUBLIC_RUN_ID
+  }`
+
   const startTime = Date.now()
   const relativeUrl = `/images/cached/favicons/${imageName}.webp`
   const absoluteUrl = `${process.cwd()}/public${relativeUrl}`
