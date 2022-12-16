@@ -177,7 +177,11 @@ export async function createFaviconWithBadge(
 
   const image = await sharp(
     await sharp(faviconBuffer)
-      .resize(200, 200)
+      .resize(200, 200, {
+        fit: 'contain',
+        position: 'center',
+        background: { r: 255, g: 255, b: 255, alpha: 0 },
+      })
       .composite([
         {
           input: rect,
