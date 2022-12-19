@@ -59,7 +59,7 @@ export async function rboardAppProjects(): Promise<{
       extraLinks: [
         {
           name: 'Rboard',
-          url: '/rboard',
+          url: '/rboard#manager',
           iconUrl: await cacheImageLocally({
             file: 'public/projects/rboard.svg',
             imageName: 'rboard',
@@ -134,7 +134,7 @@ export async function rboardAppProjects(): Promise<{
       extraLinks: [
         {
           name: 'Rboard',
-          url: '/rboard',
+          url: '/rboard#creator',
           iconUrl: await cacheImageLocally({
             file: 'public/projects/rboard.svg',
             imageName: 'rboard',
@@ -202,7 +202,7 @@ export async function rboardAppProjects(): Promise<{
       extraLinks: [
         {
           name: 'Rboard',
-          url: '/rboard',
+          url: '/rboard#patcher',
           iconUrl: await cacheImageLocally({
             file: 'public/projects/rboard.svg',
             imageName: 'rboard',

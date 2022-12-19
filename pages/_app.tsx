@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import Script from 'next/script'
 import { useEffect, useState } from 'react'
 import { AppWrapper } from '../components/appContext'
 import '../styles/globals.css'
@@ -83,6 +84,20 @@ export default function App({ Component, pageProps }: AppProps) {
           />
         </Head>
       ) : null}
+      <Script
+        async
+        src='https://www.googletagmanager.com/gtag/js?id=G-FHHB68R52E'
+        strategy='afterInteractive'
+      />
+      <Script id='google-analytics' strategy='afterInteractive'>
+        {`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+      
+        gtag('config', 'G-FHHB68R52E');
+        `}
+      </Script>
       <Component {...pageProps} />
     </AppWrapper>
   )

@@ -235,13 +235,13 @@ function ProjectPage({ projects }: Props) {
                 <Link
                   key={index}
                   href={`/projects/${p.id}`}
-                  className='flex flex-col items-center justify-center w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 rounded-3xl bg-secondaryBackground/50 dark:bg-secondaryBackgroundDark/50 relative cursor-pointer overflow-hidden m-2 transition-all duration-200'>
+                  className='flex flex-col items-center justify-center w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 rounded-3xl bg-secondaryBackground/50 dark:bg-secondaryBackgroundDark/50 relative cursor-pointer overflow-hidden m-2 transition-all duration-200 group'>
                   <img
                     src={p.imageUrl}
                     alt={p.name}
                     className='absolute top-0 left-0 w-full h-full'
                   />
-                  <span className='absolute text-xs sm:text-base lg:text-lg w-full p-1 bottom-0 pb-3 select-none rounded-[5px] bg-white/50 text-black backdrop-blur-[5px] z-30 transition-all duration-200'>
+                  <span className='absolute font-bold text-xs sm:text-base lg:text-lg w-full h-full bottom-0 p-3 select-none bg-white/50 text-black backdrop-blur-[5px] z-30 transition-all ease-out duration-500 top-[100%] group-hover:top-0 rounded-none group-hover:rounded-3xl'>
                     {p.name}
                   </span>
                 </Link>

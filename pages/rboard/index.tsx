@@ -106,6 +106,13 @@ function Rboard({
             width: 1em;
             margin-left: -1em;
           }
+          :target .description h1 {
+            underline-offset: 0.5em;
+            text-decoration: underline;
+            text-decoration-color: ${darkMode
+              ? process.env.NEXT_PUBLIC_COLOR_ACCENT_DARK
+              : process.env.NEXT_PUBLIC_COLOR_ACCENT};
+          }
           .description h2 {
             margin-top: 1em;
             margin-bottom: 0.25em;
