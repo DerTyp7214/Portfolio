@@ -1,85 +1,149 @@
 import { HomeIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { GetStaticProps } from 'next/types'
-import { CSSProperties, useEffect, useState } from 'react'
 import { useAppContext } from '../../components/appContext'
 import BaseHeader from '../../components/BaseHeader'
-import { PageInfo } from '../../types/types'
+import Chip from '../../components/Chip'
+import RboardIcon from '../../svgs/RboardIcon.svg'
+import RboardThemeCreatorIcon from '../../svgs/RboardThemeCreatorIcon.svg'
+import RboardThemePatcherIcon from '../../svgs/RboardThemePatcherIcon.svg'
+import RepositoryIcon from '../../svgs/RepositoryIcon.svg'
+import TelegramIcon from '../../svgs/TelegramIcon.svg'
+import XDAIcon from '../../svgs/XDAIcon.svg'
+import { PageInfo, RboardData } from '../../types/types'
 import fetchPageInfo from '../../utils/fetchPageInfo'
+import fetchRboardData from '../../utils/fetchRboardData'
 
-type Props = {}
-
-function telegramChat({
-  chatLink,
-  commentLimit,
-  height,
-  width,
-  darkMode,
-}: {
-  chatLink: string
-  commentLimit?: number
-  height: number
-  width?: number
-  darkMode: boolean
-}) {
-  const url = new URL(`https://t.me/${chatLink}`)
-  const params = new URLSearchParams(url.search)
-  params.set('embed', '1')
-  params.set('discussion', '1')
-  params.set('comments_limit', commentLimit?.toString() ?? '5')
-  params.set(
-    'color',
-    (darkMode
-      ? process.env.NEXT_PUBLIC_COLOR_ACCENT_DARK
-      : process.env.NEXT_PUBLIC_COLOR_ACCENT
-    )?.replace('#', '') ?? '39C4E8'
-  )
-  params.set('dark', darkMode ? '1' : '0')
-  params.set('height', height.toString())
-  url.search = params.toString()
-
-  return (
-    <iframe
-      src={url.toString()}
-      height={height}
-      width={width ?? '100%'}
-      className='border-none min-w-[320px]'
-    />
-  )
+type Props = {
+  rboardData: RboardData
 }
 
-type ChatWrapperType = { className?: string; style?: CSSProperties }
+function getIcon(icon?: string, props: any = {}) {
+  switch (icon) {
+    case 'TelegramIcon':
+      return <TelegramIcon {...props} />
+    case 'XDAIcon':
+      return <XDAIcon {...props} />
+    case 'RepositoryIcon':
+      return <RepositoryIcon {...props} />
+    case 'RboardIcon':
+      return <RboardIcon {...props} />
+    case 'RboardThemeCreatorIcon':
+      return <RboardThemeCreatorIcon {...props} />
+    case 'RboardThemePatcherIcon':
+      return <RboardThemePatcherIcon {...props} />
+    default:
+      return <></>
+  }
+}
 
-function Rboard({}: Props) {
-  const [isSSR, setIsSSR] = useState(true)
+function Rboard({
+  rboardData: { title, description, icon, chips, projects },
+}: Props) {
   const { darkMode } = useAppContext()
 
-  const chatWrapper = (
-    chatLink: string,
-    { className, style }: ChatWrapperType | undefined = {}
-  ) => (
-    <div
-      style={style}
-      className={`p-4 w-min bg-secondaryBackground dark:bg-secondaryBackgroundDark rounded-xl ${className}`}>
-      {!isSSR
-        ? telegramChat({
-            chatLink,
-            height: 500,
-            darkMode,
-          })
-        : null}
-    </div>
-  )
+  const buildProjectClass = () => {
+    const width = 'w-1/3 min-w-[250px]'
+    const text = 'text-background dark:text-backgroundDark'
+    const background = 'bg-accent/90 dark:bg-accentDark/90'
+    const backgroundHover = 'hover:bg-accent hover:dark:bg-accentDark'
+    const rounded =
+      'rounded-2xl lg:first:rounded-l-[35px] lg:last:rounded-r-[35px]'
+    const padding = 'p-5'
+    const transition = 'transition-all duration-200'
+    const snap = 'snap-center'
+    const cursor = 'cursor-pointer'
 
-  const TelegramGeneralChat = (props: ChatWrapperType) =>
-    chatWrapper('gboardthemes/1', props)
+    return `${width} ${text} ${background} ${backgroundHover} ${rounded} ${padding} ${transition} ${snap} ${cursor}`
+  }
 
-  const TelegramThemesChat = (props: ChatWrapperType) =>
-    chatWrapper('gboardthemes/320750', props)
+  const buildContentClass = (optional?: string) => {
+    const width = 'w-full'
+    const display = 'flex'
+    const space = 'space-x-4'
+    const padding = 'p-2'
+    const max = 'max-w-screen-2xl'
+    const margin = 'm-auto'
+    const snap = 'snap-x snap-mandatory'
+    const overflow = 'overflow-x-auto scrollbar-none'
 
-  useEffect(() => {
-    setIsSSR(false)
-  }, [])
+    return `${width} ${display} ${space} ${padding} ${max} ${margin} ${snap} ${overflow} ${optional}`
+  }
+
+  const buildDescriptionWrapperClass = (optional?: string) => {
+    const width = 'w-full'
+    const display = 'flex'
+    const direction = 'flex-col'
+    const padding = 'p-5'
+    const max = 'max-w-screen-2xl'
+    const margin = 'm-auto'
+
+    return `${width} ${display} ${direction} ${padding} ${max} ${margin} ${optional}`
+  }
+
+  const buildDescriptionWrapper = (description: string) => {
+    const transition = 'transition-all duration-200'
+
+    const wrapperClass = `${transition}`
+    const descriptionClass =
+      'description text-md text-lg md:text-xl lg:text-2xl ml-[1em]'
+
+    const wrapper = (
+      <div className={wrapperClass}>
+        <style jsx global>{`
+          .description h1 {
+            margin-top: 3em;
+            font-size: 1.5em;
+            font-weight: 500;
+          }
+          .description h1::before {
+            content: '•';
+            color: ${darkMode
+              ? process.env.NEXT_PUBLIC_COLOR_TERTIARY_DARK
+              : process.env.NEXT_PUBLIC_COLOR_TERTIARY};
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+          }
+          .description h2 {
+            margin-top: 1em;
+            margin-bottom: 0.25em;
+            font-size: 1.25em;
+            font-weight: 400;
+          }
+          .description h3 {
+            font-size: 1em;
+            font-weight: 400;
+          }
+          .description ol {
+            font-size: 0.875em;
+            font-weight: 400;
+          }
+          .description li {
+            font-size: 0.875em;
+            font-weight: 400;
+          }
+          .description li::before {
+            content: '•';
+            color: ${darkMode
+              ? process.env.NEXT_PUBLIC_COLOR_ACCENT_DARK
+              : process.env.NEXT_PUBLIC_COLOR_ACCENT};
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: 1em;
+          }
+        `}</style>
+        <div
+          className={descriptionClass}
+          dangerouslySetInnerHTML={{ __html: description }}
+        />
+      </div>
+    )
+
+    return wrapper
+  }
 
   return (
     <>
@@ -91,17 +155,49 @@ function Rboard({}: Props) {
         }
       />
 
-      {/*
-        under construction text
-        TODO: remove when ready
-        TODO: show all rboard related stuff
-        */}
-      <div className='text-center text-2xl font-bold text-primaryText dark:text-primaryTextDark'>
-        Under construction
+      <div className='mt-4 font-kulimPark'>
+        {getIcon(icon, { className: 'w-24 h-24 m-auto' })}
+        <h1 className='text-5xl tracking-[15px] text-center w-auto mt-2'>
+          {title}
+        </h1>
+        <h2 className='text-md tracking-[1px] text-center w-auto mt-5 text-accent dark:text-accentDark'>
+          {description.toUpperCase()}
+        </h2>
       </div>
-      <div className='w-full flex justify-between p-2'>
-        <TelegramGeneralChat />
-        <TelegramThemesChat />
+      <div className={buildContentClass('mt-4')}>
+        {projects.map((project) => (
+          <Link
+            key={project.title}
+            className={buildProjectClass()}
+            href={`/projects/${project.id}`}>
+            {getIcon(project.icon, { className: 'w-24 h-24 m-auto' })}
+            <h1 className='text-xl text-center w-auto mt-2'>{project.title}</h1>
+            <h2 className='text-md text-center w-auto mt-5'>
+              {project.description}
+            </h2>
+          </Link>
+        ))}
+      </div>
+      <div className={buildContentClass()}>
+        {chips.map((chip) => (
+          <Chip
+            key={chip.text}
+            text={chip.text}
+            icon={getIcon(chip.icon)}
+            href={chip.href}
+            className='min-w-[250px] snap-center'
+            fullWidth
+          />
+        ))}
+      </div>
+      <div className={buildDescriptionWrapperClass('mt-4')}>
+        {projects.map((project) => (
+          <div key={project.title} className='mt-4' id={project.shortId}>
+            {project.longDescription
+              ? buildDescriptionWrapper(project.longDescription)
+              : null}
+          </div>
+        ))}
       </div>
     </>
   )
@@ -110,11 +206,13 @@ function Rboard({}: Props) {
 export default Rboard
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const pageInfo: PageInfo = await fetchPageInfo()
+  const pageInfo: PageInfo = await fetchPageInfo('rboard')
+  const rboardData: RboardData = await fetchRboardData()
 
   return {
     props: {
       pageInfo,
+      rboardData,
     },
   }
 }

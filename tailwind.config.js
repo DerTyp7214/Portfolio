@@ -17,6 +17,9 @@ module.exports = {
         tertiary: process.env.NEXT_PUBLIC_COLOR_TERTIARY,
         tertiaryDark: process.env.NEXT_PUBLIC_COLOR_TERTIARY_DARK,
       },
+      fontFamily: {
+        kulimPark: ['Kulim Park', 'sans-serif'],
+      },
     },
   },
   plugins: [

@@ -1,8 +1,20 @@
 export interface PageInfo {
   title: string
   favIconUrl: string
-  description?: string
+  description: string | null
   ogImageUrl: string
+}
+
+export interface RboardData {
+  chips: {
+    icon: string
+    text: string
+    href: string
+  }[]
+  projects: Project[]
+  title: string
+  description: string
+  icon: string
 }
 
 export interface ProfileInfo {
@@ -51,6 +63,12 @@ export interface Project {
     url: string
     className?: string
   }[]
+
+  shortId?: string
+  title?: string
+  description?: string
+  longDescription?: string
+  icon?: string
 }
 
 export interface ContactInfo {

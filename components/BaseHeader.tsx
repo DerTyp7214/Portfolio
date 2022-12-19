@@ -47,7 +47,14 @@ export default function Header({ leftContent, rightContent }: Props) {
             duration: 0.8,
           }}
           className='flex flex-row items-center'>
-          {leftContent}
+          {leftContent ?? (
+            <div
+              className='opacity-0 cursor-default relative'
+              onClick={(e) => e.stopPropagation()}>
+              <div className='w-full h-full absolute top-0 left-0 z-50'></div>
+              {rightContent}
+            </div>
+          )}
           <div className='inline-block md:hidden'>{icon}</div>
         </motion.div>
 
@@ -84,7 +91,14 @@ export default function Header({ leftContent, rightContent }: Props) {
             duration: 0.8,
           }}
           className='text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white flex flex-row items-center cursor-pointer transition-all duration-200 group'>
-          {rightContent}
+          {rightContent ?? (
+            <div
+              className='opacity-0 cursor-default relative'
+              onClick={(e) => e.stopPropagation()}>
+              <div className='w-full h-full absolute top-0 left-0 z-50'></div>
+              {leftContent}
+            </div>
+          )}
         </motion.div>
       </div>
     </header>

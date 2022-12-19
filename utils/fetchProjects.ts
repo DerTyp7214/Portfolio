@@ -9,6 +9,231 @@ import {
 import fetchSkill from './fetchSkill'
 import { languages, technologies, wikiMappping } from './fetchSkills'
 
+const rboardApps = ['manager', 'creator', 'patcher']
+
+type RboardApp = typeof rboardApps[number]
+
+export async function rboardAppProjects(): Promise<{
+  [key: RboardApp]: Project
+}> {
+  const skillData = await Promise.all([
+    ...languages.map((skill) =>
+      fetchSkill({ skill, type: 'language', wiki: wikiMappping[skill] })
+    ),
+    ...technologies.map((skill) =>
+      fetchSkill({ skill, type: 'technology', wiki: wikiMappping[skill] })
+    ),
+  ])
+
+  const getSkills = (skills: string[]): Skill[] =>
+    skillData.filter((a) => a && skills.includes(a.name)) as Skill[]
+
+  return {
+    manager: {
+      name: 'Rboard Theme Manager V3',
+      id: 'Rboard Theme Manager V3'.replace(/ /g, '-').toLowerCase(),
+      authors: ['DerTyp7214', 'AkosPaha', 'RadekBledowski'],
+      imageUrl: 'assets/parsed/rboardThemeManager.svg',
+      skills: getSkills(['Kotlin', 'Gson', 'C', 'C++']),
+      githubUrl: 'https://github.com/DerTyp7214/RboardThemeManagerV3',
+      keypoints: [
+        'Rboard Theme Manager V3 is a theme manager for the Rboard keyboard.',
+        'It also allows you to download themes from the community.',
+        'It is available on F-Droid and GitHub.',
+      ],
+      downloads:
+        (await gitHubDownloads(
+          'DerTyp7214',
+          'RboardThemeManagerV3',
+          'tags/latest-release',
+          true
+        )) +
+        12000 + // 12k downloads from Play Store before it was removed
+        15000, // 15k downloads from GitHub before it realized that they get reset every time a new release is made :)
+      downloadUrl:
+        'https://github.com/DerTyp7214/RboardThemeManagerV3/releases/latest/download/app-release.apk',
+      alternativeDownload: {
+        name: 'Download (Below Android 12)',
+        url: 'https://github.com/DerTyp7214/RboardThemeManagerV3/releases/download/latest-rCompatible/app-release.apk',
+      },
+      extraLinks: [
+        {
+          name: 'Rboard',
+          url: '/rboard',
+          iconUrl: await cacheImageLocally({
+            file: 'public/projects/rboard.svg',
+            imageName: 'rboard',
+            path: 'icons',
+            newWidth: 32,
+            newHeight: 32,
+          }),
+          className: 'invert dark:invert-0',
+        },
+        {
+          name: 'Telegram',
+          url: 'https://t.me/gboardthemes',
+          iconUrl: await cacheImageLocally({
+            url: 'https://telegram.org/img/t_logo.png',
+            imageName: 'telegram',
+            path: 'icons',
+            newWidth: 32,
+            newHeight: 32,
+          }),
+        },
+      ],
+
+      title: 'Rboard Theme Manager',
+      description: 'Download themes and enable hidden Gboard features',
+      longDescription: `
+# [How to use Rboard Theme Manager](#manager)
+
+## Downloading themes
+
+1. Open the app
+2. Open the "Download" tab
+3. Select a themepack
+4. Select the themes you want to download
+5. Click on the "Download" button
+
+## Enabling hidden features
+
+1. Open the app
+2. Swipe up to open the navigation drawer
+3. Select "Flags"
+4. Select the features you want to enable
+5. Go back to the main screen to apply the changes
+    `,
+      shortId: 'manager',
+      icon: 'RboardIcon',
+    },
+    creator: {
+      name: 'Rboard Theme Creator',
+      id: 'Rboard Theme Creator'.replace(/ /g, '-').toLowerCase(),
+      authors: ['DerTyp7214', 'RadekBledowski'],
+      imageUrl: 'assets/parsed/rboardThemeCreator.svg',
+      skills: getSkills(['Kotlin', 'Gson', 'C', 'C++']),
+      githubUrl: 'https://github.com/DerTyp7214/RboardThemeCreator',
+      playStoreUrl:
+        'https://play.google.com/store/apps/details?id=de.dertyp7214.rboardthemecreator',
+      keypoints: [
+        'Rboard Theme Creator is a theme creator for the Rboard keyboard.',
+        'It allows you to create your own themes for Rboard.',
+        'It also allows you to share your themes with others.',
+        'It is available on Google Play and GitHub.',
+      ],
+      downloads:
+        (await playStoreDownloads('de.dertyp7214.rboardthemecreator')) +
+        (await gitHubDownloads(
+          'DerTyp7214',
+          'RboardThemeCreator',
+          'tags/latest-release',
+          true
+        )),
+      downloadUrl:
+        'https://github.com/DerTyp7214/RboardThemeCreator/releases/latest/download/app-release.apk',
+      extraLinks: [
+        {
+          name: 'Rboard',
+          url: '/rboard',
+          iconUrl: await cacheImageLocally({
+            file: 'public/projects/rboard.svg',
+            imageName: 'rboard',
+            path: 'icons',
+            newWidth: 32,
+            newHeight: 32,
+          }),
+          className: 'invert dark:invert-0',
+        },
+        {
+          name: 'Telegram',
+          url: 'https://t.me/gboardthemes',
+          iconUrl: await cacheImageLocally({
+            url: 'https://telegram.org/img/t_logo.png',
+            imageName: 'telegram',
+            path: 'icons',
+            newWidth: 32,
+            newHeight: 32,
+          }),
+        },
+      ],
+
+      title: 'Rboard Theme Creator',
+      description:
+        'Create your own theme base that can be editied with Patcher',
+      longDescription: `
+# [How to use Rboard Theme Creator](#creator)
+
+## Creating theme
+
+1. Open the app
+2. Select options above preview of keyboard
+3. Click "Add theme"
+4. Select Rboard Theme manager if you done editing theme or Rboard theme Patcher if you want to continue editing theme with more options
+        `,
+      shortId: 'creator',
+      icon: 'RboardThemeCreatorIcon',
+    },
+    patcher: {
+      name: 'Rboard Patcher',
+      id: 'Rboard Patcher'.replace(/ /g, '-').toLowerCase(),
+      authors: ['DerTyp7214', 'RadekBledowski'],
+      imageUrl: 'assets/parsed/rboardPatcher.svg',
+      skills: getSkills(['Kotlin', 'Gson', 'C', 'C++']),
+      githubUrl: 'https://github.com/DerTyp7214/RboardPatcher',
+      playStoreUrl:
+        'https://play.google.com/store/apps/details?id=de.dertyp7214.rboardpatcher',
+      keypoints: [
+        'Rboard Patcher is a patcher for Rboard Themes.',
+        'It allows you to patch Rboard Themes with custom features.',
+        'It is available on Google Play and GitHub.',
+        'It is also available as a module for Rboard Theme Manager V3.',
+        'It is also available as a module for Rboard Theme Creator.',
+      ],
+      downloads:
+        (await playStoreDownloads('de.dertyp7214.rboardpatcher')) +
+        (await gitHubDownloads(
+          'DerTyp7214',
+          'RboardPatcher',
+          'tags/latest-release',
+          true
+        )),
+      downloadUrl:
+        'https://github.com/DerTyp7214/RboardPatcher/releases/latest/download/app-release.apk',
+      extraLinks: [
+        {
+          name: 'Rboard',
+          url: '/rboard',
+          iconUrl: await cacheImageLocally({
+            file: 'public/projects/rboard.svg',
+            imageName: 'rboard',
+            path: 'icons',
+            newWidth: 32,
+            newHeight: 32,
+          }),
+          className: 'invert dark:invert-0',
+        },
+        {
+          name: 'Telegram',
+          url: 'https://t.me/gboardthemes',
+          iconUrl: await cacheImageLocally({
+            url: 'https://telegram.org/img/t_logo.png',
+            imageName: 'telegram',
+            path: 'icons',
+            newWidth: 32,
+            newHeight: 32,
+          }),
+        },
+      ],
+
+      title: 'Rboard Theme Patcher',
+      description: 'Customize your Rboard themes to your preferences',
+      longDescription: '',
+      shortId: 'patcher',
+      icon: 'RboardThemePatcherIcon',
+    },
+  }
+}
+
 export default async function fetchProjects(): Promise<Project[]> {
   const skillData = await Promise.all([
     ...languages.map((skill) =>
@@ -24,109 +249,7 @@ export default async function fetchProjects(): Promise<Project[]> {
 
   return await Promise.all(
     [
-      {
-        name: 'Rboard Theme Manager V3',
-        authors: ['DerTyp7214', 'AkosPaha', 'RadekBledowski'],
-        imageUrl: 'assets/parsed/rboardThemeManager.svg',
-        skills: getSkills(['Kotlin', 'Gson', 'C', 'C++']),
-        githubUrl: 'https://github.com/DerTyp7214/RboardThemeManagerV3',
-        keypoints: [
-          'Rboard Theme Manager V3 is a theme manager for the Rboard keyboard.',
-          'It also allows you to download themes from the community.',
-          'It is available on F-Droid and GitHub.',
-        ],
-        downloads:
-          (await gitHubDownloads(
-            'DerTyp7214',
-            'RboardThemeManagerV3',
-            'tags/latest-release',
-            true
-          )) +
-          12000 + // 12k downloads from Play Store before it was removed
-          15000, // 15k downloads from GitHub before it realized that they get reset every time a new release is made :)
-        downloadUrl:
-          'https://github.com/DerTyp7214/RboardThemeManagerV3/releases/latest/download/app-release.apk',
-        alternativeDownload: {
-          name: 'Download (Below Android 12)',
-          url: 'https://github.com/DerTyp7214/RboardThemeManagerV3/releases/download/latest-rCompatible/app-release.apk',
-        },
-        extraLinks: [
-          {
-            name: 'Rboard',
-            url: '/rboard',
-            iconUrl: await cacheImageLocally({
-              file: 'public/projects/rboard.svg',
-              imageName: 'rboard',
-              path: 'icons',
-              newWidth: 32,
-              newHeight: 32,
-            }),
-            className: 'invert dark:invert-0',
-          },
-          {
-            name: 'Telegram',
-            url: 'https://t.me/gboardthemes',
-            iconUrl: await cacheImageLocally({
-              url: 'https://telegram.org/img/t_logo.png',
-              imageName: 'telegram',
-              path: 'icons',
-              newWidth: 32,
-              newHeight: 32,
-            }),
-          },
-        ],
-      },
-      {
-        name: 'Rboard Theme Creator',
-        authors: ['DerTyp7214', 'RadekBledowski'],
-        imageUrl: 'assets/parsed/rboardThemeCreator.svg',
-        skills: getSkills(['Kotlin', 'Gson', 'C', 'C++']),
-        githubUrl: 'https://github.com/DerTyp7214/RboardThemeCreator',
-        playStoreUrl:
-          'https://play.google.com/store/apps/details?id=de.dertyp7214.rboardthemecreator',
-        keypoints: [
-          'Rboard Theme Creator is a theme creator for the Rboard keyboard.',
-          'It allows you to create your own themes for Rboard.',
-          'It also allows you to share your themes with others.',
-          'It is available on Google Play and GitHub.',
-        ],
-        downloads:
-          (await playStoreDownloads('de.dertyp7214.rboardthemecreator')) +
-          (await gitHubDownloads(
-            'DerTyp7214',
-            'RboardThemeCreator',
-            'tags/latest-release',
-            true
-          )),
-        downloadUrl:
-          'https://github.com/DerTyp7214/RboardThemeCreator/releases/latest/download/app-release.apk',
-      },
-      {
-        name: 'Rboard Patcher',
-        authors: ['DerTyp7214', 'RadekBledowski'],
-        imageUrl: 'assets/parsed/rboardPatcher.svg',
-        skills: getSkills(['Kotlin', 'Gson', 'C', 'C++']),
-        githubUrl: 'https://github.com/DerTyp7214/RboardPatcher',
-        playStoreUrl:
-          'https://play.google.com/store/apps/details?id=de.dertyp7214.rboardpatcher',
-        keypoints: [
-          'Rboard Patcher is a patcher for Rboard Themes.',
-          'It allows you to patch Rboard Themes with custom features.',
-          'It is available on Google Play and GitHub.',
-          'It is also available as a module for Rboard Theme Manager V3.',
-          'It is also available as a module for Rboard Theme Creator.',
-        ],
-        downloads:
-          (await playStoreDownloads('de.dertyp7214.rboardpatcher')) +
-          (await gitHubDownloads(
-            'DerTyp7214',
-            'RboardPatcher',
-            'tags/latest-release',
-            true
-          )),
-        downloadUrl:
-          'https://github.com/DerTyp7214/RboardPatcher/releases/latest/download/app-release.apk',
-      },
+      ...Object.values(await rboardAppProjects()),
       {
         name: 'Rboard IME Tester',
         authors: ['DerTyp7214', 'RadekBledowski'],
@@ -304,7 +427,7 @@ export default async function fetchProjects(): Promise<Project[]> {
           `${id}-favicon`
         ),
         extraLinks: [
-          ...(project.extraLinks ?? []),
+          ...((project as any).extraLinks ?? []),
           {
             name: 'GitHub',
             url: project.githubUrl,

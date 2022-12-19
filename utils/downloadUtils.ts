@@ -169,8 +169,6 @@ export async function createFaviconWithBadge(
   else if (favicon.file)
     log(chalk.blue('Cache'), chalk.white(`  - ${favicon.file}`))
 
-  if (!badgeBuffer) throw new Error('No badge buffer')
-
   const rect = Buffer.from(
     '<svg><rect x="0" y="0" width="200" height="200" rx="25" ry="25"/></svg>'
   )
@@ -197,12 +195,16 @@ export async function createFaviconWithBadge(
       right: 10,
       background: { r: 255, g: 255, b: 255, alpha: 0 },
     })
-    .composite([
-      {
-        input: await sharp(badgeBuffer).resize(100, 100).toBuffer(),
-        gravity: 'southeast',
-      },
-    ])
+    .composite(
+      badgeBuffer
+        ? [
+            {
+              input: await sharp(badgeBuffer).resize(100, 100).toBuffer(),
+              gravity: 'southeast',
+            },
+          ]
+        : []
+    )
     .webp()
     .toFile(absoluteUrl)
 
