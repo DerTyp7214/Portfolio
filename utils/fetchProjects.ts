@@ -227,7 +227,17 @@ export async function rboardAppProjects(): Promise<{
 
       title: 'Rboard Theme Patcher',
       description: 'Customize your Rboard themes to your preferences',
-      longDescription: '',
+      longDescription: `
+# How to use Rboard Theme Patcher
+
+## Patching theme
+
+1. Open Rboard Theme Manager
+2. Select theme you want to patch
+3. Click "Patch"
+4. Select icons/fonts/fixes/tweaks you want inside your theme
+5. Click "Add to Manager" to finish patching your theme (name is optional, leave it if you want to just replace previous theme)
+      `,
       shortId: 'patcher',
       icon: 'RboardThemePatcherIcon',
     },
