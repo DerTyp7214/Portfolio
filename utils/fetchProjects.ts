@@ -228,7 +228,7 @@ export async function rboardAppProjects(): Promise<{
       title: 'Rboard Theme Patcher',
       description: 'Customize your Rboard themes to your preferences',
       longDescription: `
-# How to use Rboard Theme Patcher
+# [How to use Rboard Theme Patcher](#patcher)
 
 ## Patching theme
 
