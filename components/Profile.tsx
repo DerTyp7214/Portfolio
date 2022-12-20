@@ -24,9 +24,9 @@ export default function Profile({ profileInfo }: Props) {
     <div className='h-screen flex flex-col space-y-8 items-center justify-center text-center overflow-hidden'>
       <BackgroundCircles />
 
-      <motion.div className='relative rounded-full w-32 h-32 border-4 border-accent dark:border-accentDark overflow-hidden'>
+      <motion.div className='relative w-32 h-32'>
         <img
-          className='filter grayscale-[.6] object-cover absolute top-0 left-0 w-full h-full'
+          className='filter object-cover absolute top-0 left-0 w-full h-full rounded-full overflow-hidden'
           src={profileInfo.avatarUrl}
           alt='avatar'
         />

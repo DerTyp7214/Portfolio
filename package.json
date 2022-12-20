@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "rimraf public/images/cached && next dev",
-    "new-color": "rimraf .next && node themeUtils/generateNewColors.js",
+    "dev": "next dev",
+    "new-color": "rimraf public/images/cached && rimraf .next && node themeUtils/pregenerateColorsAndImages.mjs",
     "preBuild": "npm run new-color",
     "build": "next build",
     "start": "next start",
@@ -47,14 +47,17 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.0.5",
+    "@types/color": "^3.0.3",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
     "@types/sharp": "^0.31.0",
     "autoprefixer": "^10.4.13",
+    "dotenv": "^16.0.3",
     "postcss": "^8.4.19",
     "rimraf": "^3.0.2",
     "tailwind-scrollbar": "^2.0.1",
-    "tailwindcss": "^3.2.4"
+    "tailwindcss": "^3.2.4",
+    "ts-node": "^10.9.1"
   }
 }
