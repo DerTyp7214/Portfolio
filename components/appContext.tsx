@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { createContext, useContext, useRef, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 import ReactTooltip from 'react-tooltip'
 import { lerpColor } from '../utils/colorUtils'
@@ -18,12 +18,17 @@ const AppContext = createContext<AppContextType>({
 
 export function AppWrapper({ children }: { children: React.ReactNode }) {
   const [darkMode, setDarkMode] = useState(true)
+  const [isMounted, setIsMounted] = useState(false)
 
   const scrollDiv = useRef<HTMLDivElement>(null)
 
   const {
     query: { devMode },
   } = useRouter()
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   let state: AppContextType = { darkMode, setDarkMode }
 
@@ -81,7 +86,7 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
       <div
         id='modal-root'
         className='text-black dark:text-white selection:bg-accent/40 dark:selection:bg-accentDark/40 selection:text-black/90'></div>
-      <ReactTooltip
+      {isMounted && <ReactTooltip
         html
         backgroundColor={lerpColor(
           (darkMode
@@ -93,7 +98,7 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
         textColor={darkMode ? '#FFFFFF' : '#000000'}
         multiline
         className='max-w-[200px] text-center'
-      />
+      />}
       <ToastContainer
         position='bottom-right'
         autoClose={5000}
