@@ -5,7 +5,7 @@ export default async function fetchProfileInfo(): Promise<ProfileInfo> {
   return {
     name: 'Josua Lengwenath',
     avatarUrl: await cacheImageLocally({
-      file: 'assets/parsed/favicon.svg',
+      file: 'assets/parsed/profile.png',
       imageName: 'avatar',
       path: 'profile',
       newWidth: 150,

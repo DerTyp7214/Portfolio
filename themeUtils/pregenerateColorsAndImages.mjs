@@ -112,7 +112,7 @@ const createScaledFavicons = async () => {
   await Promise.all([
     sharp(favicon).resize(196, 196).png().toFile('./public/favicon.ico'),
     sharp(favicon).resize(196, 196).png().toFile('./public/favicon.png'),
-    new Promise(resolve => fs.writeFile('./assets/parsed/favicon.svg', faviconSvg, resolve)),
+    sharp(favicon).resize(420, 420).png().toFile('./assets/parsed/profile.png'),
     ...sizes.map(saveWithSize),
   ])
 

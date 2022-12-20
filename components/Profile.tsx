@@ -26,7 +26,7 @@ export default function Profile({ profileInfo }: Props) {
 
       <motion.div className='relative w-32 h-32'>
         <img
-          className='filter object-cover absolute top-0 left-0 w-full h-full rounded-full overflow-hidden'
+          className='filter object-cover absolute top-0 left-0 w-full h-full rounded-full border-4 border-accent dark:border-accentDark overflow-hidden'
           src={profileInfo.avatarUrl}
           alt='avatar'
         />
