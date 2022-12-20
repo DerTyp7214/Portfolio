@@ -29,6 +29,7 @@ const manifest = {
 
 const rboardManifest = {
   ...manifest,
+  id: `rboard-${version}`,
   name: 'RBoard',
   short_name: 'RBoard',
   description: 'RBoard - Rboard PWA',
