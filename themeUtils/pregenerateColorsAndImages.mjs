@@ -27,6 +27,14 @@ const manifest = {
   orientation: 'portrait',
 }
 
+const rboardManifest = {
+  ...manifest,
+  name: 'RBoard',
+  short_name: 'RBoard',
+  description: 'RBoard - Rboard PWA',
+  start_url: '/rboard',
+}
+
 const randomColor = Color.rgb(
   Math.floor(Math.random() * 255),
   Math.floor(Math.random() * 255),
@@ -123,6 +131,49 @@ const createScaledFavicons = async () => {
   }))
 }
 
+const createScaledRboardIcons = async () => {
+  const sizes = [16, 32, 96, 192, 384, 512]
+
+  const rect = Buffer.from(
+    '<svg><rect x="0" y="0" width="512" height="512" rx="64" ry="64"/></svg>'
+  )
+
+  const rboardSvg = fs
+    .readFileSync('./assets/raw/rboardThemeManager.svg', 'utf8')
+    .replace(/%desaturated_accent%/g, desaturatedAccentDark.hex())
+    .replace(/%accent_background%/g, accentDark.mix(backgroundDark, 0.8).hex())
+
+  const rboard = await sharp(Buffer.from(rboardSvg))
+    .resize(512, 512, {
+      fit: 'contain',
+      position: 'center',
+      background: { r: 255, g: 255, b: 255, alpha: 0 },
+    })
+    .composite([
+      {
+        input: rect,
+        blend: 'dest-in',
+      },
+    ])
+    .png()
+    .toBuffer()
+
+  const saveWithSize = async (size) => {
+    await sharp(rboard)
+      .resize(size, size)
+      .png()
+      .toFile(`./public/icons/rboard-${size}x${size}_${version}.png`)
+  }
+
+  await Promise.all(sizes.map(saveWithSize))
+
+  rboardManifest.icons = sizes.map((size) => ({
+    src: `/icons/rboard-${size}x${size}_${version}.png`,
+    sizes: `${size}x${size}`,
+    type: 'image/png',
+  }))
+}
+
 const saveEnv = () => {
   const newEnv = `NEXT_PUBLIC_COLOR_ACCENT=${accent.hex()}
 NEXT_PUBLIC_COLOR_ACCENT_DARK=${accentDark.hex()}
@@ -184,13 +235,17 @@ async function proccess() {
       true
     ),
 
-    createScaledFavicons(),
+    createScaledFavicons().then(createScaledRboardIcons),
   ])
 
   manifest.theme_color = accentDark.hex()
   manifest.background_color = backgroundDark.hex()
 
+  rboardManifest.theme_color = accentDark.hex()
+  rboardManifest.background_color = backgroundDark.hex()
+
   fs.writeFileSync('./public/manifest.json', JSON.stringify(manifest, null, 4))
+  fs.writeFileSync('./public/rboard-manifest.json', JSON.stringify(rboardManifest, null, 4))
 }
 
 proccess().then(() => {

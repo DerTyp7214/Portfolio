@@ -113,7 +113,7 @@ export default function App({ Component, pageProps }: AppProps) {
           />
           <meta name='msapplication-tap-highlight' content='no' />
 
-          <link rel='manifest' href='/manifest.json' />
+          <link rel='manifest' href={pageInfo.manifestUrl} />
           <link
             rel='mask-icon'
             href='/icons/safari-pinned-tab.svg'

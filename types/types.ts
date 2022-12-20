@@ -4,6 +4,7 @@ export interface PageInfo {
   description: string | null
   ogImageUrl: string
   appName: string
+  manifestUrl: string
 }
 
 export interface RboardData {

@@ -29,6 +29,11 @@ const favIcons: { [key: Page]: () => Promise<string> } = {
     ),
 }
 
+const manifestUrls: { [key: string]: string } = {
+  default: `/manifest.json?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
+  rboard: `/rboard-manifest.json?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
+}
+
 const ogImages: { [key: Page]: string } = {
   default: `${process.env.NEXT_PUBLIC_BASE_URL}/assets/og-image.png?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
   rboard: `${process.env.NEXT_PUBLIC_BASE_URL}/assets/og-image-rboard.png?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
@@ -46,5 +51,6 @@ export default async function fetchPageInfo(page?: string): Promise<PageInfo> {
     ogImageUrl: ogImages[page || 'default'],
     description: description[page || 'default'],
     appName: 'DerTyp7214.de',
+    manifestUrl: manifestUrls[page || 'default'],
   }
 }
