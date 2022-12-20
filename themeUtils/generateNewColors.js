@@ -2,6 +2,28 @@ const Color = require('color')
 const fs = require('fs')
 const sharp = require('sharp')
 
+const manifest = {
+    name: 'DerTyp7214.de',
+    short_name: 'DerTyp7214.de',
+    description: 'DerTyp7214.de - Small website with stuff id did',
+    icons: [],
+    theme_color: '#000000',
+    background_color: '#000000',
+    start_url: '/',
+    protocol_handlers: [
+        {
+            protocol: 'web+derTyp7214',
+            url: '/',
+        },
+        {
+            protocol: 'web+rboard',
+            url: '/rboard',
+        }
+    ],
+    display: 'standalone',
+    orientation: 'portrait'
+}
+
 const randomColor = Color.rgb(
     Math.floor(Math.random() * 255),
     Math.floor(Math.random() * 255),
@@ -38,6 +60,9 @@ NEXT_PUBLIC_COLOR_BACKGROUND=${background.hex()}
 NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND=${secondaryBackground.hex()}
 `
 
+manifest.theme_color = accentDark.hex()
+manifest.background_color = backgroundDark.hex()
+
 const modifySvgColors = async (input, output, asSvg = false) => {
     const svg = fs.readFileSync(input, 'utf8')
     const newSvg = svg
@@ -55,6 +80,58 @@ const modifySvgColors = async (input, output, asSvg = false) => {
         .toFile(output)
 }
 
+const createScaledFavicons = async () => {
+    const sizes = [16, 32, 96, 192, 384, 512]
+
+    const rect = Buffer.from(
+        '<svg><rect x="0" y="0" width="512" height="512" rx="64" ry="64"/></svg>'
+    )
+
+    const faviconSvg = fs.readFileSync('./assets/raw/favicon.svg', 'utf8')
+        .replace(/%accent%/g, desaturatedAccent.hex())
+        .replace(/%accent_dark%/g, accentDark.hex())
+
+    const favicon = await sharp(Buffer.from(faviconSvg))
+        .resize(512, 512, {
+            fit: 'contain',
+            position: 'center',
+            background: { r: 255, g: 255, b: 255, alpha: 0 },
+        })
+        .composite([
+            {
+                input: rect,
+                blend: 'dest-in',
+            },
+        ])
+        .png()
+        .toBuffer()
+
+    const saveWithSize = async (size) => {
+        await sharp(favicon)
+            .resize(size, size)
+            .png()
+            .toFile(`./public/icons/favicon-${size}x${size}.png`)
+    }
+
+    await Promise.all([
+        sharp(favicon)
+            .resize(196, 196)
+            .png()
+            .toFile('./public/favicon.ico'),
+        ...sizes.map(saveWithSize)
+    ])
+
+    manifest.icons = sizes.map((size) => ({
+        src: `/icons/favicon-${size}x${size}.png`,
+        sizes: `${size}x${size}`,
+        type: 'image/png',
+    }))
+}
+
+const saveManifest = async () => {
+    fs.writeFileSync('./public/manifest.json', JSON.stringify(manifest, null, 4))
+}
+
 fs.writeFileSync('./.env', newEnv)
 
 if (!fs.existsSync('./public/assets')) fs.mkdirSync('./public/assets')
@@ -69,7 +146,9 @@ Promise.all([
     modifySvgColors('./assets/raw/rboardPatcher.svg', './assets/parsed/rboardPatcher.svg', true),
     modifySvgColors('./assets/raw/mixThemeCreator.svg', './assets/parsed/mixThemeCreator.svg', true),
     modifySvgColors('./assets/raw/ytmdRemote.svg', './assets/parsed/ytmdRemote.svg', true),
-])
+
+    createScaledFavicons()
+]).then(saveManifest)
 
 console.log(`Accent: ${accent.hex()}
 Accent Dark: ${accentDark.hex()}

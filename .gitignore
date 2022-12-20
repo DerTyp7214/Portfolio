@@ -42,3 +42,13 @@ next-env.d.ts
 
 # dertyp
 assets/parsed
+
+# service workers
+public/sw.js
+public/sw.js.map
+
+# workbox
+public/workbox-*
+
+# icons
+public/icons

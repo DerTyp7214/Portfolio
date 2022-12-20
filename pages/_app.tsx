@@ -38,9 +38,17 @@ export default function App({ Component, pageProps }: AppProps) {
               : pageInfo.title}
           </title>
           {project?.faviconUrl ? (
-            <link rel='icon' href={project.faviconUrl} />
+            <>
+              <link rel='icon' href={project.faviconUrl} />
+              <link rel='shortcut icon' href={project.faviconUrl} />
+              <link rel='apple-touch-icon' href={project.faviconUrl} />
+            </>
           ) : (
-            <link rel='icon' href={pageInfo.favIconUrl} />
+            <>
+              <link rel='icon' href={pageInfo.favIconUrl} />
+              <link rel='shortcut icon' href={pageInfo.favIconUrl} />
+              <link rel='apple-touch' href={pageInfo.favIconUrl} />
+            </>
           )}
 
           {!isSSR && <link rel='canonical' href={window.location.href} />}
@@ -73,6 +81,46 @@ export default function App({ Component, pageProps }: AppProps) {
           )}
 
           <meta
+            name='application-name'
+            content={
+              project?.name
+                ? `${project?.name} - ${pageInfo.title}`
+                : pageInfo.title
+            }
+          />
+          <meta name='apple-mobile-web-app-capable' content='yes' />
+          <meta
+            name='apple-mobile-web-app-status-bar-style'
+            content='default'
+          />
+          <meta
+            name='apple-mobile-web-app-title'
+            content={
+              project?.name
+                ? `${project?.name} - ${pageInfo.title}`
+                : pageInfo.title
+            }
+          />
+          <meta name='format-detection' content='telephone=no' />
+          <meta name='mobile-web-app-capable' content='yes' />
+          <meta
+            name='msapplication-config'
+            content='/icons/browserconfig.xml'
+          />
+          <meta
+            name='msapplication-TileColor'
+            content={process.env.NEXT_PUBLIC_COLOR_BACKGROUND}
+          />
+          <meta name='msapplication-tap-highlight' content='no' />
+
+          <link rel='manifest' href='/manifest.json' />
+          <link
+            rel='mask-icon'
+            href='/icons/safari-pinned-tab.svg'
+            color={process.env.NEXT_PUBLIC_COLOR_ACCENT}
+          />
+
+          <meta
             name='theme-color'
             media='(prefers-color-scheme: light)'
             content={process.env.NEXT_PUBLIC_COLOR_ACCENT}
@@ -83,7 +131,20 @@ export default function App({ Component, pageProps }: AppProps) {
             content={process.env.NEXT_PUBLIC_COLOR_BACKGROUND}
           />
         </Head>
-      ) : null}
+      ) : (
+        <Head>
+          <title>DerTyp7214.de</title>
+          <link rel='icon' href='/favicon.png' />
+          <link rel='shortcut icon' href='/favicon.png' />
+          <link rel='apple-touch-icon' href='/favicon.png' />
+
+          <meta name='og:title' content='DerTyp7214.de' />
+          <meta name='og:image' content='/og-image.png' />
+          <meta name='og:url' content={process.env.NEXT_PUBLIC_BASE_URL} />
+          <meta name='og:description' content='DerTyp7214.de' />
+          <meta name='description' content='DerTyp7214.de' />
+        </Head>
+      )}
       <Script
         async
         src='https://www.googletagmanager.com/gtag/js?id=G-FHHB68R52E'

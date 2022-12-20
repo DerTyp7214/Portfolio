@@ -3,6 +3,7 @@ export interface PageInfo {
   favIconUrl: string
   description: string | null
   ogImageUrl: string
+  appName: string
 }
 
 export interface RboardData {

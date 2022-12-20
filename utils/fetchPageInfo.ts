@@ -45,5 +45,6 @@ export default async function fetchPageInfo(page?: string): Promise<PageInfo> {
     favIconUrl: await favIcons[page || 'default'](),
     ogImageUrl: ogImages[page || 'default'],
     description: description[page || 'default'],
+    appName: 'DerTyp7214.de',
   }
 }

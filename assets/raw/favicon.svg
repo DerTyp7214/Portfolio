@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="none">
+    <path fill="%accent_dark%" d="M0 0h512v512H0z" />
+    <path fill="%accent%" d="M42 42h171.932v86.575H42V42ZM298.068 42H470v86.575H298.068V42Z" />
+    <path fill="%accent%" d="M127.356 126.137h257.288v89.014H127.356v-89.014Z" />
+    <path fill="%accent%" d="M42 212.712h86.575v171.932H42V212.712ZM382.205 212.712h86.576v171.932h-86.576V212.712Z" />
+    <path fill="%accent%" d="M127.356 298.068h86.576V470h-86.576V298.068ZM298.068 298.068h86.576V470h-86.576V298.068Z" />
+    <path fill="%accent%" d="M212.712 383.425h86.576V470h-86.576v-86.575Z" />
+</svg>
