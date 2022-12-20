@@ -82,6 +82,13 @@ jobs:
 
       - name: Prepare build
         run: pnpm preBuild
+        env:
+          NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+          NEXT_PUBLIC_GIT_HASH: ${{ steps.commit.outputs.hash }}
+          NEXT_PUBLIC_GIT_HASH_SHORT: ${{ steps.commit.outputs.short }}
+          NEXT_PUBLIC_RUN_ID: ${{ github.run_id }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_OUTPUT: ${{ env.GITHUB_OUTPUT }}
 
       - name: Build with Next.js
         id: buildNextJS

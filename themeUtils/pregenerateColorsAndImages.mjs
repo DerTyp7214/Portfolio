@@ -1,10 +1,15 @@
 import Color from 'color'
-import fs from 'fs'
-import sharp from 'sharp'
 import * as dotenv from 'dotenv'
+import fs from 'fs'
+import path from 'path'
 import rimraf from 'rimraf'
+import sharp from 'sharp'
+import { fileURLToPath } from 'url'
 
-const { parsed: env } = dotenv.config({ path: '.env.local' })
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+const { parsed: env } = dotenv.config({ path: `${__dirname}/../.env.local` })
 
 const version = (proccess.env ?? env).NEXT_PUBLIC_RUN_ID
 
