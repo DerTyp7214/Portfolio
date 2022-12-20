@@ -73,7 +73,7 @@ function ProjectPage({ projects }: Props) {
   if (!project) return <div>Project not found</div>
 
   return (
-    <div>
+    <>
       <BaseHeader
         leftContent={
           <Link href='/#projects'>
@@ -86,7 +86,7 @@ function ProjectPage({ projects }: Props) {
         skill={currentSkill}
         onClose={() => ShowModal(false)}
       />
-      <div className='m-4 sm:m-10 sm:flex sm:flex-row xl:justify-around'>
+      <div className='p-2 m-auto mt-4 sm:mt-10 sm:flex sm:flex-row xl:justify-around max-w-screen-2xl'>
         <div className='flex flex-col space-y-5 sm:ml-10 sm:mt-10 sm:mr-10'>
           <div className='flex flex-col space-y-1 sm:space-y-0 sm:flex-row ml-1'>
             <ProjectIcon
@@ -251,7 +251,7 @@ function ProjectPage({ projects }: Props) {
 
         <ProjectIcon className='hidden xl:block' project={project} />
       </div>
-    </div>
+    </>
   )
 }
 

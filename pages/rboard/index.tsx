@@ -1,4 +1,5 @@
 import { HomeIcon } from '@heroicons/react/24/outline'
+import DOMPurify from 'isomorphic-dompurify'
 import Link from 'next/link'
 import { GetStaticProps } from 'next/types'
 import { useAppContext } from '../../components/appContext'
@@ -144,7 +145,7 @@ function Rboard({
         `}</style>
         <div
           className={descriptionClass}
-          dangerouslySetInnerHTML={{ __html: description }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(description) }}
         />
       </div>
     )

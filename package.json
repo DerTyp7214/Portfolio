@@ -21,6 +21,7 @@
     "fluent-ffmpeg": "^2.1.2",
     "framer-motion": "^7.6.7",
     "hast-util-to-html": "^8.0.3",
+    "isomorphic-dompurify": "^0.24.0",
     "lottie-react": "^2.3.1",
     "mdast-util-to-hast": "^12.2.4",
     "moment": "^2.29.4",

@@ -173,6 +173,10 @@ export async function createFaviconWithBadge(
     '<svg><rect x="0" y="0" width="200" height="200" rx="25" ry="25"/></svg>'
   )
 
+  mkdirSync(`${process.cwd()}/public/images/cached/favicons`, {
+    recursive: true,
+  })
+
   const image = await sharp(
     await sharp(faviconBuffer)
       .resize(200, 200, {
