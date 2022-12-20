@@ -71,8 +71,7 @@ Promise.all([
     modifySvgColors('./assets/raw/ytmdRemote.svg', './assets/parsed/ytmdRemote.svg', true),
 ])
 
-console.log
-`Accent: ${accent.hex()}
+console.log(`Accent: ${accent.hex()}
 Accent Dark: ${accentDark.hex()}
 Desaturated Accent: ${desaturatedAccent.hex()}
 Desaturated Accent Dark: ${desaturatedAccentDark.hex()}
@@ -84,4 +83,4 @@ Background Dark: ${backgroundDark.hex()}
 Secondary Background Dark: ${secondaryBackgroundDark.hex()}
 Background: ${background.hex()}
 Secondary Background: ${secondaryBackground.hex()}
-`
+`)
