@@ -70,3 +70,18 @@ Promise.all([
     modifySvgColors('./assets/raw/mixThemeCreator.svg', './assets/parsed/mixThemeCreator.svg', true),
     modifySvgColors('./assets/raw/ytmdRemote.svg', './assets/parsed/ytmdRemote.svg', true),
 ])
+
+console.log
+`Accent: ${accent.hex()}
+Accent Dark: ${accentDark.hex()}
+Desaturated Accent: ${desaturatedAccent.hex()}
+Desaturated Accent Dark: ${desaturatedAccentDark.hex()}
+Tertiary: ${tertiary.hex()}
+Tertiary Dark: ${tertiaryDark.hex()}
+Desaturated Tertiary: ${desaturatedTertiary.hex()}
+Desaturated Tertiary Dark: ${desaturatedTertiaryDark.hex()}
+Background Dark: ${backgroundDark.hex()}
+Secondary Background Dark: ${secondaryBackgroundDark.hex()}
+Background: ${background.hex()}
+Secondary Background: ${secondaryBackground.hex()}
+`
