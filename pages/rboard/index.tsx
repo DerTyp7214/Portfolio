@@ -2,9 +2,11 @@ import { HomeIcon } from '@heroicons/react/24/outline'
 import DOMPurify from 'isomorphic-dompurify'
 import Link from 'next/link'
 import { GetStaticProps } from 'next/types'
+import ReactTooltip from 'react-tooltip'
 import { useAppContext } from '../../components/appContext'
 import BaseHeader from '../../components/BaseHeader'
 import Chip from '../../components/Chip'
+import RenderOnMount from '../../components/RenderOnMount'
 import RboardIcon from '../../svgs/RboardIcon.svg'
 import RboardThemeCreatorIcon from '../../svgs/RboardThemeCreatorIcon.svg'
 import RboardThemePatcherIcon from '../../svgs/RboardThemePatcherIcon.svg'
@@ -12,6 +14,7 @@ import RepositoryIcon from '../../svgs/RepositoryIcon.svg'
 import TelegramIcon from '../../svgs/TelegramIcon.svg'
 import XDAIcon from '../../svgs/XDAIcon.svg'
 import { PageInfo, RboardData } from '../../types/types'
+import { lerpColor } from '../../utils/colorUtils'
 import fetchPageInfo from '../../utils/fetchPageInfo'
 import fetchRboardData from '../../utils/fetchRboardData'
 
@@ -207,6 +210,22 @@ function Rboard({
           </div>
         ))}
       </div>
+      <RenderOnMount>
+        <ReactTooltip
+          html
+          backgroundColor={lerpColor(
+            (darkMode
+              ? process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND_DARK
+              : process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND) ??
+              '#434d57',
+            darkMode ? '#FFFFFF' : '#000000',
+            0.1
+          )}
+          textColor={darkMode ? '#FFFFFF' : '#000000'}
+          multiline
+          className='max-w-[200px] text-center'
+        />
+      </RenderOnMount>
     </>
   )
 }

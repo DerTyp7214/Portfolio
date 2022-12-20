@@ -28,7 +28,10 @@ import fetchSkills from '../utils/fetchSkills'
 import fetchSocials from '../utils/fetchSocials'
 
 import 'react-toastify/dist/ReactToastify.css'
+import ReactTooltip from 'react-tooltip'
 import { useAppContext } from '../components/appContext'
+import RenderOnMount from '../components/RenderOnMount'
+import { lerpColor } from '../utils/colorUtils'
 
 type Props = {
   pageInfo: PageInfo
@@ -54,7 +57,7 @@ export default function Home({
   const { darkMode } = useAppContext()
 
   return (
-    <div>
+    <>
       <Header socials={socials} />
 
       <section id='profile' className='snap-center mb-20'>
@@ -66,7 +69,7 @@ export default function Home({
       </section>
 
       <section id='projects' className='snap-center mt-20 mb-20'>
-        <Projects projects={projects} />
+        <Projects projects={projects} skills={skills} />
       </section>
 
       <section id='skills' className='snap-start mt-20 mb-20'>
@@ -90,7 +93,23 @@ export default function Home({
           </Link>
         </div>
       </footer>
-    </div>
+      <RenderOnMount>
+        <ReactTooltip
+          html
+          backgroundColor={lerpColor(
+            (darkMode
+              ? process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND_DARK
+              : process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND) ??
+              '#434d57',
+            darkMode ? '#FFFFFF' : '#000000',
+            0.1
+          )}
+          textColor={darkMode ? '#FFFFFF' : '#000000'}
+          multiline
+          className='max-w-[200px] text-center'
+        />
+      </RenderOnMount>
+    </>
   )
 }
 

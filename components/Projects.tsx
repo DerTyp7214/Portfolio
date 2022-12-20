@@ -1,22 +1,22 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 import { motion } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { Project } from '../types/types'
+import { Project, Skill } from '../types/types'
 import ProjectCard from './ProjectCard'
 
 type Props = {
   projects: Project[]
+  skills: Skill[]
 }
 
-export default function Projects({ projects }: Props) {
+export default function Projects({ projects, skills }: Props) {
   const scrollElement = useRef<HTMLDivElement>(null)
 
   const [isLeft, setIsLeft] = useState(true)
   const [isRight, setIsRight] = useState(false)
 
   return (
-    <motion.div
-      className='min-h-screen flex flex-row relative overflow-hidden text-left max-w-full justify-evenly mx-auto items-start'>
+    <motion.div className='min-h-screen flex flex-row relative overflow-hidden text-left max-w-full justify-evenly mx-auto items-start'>
       <h3 className='absolute top-24 uppercase tracking-[20px] text-black/50 dark:text-white/30 text-2xl'>
         Projects
       </h3>
@@ -57,7 +57,7 @@ export default function Projects({ projects }: Props) {
           }
         }}>
         {projects?.map((project, index) => (
-          <ProjectCard key={index} project={project} />
+          <ProjectCard key={index} project={project} skills={skills} />
         ))}
       </div>
 

@@ -44,7 +44,7 @@ export interface Project {
   name: string
   imageUrl: string
   authors: string[]
-  skills: Skill[]
+  skills: string[]
   githubUrl?: string
   playStoreUrl?: string
   keypoints: string[]

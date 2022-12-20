@@ -1,4 +1,4 @@
-import { Project, Skill } from '../types/types'
+import { Project } from '../types/types'
 import {
   cacheImageLocally,
   createFaviconWithBadge,
@@ -6,8 +6,6 @@ import {
   playStoreDownloads,
   roundDownloads
 } from './downloadUtils'
-import fetchSkill from './fetchSkill'
-import { languages, technologies, wikiMappping } from './fetchSkills'
 
 const rboardApps = ['manager', 'creator', 'patcher']
 
@@ -16,17 +14,7 @@ type RboardApp = typeof rboardApps[number]
 export async function rboardAppProjects(): Promise<{
   [key: RboardApp]: Project
 }> {
-  const skillData = await Promise.all([
-    ...languages.map((skill) =>
-      fetchSkill({ skill, type: 'language', wiki: wikiMappping[skill] })
-    ),
-    ...technologies.map((skill) =>
-      fetchSkill({ skill, type: 'technology', wiki: wikiMappping[skill] })
-    ),
-  ])
-
-  const getSkills = (skills: string[]): Skill[] =>
-    skillData.filter((a) => a && skills.includes(a.name)) as Skill[]
+  const getSkills = (skills: string[]): string[] => skills
 
   return {
     manager: {
@@ -245,17 +233,7 @@ export async function rboardAppProjects(): Promise<{
 }
 
 export default async function fetchProjects(): Promise<Project[]> {
-  const skillData = await Promise.all([
-    ...languages.map((skill) =>
-      fetchSkill({ skill, type: 'language', wiki: wikiMappping[skill] })
-    ),
-    ...technologies.map((skill) =>
-      fetchSkill({ skill, type: 'technology', wiki: wikiMappping[skill] })
-    ),
-  ])
-
-  const getSkills = (skills: string[]): Skill[] =>
-    skillData.filter((a) => a && skills.includes(a.name)) as Skill[]
+  const getSkills = (skills: string[]): string[] => skills
 
   return await Promise.all(
     [
