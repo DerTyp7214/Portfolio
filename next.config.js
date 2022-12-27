@@ -22,21 +22,6 @@ const nextConfig = {
     })
     config.externals = config.externals || [{ 'isomorphic-fetch': 'fetch' }]
     return config
-  },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        has: [
-          {
-            type: 'host',
-            value: 'rboard.dev',
-          }
-        ],
-        destination: '/rboard',
-        permanent: false
-      },
-    ]
   }
 }
 
