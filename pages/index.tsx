@@ -45,7 +45,6 @@ type Props = {
 }
 
 export default function Home({
-  pageInfo,
   socials,
   profileInfo,
   projects,
