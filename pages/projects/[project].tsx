@@ -11,6 +11,7 @@ import RenderOnMount from '../../components/RenderOnMount'
 import SkillModal from '../../components/SkillModal'
 import { PageInfo, Project, Skill } from '../../types/types'
 import { lerpColor } from '../../utils/colorUtils'
+import { ParseLocation } from '../../utils/customRouteHandler'
 import fetchPageInfo from '../../utils/fetchPageInfo'
 import fetchProjects from '../../utils/fetchProjects'
 import fetchSkills from '../../utils/fetchSkills'
@@ -84,7 +85,7 @@ function ProjectPage({ projects, skills }: Props) {
     <>
       <BaseHeader
         leftContent={
-          <Link href='/#projects'>
+          <Link href={ParseLocation('/', '#projects')}>
             <HomeIcon className='w-12 h-12 p-[7px] cursor-pointer opacity-50 dark:opacity-60 hover:scale-125 hover:opacity-100 dark:hover:opacity-100 transition-all duration-200' />
           </Link>
         }

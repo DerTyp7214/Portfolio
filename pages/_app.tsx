@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { AppWrapper } from '../components/appContext'
 import '../styles/globals.css'
 import { PageInfo, Project } from '../types/types'
+import { RouteHandler } from '../utils/customRouteHandler'
 
 export default function App({ Component, pageProps }: AppProps) {
   const {
@@ -16,9 +17,10 @@ export default function App({ Component, pageProps }: AppProps) {
     projects?: Project[]
   } = pageProps
 
+  const router = useRouter()
   const {
     query: { project: projectId },
-  } = useRouter()
+  } = router
 
   const [isSSR, setIsSSR] = useState(true)
 
@@ -26,7 +28,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     setIsSSR(false)
-  }, [])
+
+    if (window) RouteHandler(router, window.location)
+  }, [router])
 
   return (
     <AppWrapper>

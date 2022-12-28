@@ -15,6 +15,7 @@ import TelegramIcon from '../../svgs/TelegramIcon.svg'
 import XDAIcon from '../../svgs/XDAIcon.svg'
 import { PageInfo, RboardData } from '../../types/types'
 import { lerpColor } from '../../utils/colorUtils'
+import { ParseLocation } from '../../utils/customRouteHandler'
 import fetchPageInfo from '../../utils/fetchPageInfo'
 import fetchRboardData from '../../utils/fetchRboardData'
 
@@ -160,7 +161,7 @@ function Rboard({
     <>
       <BaseHeader
         leftContent={
-          <Link href='/#projects'>
+          <Link href={ParseLocation('/', '#projects')}>
             <HomeIcon className='w-12 h-12 p-[7px] cursor-pointer opacity-50 dark:opacity-60 hover:scale-125 hover:opacity-100 dark:hover:opacity-100 transition-all duration-200' />
           </Link>
         }

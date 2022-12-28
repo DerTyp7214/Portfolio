@@ -27,8 +27,6 @@ import fetchProjects from '../utils/fetchProjects'
 import fetchSkills from '../utils/fetchSkills'
 import fetchSocials from '../utils/fetchSocials'
 
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 import 'react-toastify/dist/ReactToastify.css'
 import ReactTooltip from 'react-tooltip'
 import { useAppContext } from '../components/appContext'
@@ -56,12 +54,6 @@ export default function Home({
   badges,
 }: Props) {
   const { darkMode } = useAppContext()
-
-  const router = useRouter()
-
-  useEffect(() => {
-    if (window.location.host === 'rboard.dev') router.push('/rboard')
-  }, [router])
 
   return (
     <>
