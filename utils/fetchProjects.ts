@@ -119,6 +119,12 @@ export async function rboardAppProjects(): Promise<{
         )),
       downloadUrl:
         'https://github.com/DerTyp7214/RboardThemeCreator/releases/latest/download/app-release.apk',
+      extraButtons: [
+        {
+          text: 'Web Creator',
+          url: '/creator',
+        },
+      ],
       extraLinks: [
         {
           name: 'Rboard',

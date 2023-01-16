@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Kulim+Park&display=swap');
 
+@font-face {
+    font-family: 'Product Sans';
+    src: url(/assets/Google_Sans_Text-500-100_0-0_0.ttf);
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

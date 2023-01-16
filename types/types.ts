@@ -59,6 +59,10 @@ export interface Project {
     name: string
     url: string
   }
+  extraButtons?: {
+    text: string
+    url: string
+  }[]
   extraLinks?: {
     iconUrl: string
     name: string
@@ -174,3 +178,29 @@ export const CONTRIBUTION_LEVELS = {
 }
 
 export type ContributionLevelName = keyof typeof CONTRIBUTION_LEVELS
+
+export type KeyboardPreset = 'default' | 'regularAlt'
+
+export type KeyboardTheme = {
+  mainBackground: string
+  keyBackground: string
+  keyColor: string
+  secondaryKeyBackground: string
+  accentBackground: string
+  themeName: string
+  author: string
+  keyBorderRadius: number
+  fontSize: string
+  preset: KeyboardPreset
+}
+
+export type KeyboardColors = {
+  mainBackground?: string
+  keyBackground?: string
+  keyColor?: string
+  secondaryKeyBackground?: string
+  accentBackground?: string
+  themeName?: string
+  author?: string
+  preset?: KeyboardPreset
+}

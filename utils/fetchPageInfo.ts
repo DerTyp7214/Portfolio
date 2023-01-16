@@ -1,13 +1,14 @@
 import { PageInfo } from '../types/types'
 import { cacheImageLocally, createFaviconWithBadge } from './downloadUtils'
 
-const pages = ['default', 'rboard']
+const pages = ['default', 'rboard', 'creator']
 
 type Page = typeof pages[number]
 
 const titles: { [key: Page]: string } = {
   default: 'Josua Lengwenath (DerTyp7214)',
   rboard: 'Rboard',
+  creator: 'Creator',
 }
 
 const favIcons: { [key: Page]: () => Promise<string> } = {
@@ -27,21 +28,32 @@ const favIcons: { [key: Page]: () => Promise<string> } = {
       {},
       `rboard-favicon`
     ),
+  creator: async () =>
+    await createFaviconWithBadge(
+      {
+        file: 'assets/parsed/creator.svg',
+      },
+      {},
+      `creator-favicon`
+    ),
 }
 
 const manifestUrls: { [key: string]: string } = {
   default: `/manifest.json?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
   rboard: `/rboard-manifest.json?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
+  creator: `/creator-manifest.json?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
 }
 
 const ogImages: { [key: Page]: string } = {
   default: `${process.env.NEXT_PUBLIC_BASE_URL}/assets/og-image.png?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
   rboard: `${process.env.NEXT_PUBLIC_BASE_URL}/assets/og-image-rboard.png?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
+  creator: `${process.env.NEXT_PUBLIC_BASE_URL}/assets/og-image-creator.png?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
 }
 
 const description: { [key: Page]: string | null } = {
   default: null,
   rboard: 'Gboard best modding tool',
+  creator: 'Create your own keyboard theme',
 }
 
 export default async function fetchPageInfo(page?: string): Promise<PageInfo> {

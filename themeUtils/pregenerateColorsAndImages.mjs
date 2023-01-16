@@ -36,6 +36,15 @@ const rboardManifest = {
   start_url: '/rboard',
 }
 
+const creatorManifest = {
+  ...manifest,
+  id: `creator-${version}`,
+  name: 'Creator',
+  short_name: 'Creator',
+  description: 'Creator - Creator PWA',
+  start_url: '/creator',
+}
+
 const randomColor = Color.rgb(
   Math.floor(Math.random() * 255),
   Math.floor(Math.random() * 255),
@@ -175,6 +184,38 @@ const createScaledRboardIcons = async () => {
   }))
 }
 
+const createScaledCreatorIcons = async () => {
+  const sizes = [16, 32, 96, 192, 384, 512]
+
+  const creatorSvg = fs
+    .readFileSync('./assets/raw/creator.svg', 'utf8')
+    .replace(/%accent%/g, accentDark.hex())
+
+  const creator = await sharp(Buffer.from(creatorSvg))
+    .resize(512, 512, {
+      fit: 'contain',
+      position: 'center',
+      background: { r: 255, g: 255, b: 255, alpha: 0 },
+    })
+    .png()
+    .toBuffer()
+
+  const saveWithSize = async (size) => {
+    await sharp(creator)
+      .resize(size, size)
+      .png()
+      .toFile(`./public/icons/creator-${size}x${size}_${version}.png`)
+  }
+
+  await Promise.all(sizes.map(saveWithSize))
+
+  creatorManifest.icons = sizes.map((size) => ({
+    src: `/icons/creator-${size}x${size}_${version}.png`,
+    sizes: `${size}x${size}`,
+    type: 'image/png',
+  }))
+}
+
 const saveEnv = () => {
   const newEnv = `NEXT_PUBLIC_COLOR_ACCENT=${accent.hex()}
 NEXT_PUBLIC_COLOR_ACCENT_DARK=${accentDark.hex()}
@@ -203,6 +244,10 @@ async function proccess() {
     modifySvgColors(
       './assets/raw/og-image.svg',
       './public/assets/og-image.png'
+    ),
+    modifySvgColors(
+      './assets/raw/og-image.svg',
+      './public/assets/og-image-creator.png'
     ),
 
     modifySvgColors(
@@ -235,8 +280,13 @@ async function proccess() {
       './assets/parsed/ytmdRemote.svg',
       true
     ),
+    modifySvgColors(
+      './assets/raw/creator.svg',
+      './assets/parsed/creator.svg',
+      true
+    ),
 
-    createScaledFavicons().then(createScaledRboardIcons),
+    createScaledFavicons().then(createScaledRboardIcons).then(createScaledCreatorIcons),
   ])
 
   manifest.theme_color = accentDark.hex()
@@ -245,8 +295,12 @@ async function proccess() {
   rboardManifest.theme_color = accentDark.hex()
   rboardManifest.background_color = backgroundDark.hex()
 
+  creatorManifest.theme_color = accentDark.hex()
+  creatorManifest.background_color = backgroundDark.hex()
+
   fs.writeFileSync('./public/manifest.json', JSON.stringify(manifest, null, 4))
   fs.writeFileSync('./public/rboard-manifest.json', JSON.stringify(rboardManifest, null, 4))
+  fs.writeFileSync('./public/creator-manifest.json', JSON.stringify(creatorManifest, null, 4))
 }
 
 proccess().then(() => {

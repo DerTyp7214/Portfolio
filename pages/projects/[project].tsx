@@ -211,6 +211,14 @@ function ProjectPage({ projects, skills }: Props) {
                   PlayStore
                 </button>
               )}
+              {project.extraButtons?.map((button, index) => (
+                <button
+                  onClick={() => window.open(button.url)}
+                  key={index}
+                  className='rounded-lg bg-accent/80 text-white dark:bg-accentDark/80 dark:text-black pt-1 pb-1 pl-3 pr-3 hover:bg-accent/100 dark:hover:bg-accentDark/100 transition-all duration-200 overflow-hidden'>
+                  {button.text}
+                </button>
+              ))}
             </div>
           </RenderOnMount>
 
