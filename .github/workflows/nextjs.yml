@@ -66,14 +66,13 @@ jobs:
           static_site_generator: next
 
       - name: Restore cache
-        uses: actions/cache@v3
+        uses: actions/cache/restore@v3
+        id: cache-restore
         with:
           path: |
             ${{ steps.pnpm-cache.outputs.STORE_PATH }}
             /home/runner/.cache/puppeteer
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock', '**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock', '**/pnpm-lock.yaml') }}-
 
       - name: Install dependencies
         run: pnpm install
@@ -111,6 +110,15 @@ jobs:
           NEXT_PUBLIC_GIT_HASH_SHORT: ${{ steps.commit.outputs.short }}
           NEXT_PUBLIC_RUN_ID: ${{ github.run_id }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Save cache
+        uses: actions/cache/save@v3
+        id: cache-save
+        with:
+          path: |
+            ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+            /home/runner/.cache/puppeteer
+          key: ${{ steps.cache-restore.outputs.cache-primary-key }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
