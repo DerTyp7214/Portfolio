@@ -17,7 +17,10 @@ export const generatePreview = async (bg, accent, colors) => {
         accentBg = Color(accentBackground)
     }
 
-    const browser = await puppeteer.launch()
+    const browser = await puppeteer.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+    })
 
     const page = await browser.newPage()
     await page.setContent(fs.readFileSync('./themeUtils/default.html', 'utf8'), { waitUntil: 'networkidle0' })
