@@ -74,7 +74,9 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock', '**/pnpm-lock.yaml') }}-
 
       - name: Install dependencies
-        run: pnpm install
+        run: |
+          pnpm install
+          pnpm install puppeteer --unsafe-perm=true --allow-root
 
       - name: Get Package Version
         id: package-version
