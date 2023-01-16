@@ -1,4 +1,5 @@
 import { HomeIcon } from '@heroicons/react/24/outline'
+import Color from 'color'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { GetStaticProps } from 'next/types'
@@ -27,19 +28,25 @@ const getConsts = (query: { [key: string]: string }) =>
         secondKeyBg: `#${query['secondKeyBg']}`,
         accentBg: `#${query['accentBg']}`,
         themeName: query['themeName'] ?? 'Rboard Theme',
-        author: query['author'] ?? 'Web-Creator',
+        author: query['author'] ?? 'DerTyp7214',
         preset: query['preset'] ?? 'default',
       }
-    : {
-        mainBg: '#141d1a',
-        keyBg: '#2a322f',
-        keyColor: '#ffffff',
-        secondKeyBg: '#3f4945',
-        accentBg: '#7ef7d4',
-        themeName: 'Rboard Theme',
-        author: 'Web-Creator',
-        preset: 'default',
-      }
+    : (() => {
+        const mainBg = Color(process.env.NEXT_PUBLIC_COLOR_BACKGROUND_DARK)
+        const accentBg = Color(process.env.NEXT_PUBLIC_COLOR_ACCENT_DARK)
+        const keyBg = mainBg.lighten(0.2)
+        const secondKeyBg = mainBg.lighten(0.4)
+        return {
+          mainBg: mainBg.hex(),
+          keyBg: keyBg.hex(),
+          keyColor: '#ffffff',
+          secondKeyBg: secondKeyBg.hex(),
+          accentBg: accentBg.hex(),
+          themeName: 'Rboard Theme',
+          author: 'DerTyp7214',
+          preset: 'default',
+        }
+      })()
 
 function Rboard({}: Props) {
   const router = useRouter()

@@ -57,7 +57,9 @@ public/favicon.png
 
 # images
 public/assets/og-image.png
+public/assets/og-image-creator.png
 
 # manifest
 public/manifest.json
 public/rboard-manifest.json
+public/creator-manifest.json

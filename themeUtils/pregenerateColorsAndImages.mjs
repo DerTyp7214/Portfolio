@@ -5,6 +5,7 @@ import path from 'path'
 import rimraf from 'rimraf'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
+import { generatePreview } from './generateKeyboardPreview.mjs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -245,10 +246,6 @@ async function proccess() {
       './assets/raw/og-image.svg',
       './public/assets/og-image.png'
     ),
-    modifySvgColors(
-      './assets/raw/og-image.svg',
-      './public/assets/og-image-creator.png'
-    ),
 
     modifySvgColors(
       './assets/raw/rboardThemeManager.svg',
@@ -285,6 +282,10 @@ async function proccess() {
       './assets/parsed/creator.svg',
       true
     ),
+
+    generatePreview(backgroundDark, accentDark).then(buffer => {
+      fs.writeFileSync('./public/assets/og-image-creator.png', buffer)
+    }),
 
     createScaledFavicons().then(createScaledRboardIcons).then(createScaledCreatorIcons),
   ])
