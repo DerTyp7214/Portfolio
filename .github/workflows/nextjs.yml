@@ -76,7 +76,7 @@ jobs:
       - name: Install dependencies
         run: |
           pnpm install
-          pnpm install puppeteer --unsafe-perm=true --allow-root
+          sudo pnpm install puppeteer --unsafe-perm=true
 
       - name: Get Package Version
         id: package-version
