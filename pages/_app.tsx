@@ -65,6 +65,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 : pageInfo.title
             }
           />
+          <meta name='og:type' content='website' />
           <meta name='og:image' content={pageInfo.ogImageUrl} />
           <meta name='og:url' content={process.env.NEXT_PUBLIC_BASE_URL} />
           {project ? (
@@ -83,6 +84,15 @@ export default function App({ Component, pageProps }: AppProps) {
               </>
             )
           )}
+
+          <meta
+            property='twitter:url'
+            content={process.env.NEXT_PUBLIC_BASE_URL}
+          />
+          <meta name='twitter:card' content='summary_large_image' />
+          <meta name='twitter:site' content='@DerTyp7214' />
+          <meta name='twitter:dnt' content='on' />
+          <meta name='twitter:image' content={pageInfo.ogImageUrl} />
 
           <meta
             name='application-name'
@@ -143,10 +153,25 @@ export default function App({ Component, pageProps }: AppProps) {
           <link rel='apple-touch-icon' href='/favicon.png' />
 
           <meta name='og:title' content='DerTyp7214.de' />
-          <meta name='og:image' content='/og-image.png' />
+          <meta
+            name='og:image'
+            content={process.env.NEXT_PUBLIC_BASE_URL + '/assets/og-image.png'}
+          />
           <meta name='og:url' content={process.env.NEXT_PUBLIC_BASE_URL} />
           <meta name='og:description' content='DerTyp7214.de' />
           <meta name='description' content='DerTyp7214.de' />
+
+          <meta
+            property='twitter:url'
+            content={process.env.NEXT_PUBLIC_BASE_URL}
+          />
+          <meta name='twitter:card' content='summary_large_image' />
+          <meta name='twitter:site' content='@DerTyp7214' />
+          <meta name='twitter:dnt' content='on' />
+          <meta
+            name='twitter:image'
+            content={process.env.NEXT_PUBLIC_BASE_URL + '/assets/og-image.png'}
+          />
         </Head>
       )}
       <Script
