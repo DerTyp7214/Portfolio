@@ -65,9 +65,7 @@ jobs:
           static_site_generator: next
 
       - name: Install dependencies
-        run: |
-          pnpm install
-          pnpm install puppeteer --force
+        run: pnpm install
 
       - name: Get Package Version
         id: package-version
