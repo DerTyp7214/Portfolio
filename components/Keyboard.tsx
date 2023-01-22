@@ -228,7 +228,7 @@ function Keyboard({ theme }: Props) {
         .keyboard_body {
           margin-top: 0.5em;
           border-radius: 0.5em;
-          border: 0.06em solid white;
+          border-width: 0.06em;
 
           background-color: ${theme.mainBackground};
 
@@ -334,7 +334,7 @@ function Keyboard({ theme }: Props) {
         }
       `}</style>
       <div className='keyboard'>
-        <div className='keyboard_body'>
+        <div className='keyboard_body border-black dark:border-white'>
           <div className='key_box'>
             <div className='top_bar'>
               <div className='top_bar_key'>

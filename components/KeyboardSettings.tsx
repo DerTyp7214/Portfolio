@@ -1,4 +1,5 @@
 import { KeyboardColors } from '../types/types'
+import { toHex } from '../utils/colorUtils'
 import { getTheme } from '../utils/themeUtils'
 import Picker from './Picker'
 
@@ -43,13 +44,15 @@ const KeyboardSettings = ({ colors, onColorsChanged }: Props) => {
     <div className='inline-flex w-full xl:w-auto flex-col items-end'>
       {colorVars.map((colorVar, index) => (
         <div key={index} className='flex items-center'>
-          <span className='text-white'>{nameMapping[colorVar]}</span>
+          <span className='text-black dark:text-white'>
+            {nameMapping[colorVar]}
+          </span>
           <Picker
             colorVar={colors[colorVar]}
             submitColor={(color) => {
               onColorsChanged({
                 ...colors,
-                [colorVar]: color.hex,
+                [colorVar]: toHex(color),
               })
             }}
           />

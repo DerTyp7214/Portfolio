@@ -11,6 +11,7 @@ specifiers:
   '@types/file-saver': ^2.0.5
   '@types/node': 18.11.9
   '@types/react': 18.0.25
+  '@types/react-color': ^3.0.6
   '@types/react-dom': 18.0.9
   '@types/sharp': ^0.31.0
   autoprefixer: ^10.4.13
@@ -38,7 +39,6 @@ specifiers:
   react: 18.2.0
   react-click-away-listener: ^2.2.2
   react-color: ^2.19.3
-  react-color-palette: ^6.2.0
   react-dom: 18.2.0
   react-hook-form: ^7.39.4
   react-indiana-drag-scroll: ^2.2.0
@@ -86,7 +86,6 @@ dependencies:
   react: 18.2.0
   react-click-away-listener: 2.2.2_biqbaboplfbrettd7655fr4n2y
   react-color: 2.19.3_react@18.2.0
-  react-color-palette: 6.2.0_react@18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.39.4_react@18.2.0
   react-indiana-drag-scroll: 2.2.0_biqbaboplfbrettd7655fr4n2y
@@ -109,6 +108,7 @@ devDependencies:
   '@types/file-saver': 2.0.5
   '@types/node': 18.11.9
   '@types/react': 18.0.25
+  '@types/react-color': 3.0.6
   '@types/react-dom': 18.0.9
   '@types/sharp': 0.31.0
   autoprefixer: 10.4.13_postcss@8.4.19
@@ -2524,6 +2524,13 @@ packages:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
     dev: true
 
+  /@types/react-color/3.0.6:
+    resolution: {integrity: sha512-OzPIO5AyRmLA7PlOyISlgabpYUa3En74LP8mTMa0veCA719SvYQov4WLMsHvCgXP+L+KI9yGhYnqZafVGG0P4w==}
+    dependencies:
+      '@types/react': 18.0.25
+      '@types/reactcss': 1.2.6
+    dev: true
+
   /@types/react-dom/18.0.9:
     resolution: {integrity: sha512-qnVvHxASt/H7i+XG1U1xMiY5t+IHcPGUK7TDMDzom08xa7e86eCeKOiLZezwCKVxJn6NEiiy2ekgX8aQssjIKg==}
     dependencies:
@@ -2536,6 +2543,12 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
       csstype: 3.1.1
+    dev: true
+
+  /@types/reactcss/1.2.6:
+    resolution: {integrity: sha512-qaIzpCuXNWomGR1Xq8SCFTtF4v8V27Y6f+b9+bzHiv087MylI/nTCqqdChNeWS7tslgROmYB7yeiruWX7WnqNg==}
+    dependencies:
+      '@types/react': 18.0.25
     dev: true
 
   /@types/resolve/1.17.1:
@@ -6101,15 +6114,6 @@ packages:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-    dev: false
-
-  /react-color-palette/6.2.0_react@18.2.0:
-    resolution: {integrity: sha512-9rIboaRJNoeF8aCI2f3J8wgMyhl74SnGmZLDjor3bKf0iDBhP2EBv0/jGmm0hrj6OackGCqtWl5ZvM89XUc3sg==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      react: '>=16.8.0'
-    dependencies:
-      react: 18.2.0
     dev: false
 
   /react-color/2.19.3_react@18.2.0:
