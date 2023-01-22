@@ -189,8 +189,26 @@ const Picker = ({ colorVar, submitColor }: Props) => {
                     background: toHex(color),
                     transition: 'all .3s ease',
                   }}
-                  className='border-black dark:border-white w-full'
-                />
+                  className='border-black dark:border-white w-full'>
+                  <input
+                    className='w-full h-full rounded-lg bg-transparent outline-none text-center text-sm'
+                    style={{
+                      color: toHSL(color).l > 0.5 ? 'black' : 'white',
+                    }}
+                    type='text'
+                    maxLength={7}
+                    defaultValue={toHex(color).toUpperCase()}
+                    onInput={(event) => {
+                      ;(event.target as HTMLInputElement).value = (
+                        event.target as HTMLInputElement
+                      ).value.toUpperCase()
+                    }}
+                    onChange={(event) => {
+                      if (event.target.value.match(/^#([A-Fa-f0-9]{6})$/))
+                        setColor(event.target.value)
+                    }}
+                  />
+                </div>
 
                 <Slider
                   gradientStart={toHex({ r: 0, g: 0, b: 0 })}
