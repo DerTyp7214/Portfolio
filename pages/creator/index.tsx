@@ -9,11 +9,19 @@ import BaseHeader from '../../components/BaseHeader'
 import Keyboard from '../../components/Keyboard'
 import KeyboardSettings from '../../components/KeyboardSettings'
 import RenderOnMount from '../../components/RenderOnMount'
-import { KeyboardColors, KeyboardTheme, PageInfo } from '../../types/types'
+import {
+    KeyboardColors,
+    KeyboardTheme,
+    PageInfo,
+    ThemePreset
+} from '../../types/types'
 import { ParseLocation } from '../../utils/customRouteHandler'
 import fetchPageInfo from '../../utils/fetchPageInfo'
+import fetchThemePresets from '../../utils/fetchThemePresets'
 
-type Props = {}
+type Props = {
+  themePresets: ThemePreset[]
+}
 
 const getConsts = (query: { [key: string]: string }) =>
   query['mainBg'] &&
@@ -48,7 +56,7 @@ const getConsts = (query: { [key: string]: string }) =>
         }
       })()
 
-function Rboard({}: Props) {
+function Rboard({ themePresets }: Props) {
   const router = useRouter()
   const query = router.query as { [key: string]: string }
 
@@ -66,6 +74,8 @@ function Rboard({}: Props) {
     accentBackground: consts.accentBg,
     fontSize: 'min(4vw, 4vh)',
   })
+
+  const { preset } = keyboardTheme
 
   useEffect(() => {
     const consts = getConsts(query)
@@ -133,6 +143,14 @@ function Rboard({}: Props) {
     })
   }
 
+  useEffect(() => {
+    const presetObj = themePresets.find(
+      (presetObj) => presetObj.name === preset
+    )
+    if (presetObj) {
+    }
+  }, [preset, themePresets])
+
   return (
     <>
       <BaseHeader
@@ -164,10 +182,12 @@ export default Rboard
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const pageInfo: PageInfo = await fetchPageInfo('creator')
+  const themePresets: ThemePreset[] = await fetchThemePresets()
 
   return {
     props: {
       pageInfo,
+      themePresets,
     },
   }
 }

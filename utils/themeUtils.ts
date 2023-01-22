@@ -2,14 +2,17 @@ import { saveAs } from 'file-saver'
 import html2canvas from 'html2canvas'
 import JSZip from 'jszip'
 import { name } from 'ntc'
-import { KeyboardColors } from '../types/types'
+import { KeyboardColors, ThemePreset } from '../types/types'
 
 export const getTheme = async (
   keyboardElement?: HTMLElement | null,
-  colors?: KeyboardColors
+  colors?: KeyboardColors,
+  preset?: ThemePreset
 ) => {
   if (!keyboardElement) return
   if (!colors) return
+
+  const presetObj = preset || defaultPreset
 
   const metadata = generateMetadata()
 
@@ -58,9 +61,17 @@ export const getTheme = async (
   const themeZip = new JSZip()
 
   themeZip.file('metadata.json', JSON.stringify(metadata, null, 2))
-  themeZip.file('style_sheet_md2.css', styleSheedMd)
-  themeZip.file('style_sheet_md2_border.css', styleSheedMdBorder)
+  themeZip.file('style_sheet_md2.css', presetObj.styleSheetMd)
+  themeZip.file('style_sheet_md2_border.css', presetObj.styleSheetMdBorder)
   themeZip.file('variables.css', variables.join('\n'))
+
+  presetObj.imageBase64.forEach((image, index) => {
+    themeZip.file(
+      `image${index}.png`,
+      image.replace(/^data:image\/png;base64,/, ''),
+      { base64: true }
+    )
+  })
 
   const packZip = new JSZip()
 
@@ -130,7 +141,7 @@ const generateMetadata = () => {
   }
 }
 
-const styleSheedMd = `@def color_header @web_color_bg;
+export const styleSheetMd = `@def color_header @web_color_bg;
 @def color_base @web_color_bg;
 @def color_icon_action @web_color_label;
 /* This value is not used for action key background, since it is special on material theme. */
@@ -940,7 +951,7 @@ alpha: 1;
 /* end of pill shaped key */
 `
 
-const styleSheedMdBorder = `;.keytop {
+export const styleSheetMdBorder = `;.keytop {
     elevation: 0;
     shadow_color: @web_color_key_bg;
     
@@ -1122,3 +1133,10 @@ alpha: 1;
 	}
 	
 /* end of pill shaped key */`
+
+export const defaultPreset = {
+  name: 'default',
+  styleSheetMd: styleSheetMd,
+  styleSheetMdBorder: styleSheetMdBorder,
+  imageBase64: [],
+}

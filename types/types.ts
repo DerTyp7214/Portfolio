@@ -179,7 +179,7 @@ export const CONTRIBUTION_LEVELS = {
 
 export type ContributionLevelName = keyof typeof CONTRIBUTION_LEVELS
 
-export type KeyboardPreset = 'default' | 'regularAlt'
+export type KeyboardPreset = string
 
 export type KeyboardTheme = {
   mainBackground: string
@@ -203,4 +203,12 @@ export type KeyboardColors = {
   themeName?: string
   author?: string
   preset?: KeyboardPreset
+}
+
+export type ThemePreset = {
+  name: string
+  html?: string
+  styleSheetMd: string
+  styleSheetMdBorder: string
+  imageBase64: string[]
 }
