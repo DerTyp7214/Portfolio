@@ -56,6 +56,9 @@ const KeyboardSettings = ({ colors, onColorsChanged }: Props) => {
     onColorsChanged(
       generateRandomKeyboardTheme(!darkMode, {
         seed: process.env.NEXT_PUBLIC_COLOR_SEED,
+        backgroundSeed: darkMode
+          ? process.env.NEXT_PUBLIC_COLOR_BACKGROUND_DARK
+          : process.env.NEXT_PUBLIC_COLOR_BACKGROUND,
       })
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -156,7 +156,7 @@ export function generateRandomKeyboardTheme(
   const mainBg = backgroundSeed
     ? ColorLib(backgroundSeed)
     : randomColor
-        .lightness(light ? 60 : 40)
+        .lightness(light ? 60 + Math.random() * 10 : 40)
         .rotate(120)
         .desaturate(randomDesaturation)
         .mix(light ? white : black)
