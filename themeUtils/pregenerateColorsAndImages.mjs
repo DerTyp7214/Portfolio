@@ -218,7 +218,8 @@ const createScaledCreatorIcons = async () => {
 }
 
 const saveEnv = () => {
-  const newEnv = `NEXT_PUBLIC_COLOR_ACCENT=${accent.hex()}
+  const newEnv = `NEXT_PUBLIC_COLOR_SEED=${randomColor.hex()}
+NEXT_PUBLIC_COLOR_ACCENT=${accent.hex()}
 NEXT_PUBLIC_COLOR_ACCENT_DARK=${accentDark.hex()}
 NEXT_PUBLIC_COLOR_DESATURATED_ACCENT=${desaturatedAccent.hex()}
 NEXT_PUBLIC_COLOR_DESATURATED_ACCENT_DARK=${desaturatedAccentDark.hex()}
@@ -305,7 +306,8 @@ async function proccess() {
 }
 
 proccess().then(() => {
-  console.log(`Accent: ${accent.hex()}
+  console.log(`Seed: ${randomColor.hex()}
+Accent: ${accent.hex()}
 Accent Dark: ${accentDark.hex()}
 Desaturated Accent: ${desaturatedAccent.hex()}
 Desaturated Accent Dark: ${desaturatedAccentDark.hex()}

@@ -5,16 +5,19 @@ import { useRouter } from 'next/router'
 import { GetStaticProps } from 'next/types'
 import Vibrant from 'node-vibrant'
 import { useEffect, useState } from 'react'
+import ReactTooltip from 'react-tooltip'
+import { useAppContext } from '../../components/appContext'
 import BaseHeader from '../../components/BaseHeader'
 import Keyboard from '../../components/Keyboard'
 import KeyboardSettings from '../../components/KeyboardSettings'
 import RenderOnMount from '../../components/RenderOnMount'
 import {
-    KeyboardColors,
-    KeyboardTheme,
-    PageInfo,
-    ThemePreset
+  KeyboardColors,
+  KeyboardTheme,
+  PageInfo,
+  ThemePreset
 } from '../../types/types'
+import { lerpColor } from '../../utils/colorUtils'
 import { ParseLocation } from '../../utils/customRouteHandler'
 import fetchPageInfo from '../../utils/fetchPageInfo'
 import fetchThemePresets from '../../utils/fetchThemePresets'
@@ -57,6 +60,7 @@ const getConsts = (query: { [key: string]: string }) =>
       })()
 
 function Rboard({ themePresets }: Props) {
+  const { darkMode } = useAppContext()
   const router = useRouter()
   const query = router.query as { [key: string]: string }
 
@@ -163,7 +167,7 @@ function Rboard({ themePresets }: Props) {
 
       <div className='flex flex-col items-center justify-center w-full'>
         <RenderOnMount>
-          <div className='inline-flex flex-col-reverse xl:flex-row items-end xl:items-center justify-evenly m-5'>
+          <div className='inline-flex flex-col-reverse xl:flex-row items-end xl:items-start justify-evenly m-5'>
             <KeyboardSettings
               colors={keyboardTheme}
               onColorsChanged={(colors: KeyboardColors) => {
@@ -172,6 +176,20 @@ function Rboard({ themePresets }: Props) {
             />
             <Keyboard theme={keyboardTheme} />
           </div>
+          <ReactTooltip
+            html
+            backgroundColor={lerpColor(
+              (darkMode
+                ? process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND_DARK
+                : process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND) ??
+                '#434d57',
+              darkMode ? '#FFFFFF' : '#000000',
+              0.1
+            )}
+            textColor={darkMode ? '#FFFFFF' : '#000000'}
+            multiline
+            className='max-w-[200px] text-center'
+          />
         </RenderOnMount>
       </div>
     </>

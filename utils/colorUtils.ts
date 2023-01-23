@@ -1,6 +1,8 @@
 import ColorLib from 'color'
+import Vibrant from 'node-vibrant'
 import { hexToRgb, hslToRgb, rgbToHex, rgbToHsl } from 'node-vibrant/lib/util'
 import { Color, HSLColor, RGBColor } from 'react-color'
+import { KeyboardColors } from '../types/types'
 
 export function lerpColor(a: string, b: string, amount: number): string {
   var ah = +a.replace('#', '0x'),
@@ -124,6 +126,60 @@ export const toRGB = (color?: Color) => {
   }
 }
 
+export function generateRandomKeyboardTheme(
+  light: boolean = false,
+  options?: {
+    seed?: string
+    backgroundSeed?: string
+    keyBackgroundSeed?: string
+  }
+): KeyboardColors {
+  const { seed, backgroundSeed, keyBackgroundSeed } = options ?? {}
+
+  const randomColor = seed
+    ? ColorLib(seed)
+    : ColorLib.rgb(
+        Math.floor(Math.random() * 255),
+        Math.floor(Math.random() * 255),
+        Math.floor(Math.random() * 255)
+      )
+
+  const white = ColorLib('#ffffff')
+  const black = ColorLib('#000000')
+
+  const randomDesaturation = Math.random() * 0.5 + 0.5
+
+  const accentBg = randomColor
+    .saturate(1.1)
+    .mix(light ? black : white)
+    .lightness(light ? 30 : 70)
+  const mainBg = backgroundSeed
+    ? ColorLib(backgroundSeed)
+    : randomColor
+        .lightness(light ? 60 : 40)
+        .rotate(120)
+        .desaturate(randomDesaturation)
+        .mix(light ? white : black)
+
+  const keyBg = keyBackgroundSeed
+    ? ColorLib(keyBackgroundSeed)
+    : light
+    ? mainBg.darken(0.2)
+    : mainBg.lighten(0.2)
+  const secondKeyBg = light ? keyBg.darken(0.2) : keyBg.lighten(0.2)
+
+  return {
+    mainBackground: mainBg.hex(),
+    keyBackground: keyBg.hex(),
+    keyColor: light ? '#000000' : '#ffffff',
+    secondaryKeyBackground: secondKeyBg.hex(),
+    accentBackground: accentBg.hex(),
+    themeName: 'Rboard Theme',
+    author: 'DerTyp7214',
+    preset: 'default',
+  }
+}
+
 export function lighnessGrades(color?: Color): string[] {
   const colorLib = ColorLib(toHex(color))
   const grades = []
@@ -162,4 +218,57 @@ export function matchingColors(color?: Color): string[] {
     secondaryBackground,
     colorLib,
   ].map((c) => c.hex())
+}
+
+export async function getColorsFromPicture(
+  light: boolean = false,
+  options?: {
+    colorFull?: boolean
+  }
+): Promise<KeyboardColors> {
+  const { colorFull } = options ?? {}
+
+  const input = document.createElement('input')
+  input.type = 'file'
+  input.accept = 'image/png, image/jpeg'
+
+  const randomColor: () => string = () => {
+    const color = `#${((Math.random() * 0xffffff) << 0).toString(16)}`
+    return color.length === 7 ? color : randomColor()
+  }
+
+  return new Promise((resolve) => {
+    input.onchange = () => {
+      const file = input.files?.[0]
+      if (file) {
+        const reader = new FileReader()
+        reader.onload = async (e) => {
+          const base64 = e.target?.result?.toString()
+          if (base64) {
+            const palette = await Vibrant.from(base64).getPalette()
+
+            const mainBg = light
+              ? palette.LightMuted?.hex
+              : palette.DarkMuted?.hex
+            const accentBg = palette.Vibrant?.hex
+            const keyBg = light
+              ? palette.LightVibrant?.hex
+              : palette.DarkVibrant?.hex
+
+            resolve({
+              ...generateRandomKeyboardTheme(light, {
+                seed: accentBg,
+                backgroundSeed: mainBg,
+                keyBackgroundSeed: colorFull ? keyBg : undefined,
+              }),
+              themeName: file.name.split('.').slice(0, -1).join('.'),
+              author: 'DerTyp7214',
+            })
+          }
+        }
+        reader.readAsDataURL(file)
+      }
+    }
+    input.click()
+  })
 }

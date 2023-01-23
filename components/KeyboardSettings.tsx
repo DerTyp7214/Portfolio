@@ -1,6 +1,13 @@
+import { useEffect, useState } from 'react'
 import { KeyboardColors } from '../types/types'
-import { toHex } from '../utils/colorUtils'
+import {
+  generateRandomKeyboardTheme,
+  getColorsFromPicture,
+  toHex
+} from '../utils/colorUtils'
 import { getTheme } from '../utils/themeUtils'
+import { useAppContext } from './appContext'
+import CheckBox from './CheckBox'
 import Picker from './Picker'
 
 type Props = {
@@ -40,6 +47,20 @@ const buildUrl = (path: string = '', colors: KeyboardColors): string => {
 }
 
 const KeyboardSettings = ({ colors, onColorsChanged }: Props) => {
+  const { darkMode } = useAppContext()
+  const [lightTheme, setLightTheme] = useState(!darkMode)
+  const [colorFull, setColorFull] = useState(false)
+
+  useEffect(() => {
+    setLightTheme(!darkMode)
+    onColorsChanged(
+      generateRandomKeyboardTheme(!darkMode, {
+        seed: process.env.NEXT_PUBLIC_COLOR_SEED,
+      })
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [darkMode])
+
   return (
     <div className='inline-flex w-full xl:w-auto flex-col items-end'>
       {colorVars.map((colorVar, index) => (
@@ -89,11 +110,41 @@ const KeyboardSettings = ({ colors, onColorsChanged }: Props) => {
             })
           }}
         />
-        <div
-          className='flex flex-row'
-          style={{
-            width: 'calc(100% - 1rem)',
+        <CheckBox
+          id='lightTheme'
+          label='Light Theme'
+          checked={lightTheme}
+          onChange={(event) => {
+            setLightTheme(event.target.checked)
+          }}
+        />
+        <CheckBox
+          id='colorFull'
+          label='Colorful'
+          checked={colorFull}
+          data-tip='Only applies to theme from picture'
+          onChange={(event) => {
+            setColorFull(event.target.checked)
+          }}
+        />
+        <button
+          className='flex-grow bg-transparent rounded-lg p-2 border-black/10 dark:border-white/10 border-[1px] hover:border-black hover:dark:border-white transition-all duration-200 m-2 text-lg'
+          style={{ width: 'calc(100% - 2rem)' }}
+          onClick={() => {
+            onColorsChanged(generateRandomKeyboardTheme(lightTheme))
           }}>
+          Random Theme
+        </button>
+        <button
+          className='flex-grow bg-transparent rounded-lg p-2 border-black/10 dark:border-white/10 border-[1px] hover:border-black hover:dark:border-white transition-all duration-200 m-2 text-lg'
+          style={{ width: 'calc(100% - 2rem)' }}
+          onClick={async () => {
+            const colors = await getColorsFromPicture(lightTheme, { colorFull })
+            onColorsChanged(colors)
+          }}>
+          Theme from Picture
+        </button>
+        <div className='flex flex-row' style={{ width: 'calc(100% - 1rem)' }}>
           <button
             className='flex-grow bg-transparent rounded-lg p-2 border-black/10 dark:border-white/10 border-[1px] hover:border-black hover:dark:border-white transition-all duration-200 m-2 text-lg'
             onClick={async () => {
