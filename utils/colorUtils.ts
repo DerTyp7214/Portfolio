@@ -126,15 +126,34 @@ export const toRGB = (color?: Color) => {
   }
 }
 
+export function luminance(color?: Color): number {
+  const { r, g, b } = toRGB(color)
+
+  const a = [r, g, b].map((v) => {
+    v /= 255
+    return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4
+  })
+
+  return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722
+}
+
+export function contrast(color1?: Color, color2?: Color): number {
+  const l1 = luminance(color1)
+  const l2 = luminance(color2)
+
+  return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05)
+}
+
 export function generateRandomKeyboardTheme(
   light: boolean = false,
   options?: {
     seed?: string
     backgroundSeed?: string
     keyBackgroundSeed?: string
+    colorFul?: boolean
   }
 ): KeyboardColors {
-  const { seed, backgroundSeed, keyBackgroundSeed } = options ?? {}
+  const { seed, backgroundSeed, keyBackgroundSeed, colorFul } = options ?? {}
 
   const randomColor = seed
     ? ColorLib(seed)
@@ -147,26 +166,54 @@ export function generateRandomKeyboardTheme(
   const white = ColorLib('#ffffff')
   const black = ColorLib('#000000')
 
-  const randomDesaturation = Math.random() * 0.5 + 0.5
+  const randomNumbers = (num: number, random: number = 0.5) =>
+    Math.random() * random + num
+  const randomDesaturation = colorFul
+    ? randomNumbers(0, 0.7)
+    : Math.random() * 0.5 + 0.5
 
-  const accentBg = randomColor
-    .saturate(1.1)
-    .mix(light ? black : white)
-    .lightness(light ? 30 : 70)
+  const accentBg = colorFul
+    ? randomColor.saturate(randomNumbers(0.9, 0.8)).lightness(light ? 30 : 70)
+    : randomColor
+        .saturate(1.1)
+        .mix(light ? black : white)
+        .lightness(light ? 30 : 70)
   const mainBg = backgroundSeed
     ? ColorLib(backgroundSeed)
     : randomColor
-        .lightness(light ? 60 + Math.random() * 10 : 40)
-        .rotate(120)
+        .lightness(light ? randomNumbers(60, 10) : 40)
+        .rotate(colorFul ? randomNumbers(100, 40) : 120)
         .desaturate(randomDesaturation)
         .mix(light ? white : black)
 
-  const keyBg = keyBackgroundSeed
+  const readableColor = (
+    mainColor: ColorLib,
+    color: ColorLib,
+    minContrast: number,
+    modifier: (color: ColorLib) => ColorLib
+  ): ColorLib =>
+    contrast(color.hex(), mainColor.hex()) < minContrast
+      ? readableColor(mainColor, modifier(color), minContrast, modifier)
+      : color
+
+  const rawKeyBg = keyBackgroundSeed
     ? ColorLib(keyBackgroundSeed)
+    : colorFul
+    ? readableColor(
+        mainBg,
+        mainBg.rotate(randomNumbers(0, Math.random() > 0.6 ? 180 : 20)),
+        0.7,
+        (color) => color.lighten(randomNumbers(0.1, 0.1))
+      )
+    : mainBg
+  const keyBg = keyBackgroundSeed
+    ? rawKeyBg
     : light
-    ? mainBg.darken(0.2)
-    : mainBg.lighten(0.2)
-  const secondKeyBg = light ? keyBg.darken(0.2) : keyBg.lighten(0.2)
+    ? rawKeyBg.darken(colorFul ? randomNumbers(0.1, 0.2) : 0.2)
+    : rawKeyBg.lighten(colorFul ? randomNumbers(0.1, 0.2) : 0.2)
+  const secondKeyBg = light
+    ? keyBg.darken(colorFul ? randomNumbers(0.1, 0.2) : 0.2)
+    : keyBg.lighten(colorFul ? randomNumbers(0.1, 0.2) : 0.2)
 
   return {
     mainBackground: mainBg.hex(),
@@ -223,10 +270,10 @@ export function matchingColors(color?: Color): string[] {
 export async function getColorsFromPicture(
   light: boolean = false,
   options?: {
-    colorFull?: boolean
+    colorFul?: boolean
   }
 ): Promise<KeyboardColors> {
-  const { colorFull } = options ?? {}
+  const { colorFul } = options ?? {}
 
   const input = document.createElement('input')
   input.type = 'file'
@@ -259,7 +306,8 @@ export async function getColorsFromPicture(
               ...generateRandomKeyboardTheme(light, {
                 seed: accentBg,
                 backgroundSeed: mainBg,
-                keyBackgroundSeed: colorFull ? keyBg : undefined,
+                keyBackgroundSeed: colorFul ? keyBg : undefined,
+                colorFul,
               }),
               themeName: file.name.split('.').slice(0, -1).join('.'),
               author: 'DerTyp7214',

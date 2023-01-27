@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { HomeIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import router, { useRouter } from 'next/router'
 import { GetStaticProps } from 'next/types'
 import { useState } from 'react'
 import ReactTooltip from 'react-tooltip'
@@ -213,7 +213,10 @@ function ProjectPage({ projects, skills }: Props) {
               )}
               {project.extraButtons?.map((button, index) => (
                 <button
-                  onClick={() => window.open(button.url)}
+                  onClick={() => {
+                    if (button.url.startsWith('http')) window.open(button.url)
+                    else router.push(button.url)
+                  }}
                   key={index}
                   className='rounded-lg bg-accent/80 text-white dark:bg-accentDark/80 dark:text-black pt-1 pb-1 pl-3 pr-3 hover:bg-accent/100 dark:hover:bg-accentDark/100 transition-all duration-200 overflow-hidden'>
                   {button.text}

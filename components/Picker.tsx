@@ -145,7 +145,7 @@ const Picker = ({ colorVar, submitColor }: Props) => {
           cursor: 'pointer',
           background: toHex(colorVar),
         }}
-        className='border-black dark:border-white'
+        className='border-black dark:border-white transition-all duration-300 ease-in-out'
         onClick={() => {
           setPicking(true)
         }}

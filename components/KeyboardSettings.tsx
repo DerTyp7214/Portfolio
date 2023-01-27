@@ -49,7 +49,7 @@ const buildUrl = (path: string = '', colors: KeyboardColors): string => {
 const KeyboardSettings = ({ colors, onColorsChanged }: Props) => {
   const { darkMode } = useAppContext()
   const [lightTheme, setLightTheme] = useState(!darkMode)
-  const [colorFull, setColorFull] = useState(false)
+  const [colorFul, setColorFul] = useState(false)
 
   useEffect(() => {
     setLightTheme(!darkMode)
@@ -124,17 +124,18 @@ const KeyboardSettings = ({ colors, onColorsChanged }: Props) => {
         <CheckBox
           id='colorFull'
           label='Colorful'
-          checked={colorFull}
-          data-tip='Only applies to theme from picture'
+          checked={colorFul}
           onChange={(event) => {
-            setColorFull(event.target.checked)
+            setColorFul(event.target.checked)
           }}
         />
         <button
           className='flex-grow bg-transparent rounded-lg p-2 border-black/10 dark:border-white/10 border-[1px] hover:border-black hover:dark:border-white transition-all duration-200 m-2 text-lg'
           style={{ width: 'calc(100% - 2rem)' }}
           onClick={() => {
-            onColorsChanged(generateRandomKeyboardTheme(lightTheme))
+            onColorsChanged(
+              generateRandomKeyboardTheme(lightTheme, { colorFul: colorFul })
+            )
           }}>
           Random Theme
         </button>
@@ -142,7 +143,9 @@ const KeyboardSettings = ({ colors, onColorsChanged }: Props) => {
           className='flex-grow bg-transparent rounded-lg p-2 border-black/10 dark:border-white/10 border-[1px] hover:border-black hover:dark:border-white transition-all duration-200 m-2 text-lg'
           style={{ width: 'calc(100% - 2rem)' }}
           onClick={async () => {
-            const colors = await getColorsFromPicture(lightTheme, { colorFull })
+            const colors = await getColorsFromPicture(lightTheme, {
+              colorFul: colorFul,
+            })
             onColorsChanged(colors)
           }}>
           Theme from Picture
