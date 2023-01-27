@@ -285,7 +285,7 @@ async function proccess() {
     ),
 
     generatePreview(backgroundDark, accentDark).then(buffer => {
-      fs.writeFileSync('./public/assets/og-image-creator.png', buffer)
+      fs.writeFileSync('./assets/parsed/og-image-creator.png', buffer)
     }),
 
     createScaledFavicons().then(createScaledRboardIcons).then(createScaledCreatorIcons),

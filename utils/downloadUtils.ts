@@ -278,10 +278,20 @@ export async function cacheImageLocally(props: {
   imageName: string
   path?: string
   svg?: boolean
+  png?: boolean
   newWidth?: number
   newHeight?: number
 }) {
-  const { url, file, imageName: name, path, svg, newWidth, newHeight } = props
+  const {
+    url,
+    file,
+    imageName: name,
+    path,
+    svg,
+    png,
+    newWidth,
+    newHeight,
+  } = props
 
   const imageName = `${name.replace(/[^a-zA-Z0-9+#]/g, '_')}-${
     process.env.NEXT_PUBLIC_RUN_ID
@@ -290,12 +300,12 @@ export async function cacheImageLocally(props: {
   const internalPath = path ? `${path}/` : ''
 
   const relativeUrl = `/images/cached/${internalPath}${imageName}.${
-    svg || (url ?? file)?.endsWith('svg') ? 'svg' : 'webp'
+    svg || (url ?? file)?.endsWith('svg') ? 'svg' : png ? 'png' : 'webp'
   }`
   const absoluteUrl = `${process.cwd()}/public${relativeUrl}`
   const publicRelativeUrl = `/images/cached/${internalPath}${encodeURIComponent(
     imageName
-  )}.${svg || (url ?? file)?.endsWith('svg') ? 'svg' : 'webp'}`
+  )}.${svg || (url ?? file)?.endsWith('svg') ? 'svg' : png ? 'png' : 'webp'}`
 
   const finishLoadingImages = async (url: string) => {
     await Promise.all(
@@ -396,7 +406,10 @@ export async function cacheImageLocally(props: {
       background: { r: 255, g: 255, b: 255, alpha: 0 },
     })
 
-    const output = await resizedImage.webp().toFile(absoluteUrl)
+    const output = await (png
+      ? resizedImage.png()
+      : resizedImage.webp()
+    ).toFile(absoluteUrl)
 
     const duration = Date.now() - startTime
 

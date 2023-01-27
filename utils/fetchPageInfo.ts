@@ -44,10 +44,18 @@ const manifestUrls: { [key: string]: string } = {
   creator: `/creator-manifest.json?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
 }
 
-const ogImages: { [key: Page]: string } = {
-  default: `${process.env.NEXT_PUBLIC_BASE_URL}/assets/og-image.png?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
-  rboard: `${process.env.NEXT_PUBLIC_BASE_URL}/assets/og-image-rboard.png?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
-  creator: `${process.env.NEXT_PUBLIC_BASE_URL}/assets/og-image-creator.png?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
+const ogImages: { [key: Page]: () => Promise<string> } = {
+  default: async () =>
+    `${process.env.NEXT_PUBLIC_BASE_URL}/assets/og-image.png?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
+  rboard: async () =>
+    `${process.env.NEXT_PUBLIC_BASE_URL}/assets/og-image-rboard.png?v=${process.env.NEXT_PUBLIC_RUN_ID}`,
+  creator: async () =>
+    `${process.env.NEXT_PUBLIC_BASE_URL}${await cacheImageLocally({
+      file: 'assets/parsed/og-image-creator.png',
+      imageName: 'og-image-creator',
+      path: 'og-images',
+      png: true,
+    })}`,
 }
 
 const description: { [key: Page]: string | null } = {
@@ -60,7 +68,7 @@ export default async function fetchPageInfo(page?: string): Promise<PageInfo> {
   return {
     title: titles[page || 'default'],
     favIconUrl: await favIcons[page || 'default'](),
-    ogImageUrl: ogImages[page || 'default'],
+    ogImageUrl: await ogImages[page || 'default'](),
     description: description[page || 'default'],
     appName: 'DerTyp7214.de',
     manifestUrl: manifestUrls[page || 'default'],
