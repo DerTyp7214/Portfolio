@@ -151,9 +151,15 @@ export function generateRandomKeyboardTheme(
     backgroundSeed?: string
     keyBackgroundSeed?: string
     colorFul?: boolean
+    presets?: string[]
   }
 ): KeyboardColors {
-  const { seed, backgroundSeed, keyBackgroundSeed, colorFul } = options ?? {}
+  const { seed, backgroundSeed, keyBackgroundSeed, colorFul, presets } =
+    options ?? {}
+
+  const preset = presets
+    ? presets[Math.floor(Math.random() * presets.length)]
+    : 'default'
 
   const randomColor = seed
     ? ColorLib(seed)
@@ -223,7 +229,7 @@ export function generateRandomKeyboardTheme(
     accentBackground: accentBg.hex(),
     themeName: 'Rboard Theme',
     author: 'DerTyp7214',
-    preset: 'default',
+    preset: preset,
   }
 }
 

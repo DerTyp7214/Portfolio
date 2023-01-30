@@ -205,10 +205,29 @@ export type KeyboardColors = {
   preset?: KeyboardPreset
 }
 
+export type ThemeMetadata = {
+  format_version?: number
+  id?: string
+  name?: string
+  prefer_key_border?: boolean
+  lock_key_border?: boolean
+  is_light_theme?: boolean
+  style_sheets?: string[]
+  flavors?: {
+    type: string
+    style_sheets: string[]
+  }[]
+}
+
+export type ThemePresetManifest = {
+  [key: string]: ThemePreset
+}
+
 export type ThemePreset = {
   name: string
-  html?: string
   styleSheetMd: string
   styleSheetMdBorder: string
-  imageBase64: string[]
+  metadata: ThemeMetadata
+  preview: string
+  imageBase64: { file: string; base64: string }[]
 }

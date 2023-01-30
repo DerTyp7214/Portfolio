@@ -1,5 +1,6 @@
+import { Button, Checkbox, Dropdown, Input, Spacer } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
-import { KeyboardColors } from '../types/types'
+import { KeyboardColors, ThemePreset } from '../types/types'
 import {
   generateRandomKeyboardTheme,
   getColorsFromPicture,
@@ -7,12 +8,13 @@ import {
 } from '../utils/colorUtils'
 import { getTheme } from '../utils/themeUtils'
 import { useAppContext } from './appContext'
-import CheckBox from './CheckBox'
 import Picker from './Picker'
 
 type Props = {
   colors: KeyboardColors
+  presets: ThemePreset[]
   onColorsChanged: (colors: KeyboardColors) => void
+  onPresetChanged: (preset: string) => void
 }
 
 const colorVars: (keyof KeyboardColors)[] = [
@@ -46,21 +48,41 @@ const buildUrl = (path: string = '', colors: KeyboardColors): string => {
   return url
 }
 
-const KeyboardSettings = ({ colors, onColorsChanged }: Props) => {
+const KeyboardSettings = ({
+  colors,
+  presets,
+  onColorsChanged,
+  onPresetChanged,
+}: Props) => {
   const { darkMode } = useAppContext()
   const [lightTheme, setLightTheme] = useState(!darkMode)
   const [colorFul, setColorFul] = useState(false)
+  const [preset, setPreset] = useState<ThemePreset>({
+    name: 'default',
+    styleSheetMd: '',
+    styleSheetMdBorder: '',
+    preview: '',
+    metadata: {},
+    imageBase64: [],
+  })
+
+  useEffect(() => {
+    onPresetChanged(preset.name)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [preset])
 
   useEffect(() => {
     setLightTheme(!darkMode)
-    onColorsChanged(
-      generateRandomKeyboardTheme(!darkMode, {
-        seed: process.env.NEXT_PUBLIC_COLOR_SEED,
-        backgroundSeed: darkMode
-          ? process.env.NEXT_PUBLIC_COLOR_BACKGROUND_DARK
-          : process.env.NEXT_PUBLIC_COLOR_BACKGROUND,
-      })
-    )
+    const theme = generateRandomKeyboardTheme(!darkMode, {
+      seed: process.env.NEXT_PUBLIC_COLOR_SEED,
+      backgroundSeed: darkMode
+        ? process.env.NEXT_PUBLIC_COLOR_BACKGROUND_DARK
+        : process.env.NEXT_PUBLIC_COLOR_BACKGROUND,
+      presets: [colors.preset ?? 'default'],
+    })
+    onColorsChanged(theme)
+    if (preset.name !== theme.preset)
+      setPreset(presets.find((preset) => preset.name === theme.preset)!)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [darkMode])
 
@@ -83,14 +105,15 @@ const KeyboardSettings = ({ colors, onColorsChanged }: Props) => {
         </div>
       ))}
       <div className='flex flex-col items-center w-full mt-4'>
-        <input
-          type='text'
-          placeholder='Author'
-          className='bg-transparent text-black dark:text-white rounded-lg p-2 border-black/10 dark:border-white/10 border-[1px] hover:border-black hover:dark:border-white transition-all duration-200 m-2 text-lg'
-          style={{
+        <Spacer y={1.6} />
+        <Input
+          bordered
+          labelPlaceholder='Author'
+          value={colors.author}
+          color='primary'
+          css={{
             width: 'calc(100% - 2rem)',
           }}
-          value={colors.author}
           onChange={(e) => {
             onColorsChanged({
               ...colors,
@@ -98,14 +121,15 @@ const KeyboardSettings = ({ colors, onColorsChanged }: Props) => {
             })
           }}
         />
-        <input
-          type='text'
-          placeholder='Theme Name'
-          className='bg-transparent text-black dark:text-white rounded-lg p-2 border-black/10 dark:border-white/10 border-[1px] hover:border-black hover:dark:border-white transition-all duration-200 m-2 text-lg'
-          style={{
+        <Spacer y={1.6} />
+        <Input
+          bordered
+          labelPlaceholder='Theme Name'
+          color='primary'
+          value={colors.themeName}
+          css={{
             width: 'calc(100% - 2rem)',
           }}
-          value={colors.themeName}
           onChange={(e) => {
             onColorsChanged({
               ...colors,
@@ -113,35 +137,72 @@ const KeyboardSettings = ({ colors, onColorsChanged }: Props) => {
             })
           }}
         />
-        <CheckBox
-          id='lightTheme'
-          label='Light Theme'
-          checked={lightTheme}
-          onChange={(event) => {
-            setLightTheme(event.target.checked)
+        <Spacer y={0.6} />
+        <Dropdown>
+          <Dropdown.Button
+            light={!darkMode}
+            css={{
+              width: 'calc(100% - 2rem)',
+              color: darkMode ? 'black' : 'black',
+            }}>
+            Preset ({preset.name})
+          </Dropdown.Button>
+          <Dropdown.Menu
+            onAction={(preset) => {
+              setPreset(presets.find((p) => p.name === preset)!)
+            }}>
+            {presets.map((preset) => (
+              <Dropdown.Item key={preset.name}>{preset.name}</Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown>
+        <Spacer y={0.6} />
+        <Checkbox
+          isSelected={lightTheme}
+          color='primary'
+          css={{
+            width: 'calc(100% - 2rem)',
           }}
-        />
-        <CheckBox
-          id='colorFull'
-          label='Colorful'
-          checked={colorFul}
-          onChange={(event) => {
-            setColorFul(event.target.checked)
+          onChange={(checked) => {
+            setLightTheme(checked)
+          }}>
+          Light Theme
+        </Checkbox>
+        <Checkbox
+          isSelected={colorFul}
+          color='primary'
+          css={{
+            width: 'calc(100% - 2rem)',
           }}
-        />
-        <button
-          className='flex-grow bg-transparent rounded-lg p-2 border-black/10 dark:border-white/10 border-[1px] hover:border-black hover:dark:border-white transition-all duration-200 m-2 text-lg'
-          style={{ width: 'calc(100% - 2rem)' }}
+          onChange={(checked) => {
+            setColorFul(checked)
+          }}>
+          Colorful
+        </Checkbox>
+        <Spacer y={0.6} />
+        <Button
+          color='primary'
+          css={{
+            width: 'calc(100% - 2rem)',
+            color: darkMode ? 'black' : 'white',
+          }}
           onClick={() => {
-            onColorsChanged(
-              generateRandomKeyboardTheme(lightTheme, { colorFul: colorFul })
-            )
+            const theme = generateRandomKeyboardTheme(lightTheme, {
+              colorFul: colorFul,
+              presets: presets.map((preset) => preset.name),
+            })
+            onColorsChanged(theme)
+            setPreset(presets.find((preset) => preset.name === theme.preset)!)
           }}>
           Random Theme
-        </button>
-        <button
-          className='flex-grow bg-transparent rounded-lg p-2 border-black/10 dark:border-white/10 border-[1px] hover:border-black hover:dark:border-white transition-all duration-200 m-2 text-lg'
-          style={{ width: 'calc(100% - 2rem)' }}
+        </Button>
+        <Spacer y={0.6} />
+        <Button
+          color='primary'
+          css={{
+            width: 'calc(100% - 2rem)',
+            color: darkMode ? 'black' : 'white',
+          }}
           onClick={async () => {
             const colors = await getColorsFromPicture(lightTheme, {
               colorFul: colorFul,
@@ -149,10 +210,13 @@ const KeyboardSettings = ({ colors, onColorsChanged }: Props) => {
             onColorsChanged(colors)
           }}>
           Theme from Picture
-        </button>
-        <div className='flex flex-row' style={{ width: 'calc(100% - 1rem)' }}>
-          <button
-            className='flex-grow bg-transparent rounded-lg p-2 border-black/10 dark:border-white/10 border-[1px] hover:border-black hover:dark:border-white transition-all duration-200 m-2 text-lg'
+        </Button>
+        <Spacer y={0.6} />
+        <Button.Group color='primary' bordered>
+          <Button
+            css={{
+              color: darkMode ? 'white' : 'black',
+            }}
             onClick={async () => {
               const shareData: ShareData = {
                 url: buildUrl('creator', colors),
@@ -160,18 +224,21 @@ const KeyboardSettings = ({ colors, onColorsChanged }: Props) => {
               await navigator.share(shareData)
             }}>
             Share
-          </button>
-          <button
-            className='flex-grow bg-transparent rounded-lg p-2 border-black/10 dark:border-white/10 border-[1px] hover:border-black hover:dark:border-white transition-all duration-200 m-2 text-lg'
+          </Button>
+          <Button
+            css={{
+              color: darkMode ? 'white' : 'black',
+            }}
             onClick={async () => {
               getTheme(
+                preset,
                 document.querySelector('.key_box') as HTMLElement,
                 colors
               )
             }}>
             Download
-          </button>
-        </div>
+          </Button>
+        </Button.Group>
       </div>
     </div>
   )

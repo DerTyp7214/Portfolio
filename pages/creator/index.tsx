@@ -3,7 +3,6 @@ import Color from 'color'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { GetStaticProps } from 'next/types'
-import Vibrant from 'node-vibrant'
 import { useEffect, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
 import { useAppContext } from '../../components/appContext'
@@ -102,49 +101,22 @@ function Rboard({ themePresets }: Props) {
     return color.length === 7 ? color : randomColor()
   }
 
-  const uploadPic = async () => {
-    const input = document.createElement('input')
-    input.type = 'file'
-    input.accept = 'image/png, image/jpeg'
-    input.onchange = () => {
-      const file = input.files?.[0]
-      if (file) {
-        const reader = new FileReader()
-        reader.onload = async (e) => {
-          const base64 = e.target?.result?.toString()
-          if (base64) {
-            const palette = await Vibrant.from(base64).getPalette()
-
-            const mainBackground = palette.DarkMuted?.hex ?? randomColor()
-            const keyBackground = palette.Muted?.hex ?? randomColor()
-            const keyColor = palette.LightVibrant?.hex ?? randomColor()
-            const secondaryKeyBackground = palette.Muted?.hex ?? randomColor()
-            const accentBackground = palette.Vibrant?.hex ?? randomColor()
-            const preset = 'default'
-
-            setColors({
-              themeName: file.name.split('.').slice(0, -1).join('.'),
-              author: 'DerTyp7214',
-              mainBackground,
-              keyBackground,
-              keyColor,
-              secondaryKeyBackground,
-              accentBackground,
-              preset,
-            })
-          }
-        }
-        reader.readAsDataURL(file)
-      }
-    }
-    input.click()
-  }
-
   const setColors = (colors: KeyboardColors) => {
     setKeyboardTheme({
       ...keyboardTheme,
       ...colors,
     })
+  }
+
+  const setPreset = (preset: string) => {
+    setKeyboardTheme({
+      ...keyboardTheme,
+      preset,
+    })
+  }
+
+  const getPreset = (preset: string) => {
+    return themePresets.find((presetObj) => presetObj.name === preset)
   }
 
   useEffect(() => {
@@ -170,11 +142,18 @@ function Rboard({ themePresets }: Props) {
           <div className='inline-flex flex-col-reverse xl:flex-row items-end xl:items-start justify-evenly m-5'>
             <KeyboardSettings
               colors={keyboardTheme}
+              presets={themePresets}
               onColorsChanged={(colors: KeyboardColors) => {
                 setColors(colors)
               }}
+              onPresetChanged={(preset: string) => {
+                setPreset(preset)
+              }}
             />
-            <Keyboard theme={keyboardTheme} />
+            <Keyboard
+              theme={keyboardTheme}
+              preview={getPreset(keyboardTheme.preset)?.preview}
+            />
           </div>
           <ReactTooltip
             html

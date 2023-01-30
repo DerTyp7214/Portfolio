@@ -1,3 +1,5 @@
+import { createTheme, NextUIProvider } from '@nextui-org/react'
+import Color from 'color'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useRef, useState } from 'react'
@@ -54,6 +56,39 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
     </div>
   ) : null
 
+  const primaryDark = process.env.NEXT_PUBLIC_COLOR_ACCENT_DARK ?? '#FFFFFF'
+  const primaryLight = process.env.NEXT_PUBLIC_COLOR_ACCENT ?? '#000000'
+  const backgroundDark =
+    process.env.NEXT_PUBLIC_COLOR_BACKGROUND_DARK ?? '#000000'
+  const backgroundLight = process.env.NEXT_PUBLIC_COLOR_BACKGROUND ?? '#FFFFFF'
+  const secondaryBackgroundDark =
+    process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND_DARK ?? '#000000'
+  const secondaryBackgroundLight =
+    process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND ?? '#FFFFFF'
+
+  const primary = darkMode ? primaryDark : primaryLight
+  const background = darkMode ? backgroundDark : backgroundLight
+  const secondaryBackground = darkMode
+    ? secondaryBackgroundDark
+    : secondaryBackgroundLight
+
+  const theme = createTheme({
+    type: darkMode ? 'dark' : 'light',
+    theme: {
+      colors: {
+        primary: primary,
+        primarySolidHover: Color(primary).lighten(0.1).hex(),
+        primarySolidActive: Color(primary).darken(0.1).hex(),
+        primaryLight: Color(primary).lighten(0.4).hex(),
+        primaryLightHover: Color(primary).lighten(0.5).hex(),
+        primaryLightActive: Color(primary).lighten(0.3).hex(),
+        background: background,
+        backgroundContrast: secondaryBackground,
+        link: '',
+      },
+    },
+  })
+
   return (
     <div className={darkMode ? 'dark' : ''}>
       <div
@@ -71,7 +106,9 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
 
           current.style.backgroundPositionY = -currentScroll * 0.04 + 'px'
         }}>
-        <AppContext.Provider value={state}>{children}</AppContext.Provider>
+        <AppContext.Provider value={state}>
+          <NextUIProvider theme={theme}>{children}</NextUIProvider>
+        </AppContext.Provider>
         <div className='absolute bottom-0 right-1 hidden lg:block'>
           {versionInfo}
         </div>
