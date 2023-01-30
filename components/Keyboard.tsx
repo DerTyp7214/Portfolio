@@ -29,6 +29,9 @@ function Keyboard({ theme, preview }: Props) {
           border-width: 0.06em;
           margin: 0.33em;
           overflow: hidden;
+          font-size: var(--font-size);
+          width: 18em;
+          height: 12em;
         }
       `}</style>
       <div

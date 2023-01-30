@@ -61,6 +61,7 @@ const Picker = ({ colorVar, submitColor }: Props) => {
   const [picking, setPicking] = useState(false)
   const [color, setColor] = useState<Color>()
   const [isBrowser, setIsBrowser] = useState(false)
+  const [hexInput, setHexInput] = useState('')
   const { darkMode } = useAppContext()
 
   useEffect(() => {
@@ -84,6 +85,10 @@ const Picker = ({ colorVar, submitColor }: Props) => {
       setColor((colorResult as ColorResult).hex)
     else setColor(colorResult as Color)
   }
+
+  useEffect(() => {
+    if (color) setHexInput(toHex(color).toUpperCase())
+  }, [color])
 
   const swatches = () => {
     const grayTones = Array.from({ length: 5 }, (_, i) => {
@@ -156,13 +161,14 @@ const Picker = ({ colorVar, submitColor }: Props) => {
               }}
               type='text'
               maxLength={7}
-              defaultValue={toHex(color).toUpperCase()}
+              value={hexInput}
               onInput={(event) => {
                 ;(event.target as HTMLInputElement).value = (
                   event.target as HTMLInputElement
                 ).value.toUpperCase()
               }}
               onChange={(event) => {
+                setHexInput(event.target.value)
                 if (event.target.value.match(/^#([A-Fa-f0-9]{6})$/))
                   setColor(event.target.value)
               }}
