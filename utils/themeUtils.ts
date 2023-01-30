@@ -102,7 +102,7 @@ export const getTheme = async (
 
   const content = await packZip.generateAsync({ type: 'blob' })
 
-  saveAs(content, `${escapedThemeName}.zip`)
+  saveAs(content, `${escapedThemeName}.pack`)
 }
 
 const shadeColor = (color: string, percent: number): string => {
