@@ -86,6 +86,14 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
         backgroundContrast: secondaryBackground,
         link: '',
       },
+      letterSpacings: {
+        tighter: '0em',
+        tight: '0em',
+        normal: '0',
+        wide: '0em',
+        wider: '0em',
+        widest: '0em'
+      }
     },
   })
 

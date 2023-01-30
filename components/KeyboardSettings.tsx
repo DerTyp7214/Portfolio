@@ -157,6 +157,14 @@ const KeyboardSettings = ({
           </Dropdown.Menu>
         </Dropdown>
         <Spacer y={0.6} />
+        <style global>{`
+          .nextui-icon-check .nextui-icon-check-line1::after {
+            background: ${darkMode ? 'black' : 'white'};
+          }
+          .nextui-icon-check .nextui-icon-check-line2::after {
+            background: ${darkMode ? 'black' : 'white'};
+          }
+        `}</style>
         <Checkbox
           isSelected={lightTheme}
           color='primary'
