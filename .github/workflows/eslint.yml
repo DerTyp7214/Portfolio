@@ -32,6 +32,10 @@ jobs:
 
       - name: Install ESLint
         run: |
+          sudo apt-get update
+          sudo apt install libxt-dev
+          sudo apt install libxi-dev
+          sudo apt install libgl-dev
           npm install eslint@8.10.0
           npm install @microsoft/eslint-formatter-sarif@2.1.7
 

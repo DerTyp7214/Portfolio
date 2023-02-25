@@ -1,6 +1,9 @@
-import { INeuralNetworkJSON, NeuralNetwork } from 'brain.js/dist/src/neural-network'
-import { INeuralNetworkState } from 'brain.js/dist/src/neural-network-types'
+import { NeuralNetwork } from 'brain.js'
 import Color from 'color'
+import {
+  INeuralNetworkJSON,
+  INeuralNetworkState
+} from '../types/brain.js.types'
 
 let gen = 0
 
@@ -31,12 +34,9 @@ class ColorGenerationAi {
   }
 
   generateColor(color: Color, dark: number = 255): Color[] {
-    const input = [
-      color.red(),
-      color.green(),
-      color.blue(),
-      dark,
-    ].map((value) => value / 255)
+    const input = [color.red(), color.green(), color.blue(), dark].map(
+      (value) => value / 255
+    )
 
     const output = this.brain.run(input) as number[]
 
