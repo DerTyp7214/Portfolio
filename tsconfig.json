@@ -19,7 +19,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "themeUtils/pregenerateColorsAndImages.js"
+    "themeUtils/pregenerateColorsAndImages.js",
+    "utils/trainAi.mjs"
   ],
   "exclude": ["node_modules"]
 }

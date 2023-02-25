@@ -13,18 +13,21 @@ import {
 import { useAppContext } from './appContext'
 
 type Props = {
+  disabled?: boolean
   colorVar?: Color
   submitColor: (color?: Color) => any
 }
 
-const Slider = (props: {
+export const Slider = (props: {
   gradientStart?: string
   gradientCenter?: string
   gradientEnd?: string
   value: number
+  width?: string
   onChange: (value: number) => void
 }) => {
-  const { value, onChange, gradientStart, gradientCenter, gradientEnd } = props
+  const { value, width, onChange, gradientStart, gradientCenter, gradientEnd } =
+    props
 
   return (
     <Range
@@ -39,7 +42,7 @@ const Slider = (props: {
           style={{
             ...props.style,
             height: '12px',
-            width: '100%',
+            width: width ?? '100%',
             background: `linear-gradient(to right, ${gradientStart ?? '#fff'}${
               gradientCenter ? `, ${gradientCenter}` : ''
             }, ${gradientEnd ?? '#000'})`,
@@ -57,7 +60,7 @@ const Slider = (props: {
   )
 }
 
-const Picker = ({ colorVar, submitColor }: Props) => {
+const Picker = ({ colorVar, submitColor, disabled }: Props) => {
   const [picking, setPicking] = useState(false)
   const [color, setColor] = useState<Color>()
   const [isBrowser, setIsBrowser] = useState(false)
@@ -127,7 +130,7 @@ const Picker = ({ colorVar, submitColor }: Props) => {
         }}
         className='border-black dark:border-white transition-all duration-300 ease-in-out'
         onClick={() => {
-          setPicking(true)
+          if (!disabled) setPicking(true)
         }}
       />
       <Modal

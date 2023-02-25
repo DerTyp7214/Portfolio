@@ -326,3 +326,9 @@ export async function getColorsFromPicture(
     input.click()
   })
 }
+
+export function decimalToHex(input: number): string {
+  var hex = Number(input).toString(16)
+  hex = '#000000'.substring(0, 7 - hex.length) + hex
+  return hex
+}

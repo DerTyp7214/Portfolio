@@ -4,21 +4,28 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useRef, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
+import brain from '../utils/brain'
+import ColorGenerationAi from '../utils/colorGenerationAi'
 import { lerpColor } from '../utils/colorUtils'
 import { getFormatedDate } from '../utils/stringUtils'
 
 export type AppContextType = {
   darkMode: boolean
+  colorAi: ColorGenerationAi
   setDarkMode: (darkMode: boolean) => void
+  setColorAi: (colorAi: ColorGenerationAi) => void
 }
 
 const AppContext = createContext<AppContextType>({
   darkMode: true,
+  colorAi: new ColorGenerationAi(brain),
   setDarkMode: () => {},
+  setColorAi: () => {},
 })
 
 export function AppWrapper({ children }: { children: React.ReactNode }) {
   const [darkMode, setDarkMode] = useState(true)
+  const [colorAi, setColorAi] = useState(new ColorGenerationAi(brain))
 
   const scrollDiv = useRef<HTMLDivElement>(null)
 
@@ -26,7 +33,7 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
     query: { devMode },
   } = useRouter()
 
-  let state: AppContextType = { darkMode, setDarkMode }
+  let state: AppContextType = { darkMode, colorAi, setDarkMode, setColorAi }
 
   const versionInfo = devMode ? (
     <div className='mb-1 mr-2 text-right text-sm opacity-60 dark:opacity-20 flex flex-col'>
@@ -108,17 +115,6 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
         '7xl': '',
         '8xl': '',
         '9xl': '',
-      },
-      fontWeights: {
-        thin: '',
-        extralight: '',
-        light: '',
-        normal: '',
-        medium: '',
-        semibold: '',
-        bold: '',
-        extrabold: '',
-        black: '',
       },
     },
   })

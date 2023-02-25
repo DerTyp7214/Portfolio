@@ -8,7 +8,7 @@ type Page = typeof pages[number]
 const titles: { [key: Page]: string } = {
   default: 'Josua Lengwenath (DerTyp7214)',
   rboard: 'Rboard',
-  creator: 'Creator',
+  creator: 'Rboard Theme Creator',
 }
 
 const favIcons: { [key: Page]: () => Promise<string> } = {
@@ -61,7 +61,7 @@ const ogImages: { [key: Page]: () => Promise<string> } = {
 const description: { [key: Page]: string | null } = {
   default: null,
   rboard: 'Gboard best modding tool',
-  creator: 'Create your own keyboard theme',
+  creator: 'Create your own keyboard theme. Compatible with Rboard and Gboard.',
 }
 
 export default async function fetchPageInfo(page?: string): Promise<PageInfo> {
