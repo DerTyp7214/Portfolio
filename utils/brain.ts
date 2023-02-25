@@ -201,7 +201,6 @@ const brain: INeuralNetworkJSON = {
     inputSize: 4,
     outputSize: 15,
     binaryThresh: 0.5,
-    mode: 'gpu',
     hiddenLayers: [15],
   },
   trainOpts: {
@@ -219,6 +218,6 @@ const brain: INeuralNetworkJSON = {
     beta2: 0.999,
     epsilon: 1e-8,
   },
-} as any as INeuralNetworkJSON
+}
 
 export default brain

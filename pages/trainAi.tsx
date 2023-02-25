@@ -49,7 +49,7 @@ async function train(
       )
     }
 
-    resolve({ json: colorGenerationAi.getWeights(), errorRates })
+    resolve({ json: colorGenerationAi.getJson(), errorRates })
   })
 }
 

@@ -1,5 +1,4 @@
-import { NeuralNetworkGPU } from 'brain.js'
-import { INeuralNetworkJSON } from 'brain.js/dist/src/neural-network'
+import { INeuralNetworkJSON, NeuralNetwork } from 'brain.js/dist/src/neural-network'
 import { INeuralNetworkState } from 'brain.js/dist/src/neural-network-types'
 import Color from 'color'
 
@@ -13,7 +12,7 @@ class ColorGenerationAi {
     outputSize: 15,
   }
 
-  private brain = new NeuralNetworkGPU(this.config)
+  private brain = new NeuralNetwork(this.config)
   private weights: number[][][] = []
   private name: string = ''
 
@@ -28,7 +27,7 @@ class ColorGenerationAi {
   }
 
   reset() {
-    this.brain = new NeuralNetworkGPU(this.config)
+    this.brain = new NeuralNetwork(this.config)
   }
 
   generateColor(color: Color, dark: number = 255): Color[] {
@@ -57,12 +56,8 @@ class ColorGenerationAi {
     ]
   }
 
-  getWeights() {
+  getJson() {
     return this.brain.toJSON()
-  }
-
-  setWeights(weights: number[][][]) {
-    this.brain.weights = weights
   }
 
   private trainColor(input: number[], output: number[], iterations: number) {
