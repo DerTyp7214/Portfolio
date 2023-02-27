@@ -21,10 +21,8 @@ async function train(
 
     for (let i = 0; i < trainingData.length; i++) {
       errorRates.push(
-        colorGenerationAi.trainFromHSL(
-          trainingData[i].input,
-          trainingData[i].output
-        ).error
+        colorGenerationAi.train(trainingData[i].input, trainingData[i].output)
+          .error
       )
     }
 
@@ -190,7 +188,7 @@ function TrainAi({}: Props) {
             <Button
               className='flex-grow'
               onPress={() =>
-                setColors(colorAi.generateColorFromHSL(input, 255 - darkMode))
+                setColors(colorAi.generateColor(input, 255 - darkMode))
               }>
               Generate
             </Button>

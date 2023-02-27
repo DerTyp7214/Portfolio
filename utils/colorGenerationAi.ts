@@ -10,7 +10,7 @@ let gen = 0
 class ColorGenerationAi {
   private config = {
     mode: 'gpu' as 'cpu' | 'gpu',
-    inputSize: 4,
+    inputSize: 5,
     hiddenLayers: [15],
     outputSize: 15,
   }
@@ -33,45 +33,25 @@ class ColorGenerationAi {
     this.brain = new NeuralNetwork(this.config)
   }
 
-  private generateColor(color: Color, luminosity: number = 0): Color[] {
-    const input = [color.red(), color.green(), color.blue(), luminosity].map(
-      (value) => value / 255
-    )
-
-    const output = this.brain.run(input) as number[]
-
-    const colorOutput = output
-
-    const [h1, s1, l1, h2, s2, l2, h3, s3, l3, h4, s4, l4, h5, s5, l5] =
-      colorOutput
-
-    return [
-      Color.hsl(h1 * 360, s1 * 100, l1 * 100),
-      Color.hsl(h2 * 360, s2 * 100, l2 * 100),
-      Color.hsl(h3 * 360, s3 * 100, l3 * 100),
-      Color.hsl(h4 * 360, s4 * 100, l4 * 100),
-      Color.hsl(h5 * 360, s5 * 100, l5 * 100),
-    ]
-  }
-
-  generateColorFromHSL(color: Color, l: number = 0): Color[] {
+  generateColor(color: Color, l: number = 0): Color[] {
     const input = [
       color.hue() / 360,
-      color.saturationl() / 100,
-      color.lightness() / 100,
+      color.red() / 255,
+      color.green() / 255,
+      color.blue() / 255,
       l / 100,
     ]
 
     const output = this.brain.run(input) as number[]
 
-    const [h1, s1, l1, h2, s2, l2, h3, s3, l3, h4, s4, l4, h5, s5, l5] = output
+    const [r1, g1, b1, r2, g2, b2, r3, g3, b3, r4, g4, b4, r5, g5, b5] = output
 
     return [
-      Color.hsl(h1 * 360, s1 * 100, l1 * 100),
-      Color.hsl(h2 * 360, s2 * 100, l2 * 100),
-      Color.hsl(h3 * 360, s3 * 100, l3 * 100),
-      Color.hsl(h4 * 360, s4 * 100, l4 * 100),
-      Color.hsl(h5 * 360, s5 * 100, l5 * 100),
+      Color.rgb(r1 * 255, g1 * 255, b1 * 255),
+      Color.rgb(r2 * 255, g2 * 255, b2 * 255),
+      Color.rgb(r3 * 255, g3 * 255, b3 * 255),
+      Color.rgb(r4 * 255, g4 * 255, b4 * 255),
+      Color.rgb(r5 * 255, g5 * 255, b5 * 255),
     ]
   }
 
@@ -83,43 +63,21 @@ class ColorGenerationAi {
     return this.brain.train([{ input, output }], { iterations })
   }
 
-  private train(
-    { color, l }: { color: Color; l: number },
-    colors: Color[]
-  ): INeuralNetworkState {
-    const input = [color.red(), color.green(), color.blue(), l * 2.55].map(
-      (value) => value / 255
-    )
-
-    const output = colors
-      .map((color) => {
-        return [color.red(), color.green(), color.blue()].map((value) => {
-          return value / 255
-        })
-      })
-      .flat()
-
-    return this.trainColor(input, output, 5000)
-  }
-
-  trainFromHSL(
+  train(
     { color, l }: { color: Color; l: number },
     colors: Color[]
   ): INeuralNetworkState {
     const input = [
       color.hue() / 360,
-      color.saturationl() / 100,
-      color.lightness() / 100,
+      color.red() / 255,
+      color.green() / 255,
+      color.blue() / 255,
       l / 100,
     ]
 
     const output = colors
       .map((color) => {
-        return [
-          color.hue() / 360,
-          color.saturationl() / 100,
-          color.lightness() / 100,
-        ]
+        return [color.red() / 255, color.green() / 255, color.blue() / 255]
       })
       .flat()
 

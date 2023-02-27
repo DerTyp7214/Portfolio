@@ -116,7 +116,7 @@ function monetTrainingData() {
     return {
       input: {
         color: colors[colors.length - 1],
-        l: colors[0].lightness(),
+        l: colors[0].isLight() ? 100 : 0,
       },
       output: colors,
     }
