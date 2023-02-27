@@ -1,14 +1,13 @@
 import { Button, Input, Spacer } from '@nextui-org/react'
 import Color from 'color'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useAppContext } from '../components/appContext'
 import Picker, { Slider } from '../components/Picker'
 import RenderOnMount from '../components/RenderOnMount'
-import { INeuralNetworkJSON } from '../types/brain.js.types'
 import ColorGenerationAi from '../utils/colorGenerationAi'
 import { toHex } from '../utils/colorUtils'
 import { parsableJson } from '../utils/stringUtils'
-import { randomTrainingData } from '../utils/trainingData'
+import { monetTrainingData } from '../utils/trainingData'
 
 type Props = {}
 
@@ -18,12 +17,14 @@ async function train(
   return new Promise((resolve) => {
     const errorRates: number[] = []
 
-    const trainingData = /*monetTrainingData()*/randomTrainingData()
+    const trainingData = monetTrainingData()
 
     for (let i = 0; i < trainingData.length; i++) {
       errorRates.push(
-        colorGenerationAi.train(trainingData[i].input, trainingData[i].output)
-          .error
+        colorGenerationAi.trainFromHSL(
+          trainingData[i].input,
+          trainingData[i].output
+        ).error
       )
     }
 
@@ -51,17 +52,14 @@ function TrainAi({}: Props) {
   const [lines, setLines] = useState<string[]>([])
   const [running, setRunning] = useState(false)
   const [iterations, setIterations] = useState(10000)
-  const [json, setJson] = useState<INeuralNetworkJSON>(colorAi.getJson())
-  const [brainJson, setBrainJson] = useState<string>(JSON.stringify(json))
+  const [brainJson, setBrainJson] = useState<string>(
+    JSON.stringify(colorAi.getJson())
+  )
   const [iteration, setIteration] = useState(0)
   const [totalStart, setTotalStart] = useState(0)
   const [colors, setColors] = useState<Color[]>([])
   const [input, setInput] = useState(Color(process.env.NEXT_PUBLIC_COLOR_SEED))
-  const [darkMode, setDarkMode] = useState(0)
-
-  useEffect(() => {
-    setBrainJson(JSON.stringify(json))
-  }, [json])
+  const [darkMode, setDarkMode] = useState(255)
 
   const run = async () => {
     colorAi.reset()
@@ -84,7 +82,7 @@ function TrainAi({}: Props) {
       const averageErrorRate =
         errorRates.reduce((a, b) => a + b, 0) / errorRates.length
       const diff = averageErrorRate - lastErrorRate
-      setJson(json as INeuralNetworkJSON)
+      setBrainJson(JSON.stringify(json))
       setLines((lines) => [
         ...lines.slice(Math.max(lines.length - 80, 0)),
         `Iteration ${i + 1} took ${(end - start).toFixed(
@@ -126,6 +124,7 @@ function TrainAi({}: Props) {
             </Button>
             <Input
               type='text'
+              aria-label='Iterations'
               fullWidth
               placeholder='Iterations'
               value={iterations}
@@ -191,7 +190,7 @@ function TrainAi({}: Props) {
             <Button
               className='flex-grow'
               onPress={() =>
-                setColors(colorAi.generateColor(input, 255 - darkMode))
+                setColors(colorAi.generateColorFromHSL(input, 255 - darkMode))
               }>
               Generate
             </Button>
@@ -284,15 +283,10 @@ function TrainAi({}: Props) {
         />
         <Spacer y={1} />
         <Button
-          disabled={
-            running ||
-            brainJson === JSON.stringify(json) ||
-            !parsableJson(brainJson)
-          }
+          disabled={running || !parsableJson(brainJson)}
           className='w-full'
           onPress={() => {
             colorAi.load(JSON.parse(brainJson))
-            setJson(JSON.parse(brainJson))
           }}>
           Load
         </Button>

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useRef, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
-import brain from '../utils/brain'
+import { monetBrain } from '../utils/brain'
 import ColorGenerationAi from '../utils/colorGenerationAi'
 import { lerpColor } from '../utils/colorUtils'
 import { getFormatedDate } from '../utils/stringUtils'
@@ -18,14 +18,14 @@ export type AppContextType = {
 
 const AppContext = createContext<AppContextType>({
   darkMode: true,
-  colorAi: new ColorGenerationAi(brain),
+  colorAi: new ColorGenerationAi(monetBrain),
   setDarkMode: () => {},
   setColorAi: () => {},
 })
 
 export function AppWrapper({ children }: { children: React.ReactNode }) {
   const [darkMode, setDarkMode] = useState(true)
-  const [colorAi, setColorAi] = useState(new ColorGenerationAi(brain))
+  const [colorAi, setColorAi] = useState(new ColorGenerationAi(monetBrain))
 
   const scrollDiv = useRef<HTMLDivElement>(null)
 
