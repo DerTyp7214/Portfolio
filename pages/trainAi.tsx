@@ -1,11 +1,14 @@
 import { Button, Input, Spacer } from '@nextui-org/react'
 import Color from 'color'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppContext } from '../components/appContext'
 import Picker, { Slider } from '../components/Picker'
 import RenderOnMount from '../components/RenderOnMount'
+import { INeuralNetworkJSON } from '../types/brain.js.types'
 import ColorGenerationAi from '../utils/colorGenerationAi'
-import { generateRandomKeyboardTheme, toHex } from '../utils/colorUtils'
+import { toHex } from '../utils/colorUtils'
+import { parsableJson } from '../utils/stringUtils'
+import { randomTrainingData } from '../utils/trainingData'
 
 type Props = {}
 
@@ -13,34 +16,9 @@ async function train(
   colorGenerationAi: ColorGenerationAi
 ): Promise<{ json: { [key: string]: any }; errorRates: number[] }> {
   return new Promise((resolve) => {
-    const generateColors = () => {
-      const seed = Color.rgb(
-        Math.floor(Math.random() * 255),
-        Math.floor(Math.random() * 255),
-        Math.floor(Math.random() * 255)
-      )
-
-      const dark = Math.random() > 0.5
-      const theme = generateRandomKeyboardTheme(!dark, {
-        seed: seed.hex(),
-      })
-      const colors = [
-        theme.mainBackground,
-        theme.keyBackground,
-        theme.secondaryKeyBackground,
-        theme.keyColor,
-        theme.accentBackground,
-      ]
-
-      return {
-        input: { color: seed, dark },
-        output: colors.map((color) => Color(color)),
-      }
-    }
-
     const errorRates: number[] = []
 
-    const trainingData = Array.from({ length: 1 }, () => generateColors())
+    const trainingData = /*monetTrainingData()*/randomTrainingData()
 
     for (let i = 0; i < trainingData.length; i++) {
       errorRates.push(
@@ -73,12 +51,17 @@ function TrainAi({}: Props) {
   const [lines, setLines] = useState<string[]>([])
   const [running, setRunning] = useState(false)
   const [iterations, setIterations] = useState(10000)
-  const [json, setJson] = useState<{ [key: string]: any }>({})
+  const [json, setJson] = useState<INeuralNetworkJSON>(colorAi.getJson())
+  const [brainJson, setBrainJson] = useState<string>(JSON.stringify(json))
   const [iteration, setIteration] = useState(0)
   const [totalStart, setTotalStart] = useState(0)
   const [colors, setColors] = useState<Color[]>([])
-  const [input, setInput] = useState(Color.rgb(128, 255, 0))
+  const [input, setInput] = useState(Color(process.env.NEXT_PUBLIC_COLOR_SEED))
   const [darkMode, setDarkMode] = useState(0)
+
+  useEffect(() => {
+    setBrainJson(JSON.stringify(json))
+  }, [json])
 
   const run = async () => {
     colorAi.reset()
@@ -101,9 +84,9 @@ function TrainAi({}: Props) {
       const averageErrorRate =
         errorRates.reduce((a, b) => a + b, 0) / errorRates.length
       const diff = averageErrorRate - lastErrorRate
-      setJson(json)
+      setJson(json as INeuralNetworkJSON)
       setLines((lines) => [
-        ...lines.slice(Math.max(lines.length - 9, 0)),
+        ...lines.slice(Math.max(lines.length - 80, 0)),
         `Iteration ${i + 1} took ${(end - start).toFixed(
           3
         )}ms average error: ${averageErrorRate.toFixed(10)} ${
@@ -123,27 +106,27 @@ function TrainAi({}: Props) {
     }
     const totalEnd = performance.now()
     setLines((lines) => [
-      ...lines.slice(Math.max(lines.length - 25, 0)),
+      ...lines,
       `Total time: ${(totalEnd - totalStart).toFixed(3)}ms`,
     ])
     setRunning(false)
   }
 
   return (
-    <div
-      className='flex flex-row justify-around space-x-4'
-      style={{
-        height: 'calc(100vh - 5rem)',
-      }}>
-      <div className='p-4 h-full'>
+    <div className='flex flex-col lg:flex-row lg:justify-around space-x-0 space-y-4 lg:space-y-0 lg:space-x-4 overflow-scroll lg:overflow-hidden lg:h-screen'>
+      <div className='p-4 h-full lg:h-screen flex flex-col justify-between'>
         <div className='flex flex-col justify-start overflow-hidden'>
           <Spacer y={1} />
-          <div className='flex flex-row justify-left items-center space-x-4'>
-            <Button onPress={run} disabled={running}>
+          <div className='flex flex-col md:flex-row justify-left items-start md:items-center space-y-4 space-x-0 md:space-y-0 md:space-x-4'>
+            <Button
+              onPress={run}
+              disabled={running}
+              className='!w-full md:!w-auto'>
               {running ? 'Training...' : 'Train AI'}
             </Button>
             <Input
               type='text'
+              fullWidth
               placeholder='Iterations'
               value={iterations}
               onChange={(e) => {
@@ -154,6 +137,7 @@ function TrainAi({}: Props) {
               }}
             />
             <Button
+              className='!w-full md:!w-auto'
               onPress={() => {
                 setRunning(false)
               }}
@@ -162,28 +146,48 @@ function TrainAi({}: Props) {
             </Button>
           </div>
           <Spacer y={1} />
-          <p>
-            Running with <b>{iterations}</b> iterations
-          </p>
-          <p>
-            Eta:{' '}
-            <b>
-              {totalStart === 0
-                ? 0
-                : millisecondsToHumanReadable(
-                    ((performance.now() - totalStart) / iteration) *
-                      (iterations - iteration)
-                  )}
-            </b>
-          </p>
-          <div className='flex flex-col'>
+          {running ? (
+            <>
+              <p>
+                Running with <b>{iterations}</b> iterations
+              </p>
+              <p>
+                {' '}
+                Eta:{' '}
+                <b>
+                  {totalStart === 0
+                    ? 0
+                    : millisecondsToHumanReadable(
+                        ((performance.now() - totalStart) / iteration) *
+                          (iterations - iteration)
+                      )}
+                </b>
+              </p>
+            </>
+          ) : null}
+          <div
+            className='flex flex-col overflow-auto md:!h-auto'
+            style={{
+              height: '50vh',
+            }}>
             {lines.map((line, index) => (
-              <p key={index} dangerouslySetInnerHTML={{ __html: line }}></p>
+              <p
+                key={index}
+                dangerouslySetInnerHTML={{ __html: line }}
+                style={{ overflowAnchor: 'none' }}
+                className='whitespace-nowrap'></p>
             ))}
+            <div
+              id='anchor'
+              style={{
+                overflowAnchor: 'auto',
+                height: '1px',
+              }}></div>
           </div>
+          <Spacer y={1} />
         </div>
         <div className='flex flex-col justify-end h-1/2'>
-          <div className='flex flex-row justify-start w-full'>
+          <div className='flex flex-col md:flex-row justify-start w-full'>
             <Button
               className='flex-grow'
               onPress={() =>
@@ -240,35 +244,58 @@ function TrainAi({}: Props) {
             />
           </div>
           <Spacer y={1} />
-          <div className='flex flex-row justify-start items-center'>
+          <div className='flex flex-row justify-center items-center'>
             {colors.map((color, index) => (
               <div
                 key={index}
                 style={{
                   backgroundColor: color.hex(),
-                  width: '100px',
-                  height: '100px',
+                  width: '20%',
+                  maxWidth: '120px',
+                  aspectRatio: '1',
                 }}
               />
             ))}
           </div>
         </div>
       </div>
-      <div className='p-4 w-1/2 flex flex-col overflow-hidden'>
+      <div className='p-4 lg:w-1/2 flex flex-col overflow-hidden'>
         <Spacer y={1} />
         <RenderOnMount>
-          <p>JSON ({colorAi.getName()})</p>
+          <p>
+            JSON ({colorAi.getName()})
+            {!parsableJson(brainJson) ? (
+              <span style={{ color: 'red' }}> Invalid JSON</span>
+            ) : null}
+          </p>
         </RenderOnMount>
         <textarea
           aria-label='JSON'
-          value={JSON.stringify(json)}
-          readOnly
+          value={brainJson}
+          onChange={(e) => {
+            setBrainJson(e.target.value)
+          }}
           style={{
             background: 'var(--nextui-colors-accents0)',
             borderRadius: 'var(--nextui-space-6)',
+            height: '50vh',
           }}
-          className='flex-grow w-full resize-none p-2'
+          className='flex-grow w-full resize-none p-2 lg:!h-auto'
         />
+        <Spacer y={1} />
+        <Button
+          disabled={
+            running ||
+            brainJson === JSON.stringify(json) ||
+            !parsableJson(brainJson)
+          }
+          className='w-full'
+          onPress={() => {
+            colorAi.load(JSON.parse(brainJson))
+            setJson(JSON.parse(brainJson))
+          }}>
+          Load
+        </Button>
       </div>
     </div>
   )

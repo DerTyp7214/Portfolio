@@ -93,6 +93,7 @@ class ColorGenerationAi {
   load(json: INeuralNetworkJSON) {
     try {
       this.brain.fromJSON(json)
+      this.name = `color-generation-ai-${gen++}`
       return true
     } catch (error) {
       console.log(error)

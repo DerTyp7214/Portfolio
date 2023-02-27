@@ -10,5 +10,14 @@ function getFormatedDate(date: Date) {
   return `${da}/${mo}/${ye}`
 }
 
-export { capitalize, getFormatedDate }
+function parsableJson(json: string) {
+  try {
+    JSON.parse(json)
+  } catch (e) {
+    return false
+  }
+  return true
+}
+
+export { capitalize, getFormatedDate, parsableJson }
 
