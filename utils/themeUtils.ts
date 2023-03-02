@@ -24,6 +24,7 @@ export const getTheme = async (
     keyColor,
     secondaryKeyBackground,
     accentBackground,
+    tertiaryBackground,
     themeName,
     author,
   } = Object.assign(
@@ -51,6 +52,11 @@ export const getTheme = async (
     `@def web_color_label ${keyColor};`,
     `@def web_color_accent ${accentBackground};`,
     `@def web_color_accent_pressed ${shadeColor(`${accentBackground}`, 5)};`,
+    `@def web_color_tertiary_key_bg ${tertiaryBackground};`,
+    `@def web_color_tertiary_key_bg_pressed ${shadeColor(
+      `${tertiaryBackground}`,
+      5
+    )};`,
     `@def web_color_key_bg ${keyBackground};`,
     `@def web_color_key_bg_pressed ${secondaryKeyBackground};`,
     `@def web_color_secondary_key_bg ${secondaryKeyBackground};`,
@@ -83,6 +89,7 @@ export const getTheme = async (
     name(`${keyColor}`),
     name(`${secondaryKeyBackground}`),
     name(`${accentBackground}`),
+    name(`${tertiaryBackground}`),
   ]
     .filter((tag) => tag !== null)
     .map((tag) => tag![1])

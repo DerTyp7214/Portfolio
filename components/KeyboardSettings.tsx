@@ -23,6 +23,7 @@ const colorVars: (keyof KeyboardColors)[] = [
   'keyColor',
   'secondaryKeyBackground',
   'accentBackground',
+  'tertiaryBackground',
 ]
 
 const nameMapping: {
@@ -33,6 +34,7 @@ const nameMapping: {
   keyColor: 'Key Color',
   secondaryKeyBackground: 'Secondary Key Background',
   accentBackground: 'Accent Background',
+  tertiaryBackground: 'Tertiary Background',
 }
 
 const buildUrl = (path: string = '', colors: KeyboardColors): string => {
@@ -42,6 +44,7 @@ const buildUrl = (path: string = '', colors: KeyboardColors): string => {
   url += `&keyColor=${colors.keyColor?.substring(1)}`
   url += `&secondKeyBg=${colors.secondaryKeyBackground?.substring(1)}`
   url += `&accentBg=${colors.accentBackground?.substring(1)}`
+  url += `&tertiaryBg=${colors.tertiaryBackground?.substring(1)}`
   url += `&themeName=${encodeURIComponent(colors.themeName ?? 'Rboard Theme')}`
   url += `&author=${encodeURIComponent(colors.author ?? 'Web-Creator')}`
   url += `&preset=${colors.preset ?? 'default'}`

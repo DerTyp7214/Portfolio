@@ -37,6 +37,7 @@ const getConsts = (query: { [key: string]: string }) =>
         keyColor: `#${query['keyColor']}`,
         secondKeyBg: `#${query['secondKeyBg']}`,
         accentBg: `#${query['accentBg']}`,
+        tertiaryBg: `#${query['tertiaryBg'] ?? query['accentBg']}`,
         themeName: query['themeName'] ?? 'Rboard Theme',
         author: query['author'] ?? 'DerTyp7214',
         preset: query['preset'] ?? 'default',
@@ -52,6 +53,7 @@ const getConsts = (query: { [key: string]: string }) =>
           keyColor: '#ffffff',
           secondKeyBg: secondKeyBg.hex(),
           accentBg: accentBg.hex(),
+          tertiaryBg: accentBg.rotate(180).hex(),
           themeName: 'Rboard Theme',
           author: 'DerTyp7214',
           preset: 'default',
@@ -75,6 +77,7 @@ function Rboard({ themePresets }: Props) {
     keyBorderRadius: 0.2,
     secondaryKeyBackground: consts.secondKeyBg,
     accentBackground: consts.accentBg,
+    tertiaryBackground: consts.tertiaryBg,
     fontSize: 'min(4vw, 4vh)',
   })
 
@@ -92,6 +95,7 @@ function Rboard({ themePresets }: Props) {
       keyBorderRadius: 0.2,
       secondaryKeyBackground: consts.secondKeyBg,
       accentBackground: consts.accentBg,
+      tertiaryBackground: consts.tertiaryBg,
       fontSize: 'min(4vw, 4vh)',
     })
   }, [query])

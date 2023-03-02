@@ -10,9 +10,9 @@ let gen = 0
 class ColorGenerationAi {
   private config = {
     mode: 'gpu' as 'cpu' | 'gpu',
-    inputSize: 5,
-    hiddenLayers: [15],
-    outputSize: 15,
+    inputSize: 7,
+    hiddenLayers: [35, 60],
+    outputSize: 18,
   }
 
   private brain = new NeuralNetwork(this.config)
@@ -36,15 +36,36 @@ class ColorGenerationAi {
   generateColor(color: Color, l: number = 0): Color[] {
     const input = [
       color.hue() / 360,
+      color.saturationl() / 100,
+      color.lightness() / 100,
       color.red() / 255,
       color.green() / 255,
       color.blue() / 255,
-      l / 100,
+      l,
     ]
 
     const output = this.brain.run(input) as number[]
 
-    const [r1, g1, b1, r2, g2, b2, r3, g3, b3, r4, g4, b4, r5, g5, b5] = output
+    const [
+      r1,
+      g1,
+      b1,
+      r2,
+      g2,
+      b2,
+      r3,
+      g3,
+      b3,
+      r4,
+      g4,
+      b4,
+      r5,
+      g5,
+      b5,
+      r6,
+      g6,
+      b6,
+    ] = output
 
     return [
       Color.rgb(r1 * 255, g1 * 255, b1 * 255),
@@ -52,6 +73,7 @@ class ColorGenerationAi {
       Color.rgb(r3 * 255, g3 * 255, b3 * 255),
       Color.rgb(r4 * 255, g4 * 255, b4 * 255),
       Color.rgb(r5 * 255, g5 * 255, b5 * 255),
+      Color.rgb(r6 * 255, g6 * 255, b6 * 255),
     ]
   }
 
@@ -69,10 +91,12 @@ class ColorGenerationAi {
   ): INeuralNetworkState {
     const input = [
       color.hue() / 360,
+      color.saturationl() / 100,
+      color.lightness() / 100,
       color.red() / 255,
       color.green() / 255,
       color.blue() / 255,
-      l / 100,
+      l,
     ]
 
     const output = colors

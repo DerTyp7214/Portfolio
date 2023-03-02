@@ -19,6 +19,7 @@ function Keyboard({ theme, preview }: Props) {
             --second-key-bg: ${theme.secondaryKeyBackground};
     
             --accent-bg: ${theme.accentBackground};
+            --tertiary-bg: ${theme.tertiaryBackground};
     
             --font-size: ${theme.fontSize};
         }

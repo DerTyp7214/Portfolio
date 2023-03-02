@@ -227,6 +227,7 @@ export function generateRandomKeyboardTheme(
     keyColor: light ? '#000000' : '#ffffff',
     secondaryKeyBackground: secondKeyBg.hex(),
     accentBackground: accentBg.hex(),
+    tertiaryBackground: accentBg.rotate(180).hex(),
     themeName: 'Rboard Theme',
     author: 'DerTyp7214',
     preset: preset,

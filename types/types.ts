@@ -187,6 +187,7 @@ export type KeyboardTheme = {
   keyColor: string
   secondaryKeyBackground: string
   accentBackground: string
+  tertiaryBackground: string
   themeName: string
   author: string
   keyBorderRadius: number
@@ -200,6 +201,7 @@ export type KeyboardColors = {
   keyColor?: string
   secondaryKeyBackground?: string
   accentBackground?: string
+  tertiaryBackground?: string
   themeName?: string
   author?: string
   preset?: KeyboardPreset

@@ -57,7 +57,7 @@ function TrainAi({}: Props) {
   const [totalStart, setTotalStart] = useState(0)
   const [colors, setColors] = useState<Color[]>([])
   const [input, setInput] = useState(Color(process.env.NEXT_PUBLIC_COLOR_SEED))
-  const [darkMode, setDarkMode] = useState(255)
+  const [lightness, setLightness] = useState(0)
 
   const run = async () => {
     colorAi.reset()
@@ -73,7 +73,7 @@ function TrainAi({}: Props) {
         return value
       })
       if (!running) break
-      setIteration(i + 1)
+      setCurrentIteration(i + 1)
       const start = performance.now()
       const { json, errorRates } = await train(colorAi)
       const end = performance.now()
@@ -106,6 +106,22 @@ function TrainAi({}: Props) {
       `Total time: ${(totalEnd - totalStart).toFixed(3)}ms`,
     ])
     setRunning(false)
+  }
+
+  const setCurrentIteration = (value: number) => {
+    setIteration(value)
+
+    const parse = (value: number) => {
+      if (value < 1000) return value
+      if (value < 10000) return `${(value / 1000).toFixed(1)}k`
+      return `${(value / 1000).toFixed(0)}k`
+    }
+
+    const currentTitle = document.title
+    const newTitle = `${window.location.hostname} - Iteration ${parse(
+      value
+    )} / ${parse(iterations)}`
+    if (currentTitle !== newTitle) document.title = newTitle
   }
 
   return (
@@ -188,7 +204,7 @@ function TrainAi({}: Props) {
             <Button
               className='flex-grow'
               onPress={() =>
-                setColors(colorAi.generateColor(input, 255 - darkMode))
+                setColors(colorAi.generateColor(input, lightness))
               }>
               Generate
             </Button>
@@ -202,6 +218,7 @@ function TrainAi({}: Props) {
                   secondaryKeyBackground,
                   keyColor,
                   accentBackground,
+                  tertiaryBackground,
                 ] = colors
 
                 let url = `${window.location.origin}/creator`
@@ -212,6 +229,7 @@ function TrainAi({}: Props) {
                   .hex()
                   .substring(1)}`
                 url += `&accentBg=${accentBackground.hex().substring(1)}`
+                url += `&tertiaryBg=${tertiaryBackground.hex().substring(1)}`
                 url += `&themeName=${encodeURIComponent('Rboard Theme')}`
                 url += `&author=Web-Creator`
                 url += `&preset=default`
@@ -236,8 +254,8 @@ function TrainAi({}: Props) {
             />
             <Slider
               width='calc(100% - 6em)'
-              value={darkMode / 255}
-              onChange={(value) => setDarkMode(value * 255)}
+              value={1 - lightness}
+              onChange={(value) => setLightness(Math.abs(value - 1))}
             />
           </div>
           <Spacer y={1} />
