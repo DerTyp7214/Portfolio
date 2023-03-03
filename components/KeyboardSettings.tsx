@@ -223,6 +223,18 @@ const KeyboardSettings = ({
           Theme from Picture
         </Button>
         <Spacer y={0.6} />
+        <Button
+          color='primary'
+          css={{
+            width: 'calc(100% - 2rem)',
+            color: darkMode ? 'black' : 'white',
+          }}
+          onClick={async () => {
+            window.open('/trainAi', '_blank')
+          }}>
+          Use AI (Beta)
+        </Button>
+        <Spacer y={0.6} />
         <Button.Group color='primary' bordered>
           <Button
             css={{

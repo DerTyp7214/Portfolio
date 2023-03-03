@@ -47,22 +47,26 @@ export const getTheme = async (
     )
   })
 
+  const pressedColor = (hex?: string) => {
+    const color = Color(hex)
+    if (color.isLight()) return color.darken(0.2).hex()
+    else return color.lighten(0.2).hex()
+  }
+
   const variables = [
     `@def web_color_bg ${mainBackground};`,
     `@def web_color_label ${keyColor};`,
     `@def web_color_accent ${accentBackground};`,
-    `@def web_color_accent_pressed ${shadeColor(`${accentBackground}`, 5)};`,
+    `@def web_color_accent_pressed ${pressedColor(accentBackground)};`,
     `@def web_color_tertiary_key_bg ${tertiaryBackground};`,
-    `@def web_color_tertiary_key_bg_pressed ${shadeColor(
-      `${tertiaryBackground}`,
-      5
+    `@def web_color_tertiary_key_bg_pressed ${pressedColor(
+      tertiaryBackground
     )};`,
     `@def web_color_key_bg ${keyBackground};`,
     `@def web_color_key_bg_pressed ${secondaryKeyBackground};`,
     `@def web_color_secondary_key_bg ${secondaryKeyBackground};`,
-    `@def web_color_secondary_key_bg_pressed ${shadeColor(
-      `${secondaryKeyBackground}`,
-      5
+    `@def web_color_secondary_key_bg_pressed ${pressedColor(
+      secondaryKeyBackground
     )};`,
   ]
 
@@ -110,26 +114,6 @@ export const getTheme = async (
   const content = await packZip.generateAsync({ type: 'blob' })
 
   saveAs(content, `${escapedThemeName}.pack`)
-}
-
-const shadeColor = (color: string, percent: number): string => {
-  let R = parseInt(color.substring(1, 3), 16)
-  let G = parseInt(color.substring(3, 5), 16)
-  let B = parseInt(color.substring(5, 7), 16)
-
-  R = parseInt(String((R * (100 + percent)) / 100))
-  G = parseInt(String((G * (100 + percent)) / 100))
-  B = parseInt(String((B * (100 + percent)) / 100))
-
-  R = R < 255 ? R : 255
-  G = G < 255 ? G : 255
-  B = B < 255 ? B : 255
-
-  const RR = R.toString(16).length === 1 ? '0' + R.toString(16) : R.toString(16)
-  const GG = G.toString(16).length === 1 ? '0' + G.toString(16) : G.toString(16)
-  const BB = B.toString(16).length === 1 ? '0' + B.toString(16) : B.toString(16)
-
-  return '#' + RR + GG + BB
 }
 
 const generateMetadata = (override: ThemeMetadata = {}): ThemeMetadata => {

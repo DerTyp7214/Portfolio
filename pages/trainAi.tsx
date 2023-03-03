@@ -46,7 +46,7 @@ function millisecondsToHumanReadable(milliseconds: number, precision = 2) {
 }
 
 function TrainAi({}: Props) {
-  const { colorAi } = useAppContext()
+  const { colorAi, darkMode } = useAppContext()
   const [lines, setLines] = useState<string[]>([])
   const [running, setRunning] = useState(false)
   const [iterations, setIterations] = useState(10000)
@@ -133,6 +133,9 @@ function TrainAi({}: Props) {
             <Button
               onPress={run}
               disabled={running}
+              css={{
+                color: darkMode ? 'black' : 'white',
+              }}
               className='!w-full md:!w-auto'>
               {running ? 'Training...' : 'Train AI'}
             </Button>
@@ -151,6 +154,9 @@ function TrainAi({}: Props) {
             />
             <Button
               className='!w-full md:!w-auto'
+              css={{
+                color: darkMode ? 'black' : 'white',
+              }}
               onPress={() => {
                 setRunning(false)
               }}
@@ -203,6 +209,9 @@ function TrainAi({}: Props) {
           <div className='flex flex-col md:flex-row justify-start w-full'>
             <Button
               className='flex-grow'
+              css={{
+                color: darkMode ? 'black' : 'white',
+              }}
               onPress={() =>
                 setColors(colorAi.generateColor(input, lightness))
               }>
@@ -211,6 +220,9 @@ function TrainAi({}: Props) {
             <Spacer x={1} />
             <Button
               className='flex-grow'
+              css={{
+                color: darkMode ? 'black' : 'white',
+              }}
               onPress={() => {
                 const [
                   mainBackground,
@@ -232,7 +244,7 @@ function TrainAi({}: Props) {
                 url += `&tertiaryBg=${tertiaryBackground.hex().substring(1)}`
                 url += `&themeName=${encodeURIComponent('Rboard Theme')}`
                 url += `&author=Web-Creator`
-                url += `&preset=default`
+                url += `&preset=MonetBased`
 
                 window.open(url, '_blank')
               }}>
@@ -301,6 +313,9 @@ function TrainAi({}: Props) {
         <Button
           disabled={running || !parsableJson(brainJson)}
           className='w-full'
+          css={{
+            color: darkMode ? 'black' : 'white',
+          }}
           onPress={() => {
             colorAi.load(JSON.parse(brainJson))
           }}>
