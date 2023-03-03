@@ -18,6 +18,8 @@ export const getTheme = async (
     is_light_theme: Color(colors.mainBackground).isLight(),
   })
 
+  console.log(preset)
+
   const {
     mainBackground,
     keyBackground,

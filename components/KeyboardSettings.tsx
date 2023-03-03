@@ -60,14 +60,15 @@ const KeyboardSettings = ({
   const { darkMode } = useAppContext()
   const [lightTheme, setLightTheme] = useState(!darkMode)
   const [colorFul, setColorFul] = useState(false)
-  const [preset, setPreset] = useState<ThemePreset>({
-    name: 'default',
-    styleSheetMd: '',
-    styleSheetMdBorder: '',
-    preview: '',
-    metadata: {},
-    imageBase64: [],
-  })
+  const [preset, setPreset] = useState<ThemePreset>(
+    presets.find((preset) => preset.name === colors.preset) ?? presets[0]
+  )
+
+  useEffect(() => {
+    setPreset(
+      presets.find((preset) => preset.name === colors.preset) ?? presets[0]
+    )
+  }, [colors, presets])
 
   useEffect(() => {
     onPresetChanged(preset.name)
