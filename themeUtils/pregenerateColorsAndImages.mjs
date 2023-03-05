@@ -125,7 +125,7 @@ const createScaledFavicons = async () => {
       .toFile(`./public/icons/favicon-${size}x${size}_${version}.png`)
   }
 
-  await new Promise((resolve) => rimraf('./public/icons', resolve))
+  await rimraf('./public/icons')
   fs.mkdirSync('./public/icons')
 
   await Promise.all([
