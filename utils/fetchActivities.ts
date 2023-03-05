@@ -1,3 +1,4 @@
+import fetch from 'node-fetch'
 import { CodersRankActivities } from '../types/types'
 
 export default async function fetchActivites(): Promise<CodersRankActivities> {

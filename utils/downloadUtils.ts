@@ -1,6 +1,7 @@
 import chalk from 'chalk'
 import fs, { existsSync, mkdirSync } from 'fs'
 import { request } from 'https'
+import fetch from 'node-fetch'
 import sharp from 'sharp'
 
 const loadingImages = new Map<string, ((path: string) => Promise<void>)[]>()
@@ -64,7 +65,7 @@ export async function gitHubDownloads(
             Authorization: `token ${process.env.GITHUB_TOKEN}`,
           },
         }
-      ).then((res) => res.json())
+      ).then<Promise<{ assets: any[] }[]>>((res) => res.json() as any)
       return releases
         .map((release: { assets: any[] }) =>
           release.assets
@@ -85,7 +86,15 @@ export async function gitHubDownloads(
             Authorization: `token ${process.env.GITHUB_TOKEN}`,
           },
         }
-      ).then((res) => res.json())
+      ).then<
+        Promise<{
+          assets: {
+            name: string
+            download_count: number
+            [key: string]: any
+          }[]
+        }>
+      >((res) => res.json() as any)
       return releaseData.assets
         .filter(assetsToCount)
         .reduce(

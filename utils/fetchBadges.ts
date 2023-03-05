@@ -1,3 +1,4 @@
+import fetch from 'node-fetch'
 import { CodersRankBadge } from '../types/types'
 import { cacheImageLocally } from './downloadUtils'
 

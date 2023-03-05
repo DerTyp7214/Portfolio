@@ -1,3 +1,4 @@
+import fetch from 'node-fetch'
 import { ThemePreset, ThemePresetManifest } from '../types/types'
 
 const repoUrl =
@@ -6,7 +7,7 @@ const manifestUrl = `${repoUrl}manifest.json`
 
 export default async function fetchThemePresets(): Promise<ThemePreset[]> {
   const manifest: ThemePresetManifest = await fetch(manifestUrl).then((res) =>
-    res.json()
+    res.json() as Promise<ThemePresetManifest>
   )
 
   return Object.values(manifest)

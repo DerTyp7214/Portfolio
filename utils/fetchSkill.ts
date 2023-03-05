@@ -1,3 +1,4 @@
+import fetch from 'node-fetch'
 import wikijs from 'wikijs'
 import { CodersRankLanguage, CodersRankTechnology, Skill } from '../types/types'
 import { cacheImageLocally } from './downloadUtils'
@@ -28,7 +29,7 @@ export default async function fetchSkill({
         skill
       )}?get_by=username`
     ).then(async (res) => ({
-      ...(await res.json()),
+      ...(await res.json() as CodersRankLanguage),
       name: skill,
     }))) as CodersRankLanguage
 
@@ -58,7 +59,7 @@ export default async function fetchSkill({
         skill
       )}?get_by=username`
     ).then(async (res) => ({
-      ...(await res.json()),
+      ...(await res.json() as CodersRankTechnology),
       name: skill,
     }))) as CodersRankTechnology
 

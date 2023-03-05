@@ -1,3 +1,4 @@
+import fetch from 'node-fetch'
 import { ContributionDay } from '../types/types'
 
 export default async function fetchGithubContributions() {
@@ -32,7 +33,7 @@ export default async function fetchGithubContributions() {
     method: 'POST',
   })
 
-  const { data } = await response.json()
+  const { data } = await response.json() as any
 
   const contributionCalendar =
     data?.user?.contributionsCollection?.contributionCalendar
