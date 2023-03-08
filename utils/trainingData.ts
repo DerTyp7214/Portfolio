@@ -32,7 +32,7 @@ function randomTrainingData() {
 }
 
 function monetTrainingData() {
-  const monetSchemes = [
+  const monetSchemesGen1 = [
     {
       mainBackground: '#000000',
       accentBackground: '#EFD9DD',
@@ -339,10 +339,125 @@ function monetTrainingData() {
       keyBackground: '#FFFFFF',
       secondaryKeyBackground: '#FFA3A3',
       keyColor: '#000000',
-    }
+    },
   ]
 
-  return monetSchemes.map((scheme) => {
+  const monetSchemesGen2 = [
+    {
+      mainBackground: '#EEF2E4',
+      accentBackground: '#FFB1C7',
+      tertiaryBackground: '#A6D0B9',
+      keyBackground: '#ffffff',
+      secondaryKeyBackground: '#C1ECD4',
+      keyColor: '#000000',
+    },
+    {
+      mainBackground: '#141D1D',
+      accentBackground: '#FFDCC4',
+      tertiaryBackground: '#89B1C1',
+      keyBackground: '#293231',
+      secondaryKeyBackground: '#3F4948',
+      keyColor: '#ffffff',
+    },
+    {
+      mainBackground: '#E8F3F1',
+      accentBackground: '#FFB77F',
+      tertiaryBackground: '#A4CDDD',
+      keyBackground: '#ffffff',
+      secondaryKeyBackground: '#BFE9F9',
+      keyColor: '#000000',
+    },
+    {
+      mainBackground: '#1E1A22',
+      accentBackground: '#97F4D8',
+      tertiaryBackground: '#97F4D8',
+      keyBackground: '#342F37',
+      secondaryKeyBackground: '#4A454E',
+      keyColor: '#ffffff',
+    },
+    {
+      mainBackground: '#F7EEF9',
+      accentBackground: '#7BD7BC',
+      tertiaryBackground: '#E7B9D6',
+      keyBackground: '#ffffff',
+      secondaryKeyBackground: '#FFD7EF',
+      keyColor: '#000000',
+    },
+    {
+      mainBackground: '#FFECF1',
+      accentBackground: '#79D3EE',
+      tertiaryBackground: '#F5B7B0',
+      keyBackground: '#ffffff',
+      secondaryKeyBackground: '#FFDAD6',
+      keyColor: '#000000',
+    },
+    {
+      mainBackground: '#FCEDF6',
+      accentBackground: '#72D6D7',
+      tertiaryBackground: '#F1B7C5',
+      keyBackground: '#ffffff',
+      secondaryKeyBackground: '#FFD9E1',
+      keyColor: '#000000',
+    },
+    {
+      mainBackground: '#211920',
+      accentBackground: '#8FF3F4',
+      tertiaryBackground: '#D39DA9',
+      keyBackground: '#372E35',
+      secondaryKeyBackground: '#4E444B',
+      keyColor: '#ffffff',
+    },
+    {
+      mainBackground: '#FAEFDD',
+      accentBackground: '#E2B6FC',
+      tertiaryBackground: '#C3CB97',
+      keyBackground: '#ffffff',
+      secondaryKeyBackground: '#DFE7B2',
+      keyColor: '#000000',
+    },
+    {
+      mainBackground: '#201B10',
+      accentBackground: '#F3DAFF',
+      tertiaryBackground: '#A8B07E',
+      keyBackground: '#353024',
+      secondaryKeyBackground: '#4C4639',
+      keyColor: '#ffffff',
+    },
+    {
+      mainBackground: '#23191C',
+      accentBackground: '#B1ECFF',
+      tertiaryBackground: '#D79D96',
+      keyBackground: '#392D31',
+      secondaryKeyBackground: '#514348',
+      keyColor: '#ffffff',
+    },
+    {
+      mainBackground: '#EEF0FA',
+      accentBackground: '#B9D079',
+      tertiaryBackground: '#E3BADA',
+      keyBackground: '#ffffff',
+      secondaryKeyBackground: '#FFD7F6',
+      keyColor: '#000000',
+    },
+    {
+      mainBackground: '#FFEDE8',
+      accentBackground: '#A8C8FF',
+      tertiaryBackground: '#C7CA95',
+      keyBackground: '#ffffff',
+      secondaryKeyBackground: '#E3E7AF',
+      keyColor: '#000000',
+    },
+    {
+      mainBackground: '#251915',
+      accentBackground: '#D5E3FF',
+      tertiaryBackground: '#ABAF7C',
+      keyBackground: '#3B2D29',
+      secondaryKeyBackground: '#53433F',
+      keyColor: '#ffffff',
+    },
+  ]
+
+  return [...monetSchemesGen1, ...monetSchemesGen2].map((scheme) => {
     const colors = [
       scheme.mainBackground,
       scheme.keyBackground,
