@@ -27,8 +27,17 @@ concurrency:
 
 jobs:
   # Build job
+  bumpVersion:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    steps:
+      - name: Bump Package Version and push to main
+        run: |
+          pnpm version patch
+          git push origin main
   build:
     runs-on: ubuntu-latest
+    if: ${{ success() || github.event_name != 'schedule' }}
     steps:
       - name: Get current date
         id: date
@@ -77,11 +86,6 @@ jobs:
             ${{ steps.pnpm-cache.outputs.STORE_PATH }}
             /home/runner/.cache/puppeteer
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock', '**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-
-      - name: Bump Package Version and push to main
-        run: |
-          pnpm version patch
-          git push origin main
 
       - name: Install dependencies
         run: pnpm install
