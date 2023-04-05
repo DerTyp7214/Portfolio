@@ -41,6 +41,11 @@ jobs:
         name: Get commit Hash
         uses: pr-mpt/actions-commit-hash@v2
 
+      - name: Init git config
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
       - uses: pnpm/action-setup@v2
         name: Install pnpm
         id: pnpm-install
@@ -73,11 +78,13 @@ jobs:
             /home/runner/.cache/puppeteer
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock', '**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
 
+      - name: Bump Package Version and push to main
+        run: |
+          pnpm version patch
+          git push origin main
+
       - name: Install dependencies
         run: pnpm install
-
-      - name: Bump Package Version
-        run: pnpm version patch
 
       - name: Get Package Version
         id: package-version
