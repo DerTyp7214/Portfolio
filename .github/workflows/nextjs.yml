@@ -76,6 +76,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Bump Package Version
+        run: pnpm version patch
+
       - name: Get Package Version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@main
