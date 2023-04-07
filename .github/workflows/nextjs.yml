@@ -52,9 +52,18 @@ jobs:
         with:
           node-version: 16
 
-      - name: Bump Package Version and push to main
+      - name: Bump Package Version
+        if: github.event_name == 'schedule'
         run: |
           pnpm version prerelease -m "🚀 Bump version to %s"
+        
+      - name: Bump Package Version
+        if: github.event_name == 'push'
+        run: |
+          pnpm version patch -m "🚀 Bump version to %s"
+
+      - name: Push changes
+        run: |
           git push origin main
   build:
     runs-on: ubuntu-latest
