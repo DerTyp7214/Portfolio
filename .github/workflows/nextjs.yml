@@ -53,14 +53,12 @@ jobs:
           node-version: 16
 
       - name: Bump Package Version
-        if: github.event_name == 'schedule'
         run: |
-          pnpm version prerelease -m "🚀 Bump version to %s"
-        
-      - name: Bump Package Version
-        if: github.event_name == 'push'
-        run: |
-          pnpm version prepatch -m "🚀 Bump version to %s"
+          if [[ ${{ github.event_name }} == 'push' ]]; then
+            pnpm version prepatch -m "🚀 Bump version to %s"
+          elif [[ ${{ github.event_name }} == 'schedule' ]]; then
+            pnpm version prerelease -m "🚀 Bump version to %s"
+          fi
 
       - name: Push changes
         run: |
