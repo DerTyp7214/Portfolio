@@ -60,7 +60,7 @@ jobs:
       - name: Bump Package Version
         if: github.event_name == 'push'
         run: |
-          pnpm version patch -m "🚀 Bump version to %s"
+          pnpm version prepatch -m "🚀 Bump version to %s"
 
       - name: Push changes
         run: |
