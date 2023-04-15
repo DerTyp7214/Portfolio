@@ -213,17 +213,17 @@ function Rboard({
       </div>
       <RenderOnMount>
         <ReactTooltip
-          html
-          backgroundColor={lerpColor(
-            (darkMode
-              ? process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND_DARK
-              : process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND) ??
-              '#434d57',
-            darkMode ? '#FFFFFF' : '#000000',
-            0.1
-          )}
-          textColor={darkMode ? '#FFFFFF' : '#000000'}
-          multiline
+          style={{
+            backgroundColor: lerpColor(
+              (darkMode
+                ? process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND_DARK
+                : process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND) ??
+                '#434d57',
+              darkMode ? '#FFFFFF' : '#000000',
+              0.1
+            ),
+            color: darkMode ? '#FFFFFF' : '#000000',
+          }}
           className='max-w-[200px] text-center'
         />
       </RenderOnMount>
