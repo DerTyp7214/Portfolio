@@ -38,7 +38,7 @@ export default function ContributionChart({ chartData }: Props) {
             style={{
               opacity: factor === Infinity ? 0 : factor,
             }}
-            data-tip={`${value.date} - <b>${value.contributionCount} activities</b>`}
+            data-tooltip-content={`${value.date} - <b>${value.contributionCount} activities</b>`}
           />
         </g>
       )

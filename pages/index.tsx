@@ -16,7 +16,7 @@ import {
   ProfileInfo,
   Project,
   Skill,
-  Social
+  Social,
 } from '../types/types'
 import fetchBadges from '../utils/fetchBadges'
 import fetchContactInfo from '../utils/fetchContactInfo'
@@ -28,9 +28,9 @@ import fetchSkills from '../utils/fetchSkills'
 import fetchSocials from '../utils/fetchSocials'
 
 import 'react-toastify/dist/ReactToastify.css'
-import ReactTooltip from 'react-tooltip'
-import { useAppContext } from '../components/appContext'
+import { Tooltip as ReactTooltip } from 'react-tooltip'
 import RenderOnMount from '../components/RenderOnMount'
+import { useAppContext } from '../components/appContext'
 import { lerpColor } from '../utils/colorUtils'
 
 type Props = {
@@ -94,17 +94,17 @@ export default function Home({
       </footer>
       <RenderOnMount>
         <ReactTooltip
-          html
-          backgroundColor={lerpColor(
-            (darkMode
-              ? process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND_DARK
-              : process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND) ??
-              '#434d57',
-            darkMode ? '#FFFFFF' : '#000000',
-            0.1
-          )}
-          textColor={darkMode ? '#FFFFFF' : '#000000'}
-          multiline
+          style={{
+            backgroundColor: lerpColor(
+              (darkMode
+                ? process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND_DARK
+                : process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND) ??
+                '#434d57',
+              darkMode ? '#FFFFFF' : '#000000',
+              0.1
+            ),
+            color: darkMode ? '#FFFFFF' : '#000000',
+          }}
           className='max-w-[200px] text-center'
         />
       </RenderOnMount>

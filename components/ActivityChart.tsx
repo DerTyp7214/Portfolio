@@ -51,7 +51,7 @@ export default function ActivityChart({ chartData }: Props) {
           process.env.NEXT_PUBLIC_COLOR_ACCENT || '#ff7ef9',
           value / maxVal
         )}
-        data-tip={`${first.format('DD/MM/YYYY')} - <b>${value} activities</b>`}
+        data-tooltip-content={`${first.format('DD/MM/YYYY')} - <b>${value} activities</b>`}
       />
     )
 

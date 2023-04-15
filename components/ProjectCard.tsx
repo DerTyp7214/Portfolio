@@ -69,7 +69,7 @@ export default function ProjectCard({ project, skills }: Props) {
         </p>
         {!!project.downloads && (
           <p className='text-md font-light mt-1'>
-            <b data-tip='Not a exact number. Gitlab is not tracked and github can be ~10% more then shown here.'>
+            <b data-tooltip-content='Not a exact number. Gitlab is not tracked and github can be ~10% more then shown here.'>
               {project.downloads}{' '}
             </b>
             Downloads

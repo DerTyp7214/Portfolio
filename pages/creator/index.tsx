@@ -4,17 +4,17 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { GetStaticProps } from 'next/types'
 import { useEffect, useState } from 'react'
-import ReactTooltip from 'react-tooltip'
-import { useAppContext } from '../../components/appContext'
+import { Tooltip as ReactTooltip } from 'react-tooltip'
 import BaseHeader from '../../components/BaseHeader'
 import Keyboard from '../../components/Keyboard'
 import KeyboardSettings from '../../components/KeyboardSettings'
 import RenderOnMount from '../../components/RenderOnMount'
+import { useAppContext } from '../../components/appContext'
 import {
   KeyboardColors,
   KeyboardTheme,
   PageInfo,
-  ThemePreset
+  ThemePreset,
 } from '../../types/types'
 import { lerpColor } from '../../utils/colorUtils'
 import { ParseLocation } from '../../utils/customRouteHandler'
@@ -160,17 +160,17 @@ function Rboard({ themePresets }: Props) {
             />
           </div>
           <ReactTooltip
-            html
-            backgroundColor={lerpColor(
-              (darkMode
-                ? process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND_DARK
-                : process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND) ??
-                '#434d57',
-              darkMode ? '#FFFFFF' : '#000000',
-              0.1
-            )}
-            textColor={darkMode ? '#FFFFFF' : '#000000'}
-            multiline
+            style={{
+              backgroundColor: lerpColor(
+                (darkMode
+                  ? process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND_DARK
+                  : process.env.NEXT_PUBLIC_COLOR_SECONDARY_BACKGROUND) ??
+                  '#434d57',
+                darkMode ? '#FFFFFF' : '#000000',
+                0.1
+              ),
+              color: darkMode ? '#FFFFFF' : '#000000',
+            }}
             className='max-w-[200px] text-center'
           />
         </RenderOnMount>

@@ -5,7 +5,7 @@ type Props = {
   id: string
   label: string
   checked: boolean
-  'data-tip'?: string
+  'data-tooltip-content'?: string
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -16,7 +16,7 @@ function CheckBox({ id, label, checked, onChange, ...props }: Props) {
     <label
       className='container block relative cursor-pointer pl-[40px] text-lg select-none transition-all duration-200 group mt-1 mb-1'
       style={{ width: 'calc(100% - 2rem)' }}
-      data-tip={props['data-tip']}>
+      data-tooltip-content={props['data-tooltip-content']}>
       <style jsx>{`
         .container {
           --color-accent: ${darkMode
