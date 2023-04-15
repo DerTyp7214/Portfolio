@@ -1,4 +1,4 @@
-import { INeuralNetworkJSON } from 'brain.js/dist/src/neural-network'
+import { INeuralNetworkJSON } from '../types/brain.js.types'
 
 const randomBrain: INeuralNetworkJSON = {
   type: 'NeuralNetworkGPU',
