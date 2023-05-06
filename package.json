@@ -21,7 +21,7 @@
     "chalk": "^5.2.0",
     "color": "^4.2.3",
     "eslint": "8.38.0",
-    "eslint-config-next": "13.3.0",
+    "eslint-config-next": "13.3.4",
     "file-saver": "^2.0.5",
     "fluent-ffmpeg": "^2.1.2",
     "framer-motion": "^10.0.2",
