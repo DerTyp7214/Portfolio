@@ -20,7 +20,7 @@
     "brain.js": "2.0.0-beta.23",
     "chalk": "^5.2.0",
     "color": "^4.2.3",
-    "eslint": "8.38.0",
+    "eslint": "8.40.0",
     "eslint-config-next": "13.3.4",
     "file-saver": "^2.0.5",
     "fluent-ffmpeg": "^2.1.2",
