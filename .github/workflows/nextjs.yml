@@ -172,15 +172,23 @@ jobs:
       - name: Create tar.gz
         run: tar -czvf out.tar.gz out
 
+      - name: Create Release Text
+        id: release-text
+        run: |
+          body="# Release ${{ steps.package-version.outputs.current-version }}"
+          body+="\n\n## Commits\n"
+          body+=$(git log $(git describe --tags --always --abbrev=0)..HEAD --pretty=format:'\n- [`%h`](${{ github.server_url }}/${{ github.repository }}/commit/%H): %s (%an)')
+          echo -e $body >> release.md
+
       - name: Create Release
-        uses: marvinpinto/action-automatic-releases@latest
+        uses: softprops/action-gh-release@v1
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: ${{ steps.package-version.outputs.current-version }}
-          prerelease: false
-          title: ${{ steps.package-version.outputs.current-version }}
           files: |
             out.tar.gz
+          tag_name: ${{ steps.package-version.outputs.current-version }}
+          body_path: release.md
+          draft: false
+          prerelease: false
 
       - name: Generate Summary
         run: |
