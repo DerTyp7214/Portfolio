@@ -41,16 +41,13 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
 
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        with:
-          version: 7
-          run_install: false
-
       - name: Setup Node LTS
         uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
 
       - name: Bump Package Version
         run: |
@@ -86,17 +83,13 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
 
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          version: 7
-          run_install: false
-
       - name: Setup Node LTS
         uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
 
       - name: Get pnpm store directory
         id: pnpm-cache
