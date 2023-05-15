@@ -10,9 +10,6 @@ type Props = {
 }
 
 export default function BadgeCollection({ badges }: Props) {
-  const v1Badges = badges.filter(
-    (badge) => badge.version === 'v1'
-  ) as CodersRankBadgeV1[]
   const v2Badges = badges.filter(
     (badge) => badge.version === 'v2'
   ) as CodersRankBadgeV2[]

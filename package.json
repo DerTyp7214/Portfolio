@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@babel/core": "^7.21.0",
-    "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@heroicons/react": "^2.0.16",
     "@nextui-org/react": "1.0.0-beta.12",
     "@rmwc/textfield": "^8.0.5",
@@ -23,7 +22,6 @@
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.1",
     "file-saver": "^2.0.5",
-    "fluent-ffmpeg": "^2.1.2",
     "framer-motion": "^10.0.2",
     "gpu.js": "^2.16.0",
     "hast-util-to-html": "^8.0.4",
