@@ -84,7 +84,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
 
-      - name: Install libvips
+      - name: Install dependencies required for Sharp
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential libvips libvips-dev libxi-dev libxext-dev libxt-dev libgl-dev
