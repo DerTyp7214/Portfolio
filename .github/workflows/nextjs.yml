@@ -47,10 +47,10 @@ jobs:
           version: 7
           run_install: false
 
-      - name: Setup Node
+      - name: Setup Node LTS
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 'lts/*'
 
       - name: Bump Package Version
         run: |
@@ -93,10 +93,10 @@ jobs:
           version: 7
           run_install: false
 
-      - name: Setup Node
+      - name: Setup Node LTS
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 'lts/*'
 
       - name: Get pnpm store directory
         id: pnpm-cache
