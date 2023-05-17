@@ -1,8 +1,6 @@
 name: Create Lockfile
 
-on:
-  repository_dispatch:
-    types: [create-lockfile]
+on: workflow_dispatch
 
 jobs:
   create-lockfile:
