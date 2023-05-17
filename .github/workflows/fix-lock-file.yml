@@ -13,7 +13,10 @@ jobs:
         run: npm install -g pnpm
 
       - name: Generate lockfile
-        run: pnpm install
+        run: |
+            rm -rf node_modules
+            rm -rf pnpm-lock.yaml
+            pnpm install --force
 
       - name: Commit lockfile
         run: |
