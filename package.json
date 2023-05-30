@@ -20,7 +20,7 @@
     "chalk": "^5.2.0",
     "color": "^4.2.3",
     "eslint": "8.41.0",
-    "eslint-config-next": "13.4.3",
+    "eslint-config-next": "13.4.4",
     "file-saver": "^2.0.5",
     "framer-motion": "^10.0.2",
     "gpu.js": "^2.16.0",
