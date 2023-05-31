@@ -99,7 +99,9 @@ jobs:
           node-version: 'lts/*'
 
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: |
+          wget -qO- https://get.pnpm.io/install.sh | sh -
+          pnpm add -g pnpm
 
       - name: Get pnpm store directory
         id: pnpm-cache
