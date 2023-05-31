@@ -53,7 +53,6 @@ jobs:
       - name: Install pnpm
         run: |
           npm install -g pnpm
-          pnpm add -g pnpm
 
       - name: Bump Package Version
         run: |
