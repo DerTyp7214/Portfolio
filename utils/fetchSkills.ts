@@ -4,6 +4,8 @@ import fetchSkill from './fetchSkill'
 export const languages = [
   'Kotlin',
   'JavaScript',
+  'Rust',
+  'Svelte',
   'CSS',
   'HTML',
   'C++',
