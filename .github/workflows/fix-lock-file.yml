@@ -11,7 +11,7 @@ jobs:
 
       - name: Install pnpm
         run: |
-          wget -qO- https://get.pnpm.io/install.sh | sh -
+          npm i -g pnpm
           pnpm add -g pnpm
 
       - name: Install dependencies required for Sharp
