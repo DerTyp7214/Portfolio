@@ -12,7 +12,6 @@ jobs:
       - name: Install pnpm
         run: |
           npm i -g pnpm
-          pnpm add -g pnpm
 
       - name: Install dependencies required for Sharp
         run: |
