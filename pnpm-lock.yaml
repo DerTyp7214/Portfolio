@@ -102,8 +102,8 @@ dependencies:
     specifier: ^1.8.14
     version: 1.8.14(react-dom@18.2.0)(react@18.2.0)
   react-scroll-parallax:
-    specifier: ^3.3.2
-    version: 3.3.2(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^3.4.2
+    version: 3.4.2(react-dom@18.2.0)(react@18.2.0)
   react-simple-typewriter:
     specifier: ^5.0.1
     version: 5.0.1(react-dom@18.2.0)(react@18.2.0)
@@ -8888,8 +8888,8 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /react-scroll-parallax@3.3.2(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-mLgcLqyFhrIp31gLjz11yYmWEwS8NJoOoCZ15ZFXPOcpPQK8R+jZfeuO59Trm9bReok/iDUyx3ZyCCZjkxj37Q==}
+  /react-scroll-parallax@3.4.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-jNltdM1a6y2TRHW4X4nyNT9BAzbLoISTvXaoB9YKGudVcAsGWManMI6UZ6PMd2si6bbWtTROgF/A9IoplZ2OLA==}
     engines: {node: '>=10'}
     peerDependencies:
       react: ^16.8.0-0 || >=17.0.1 || ^18.0.0
