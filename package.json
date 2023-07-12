@@ -26,7 +26,7 @@
     "gpu.js": "^2.16.0",
     "hast-util-to-html": "^8.0.4",
     "html2canvas": "^1.4.1",
-    "isomorphic-dompurify": "^1.0.0",
+    "isomorphic-dompurify": "^1.7.0",
     "jszip": "^3.10.1",
     "lottie-react": "^2.4.0",
     "mdast-util-to-hast": "^12.3.0",
