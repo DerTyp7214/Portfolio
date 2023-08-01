@@ -51,8 +51,8 @@ dependencies:
     specifier: ^1.4.1
     version: 1.4.1
   isomorphic-dompurify:
-    specifier: ^1.7.0
-    version: 1.7.0
+    specifier: ^1.8.0
+    version: 1.8.0
   jszip:
     specifier: ^3.10.1
     version: 3.10.1
@@ -7076,8 +7076,8 @@ packages:
   /isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
-  /isomorphic-dompurify@1.7.0:
-    resolution: {integrity: sha512-Iqt+WDG6I6qjsHAV9k3TYXemKHz5pfMZbSDklCXY2KaQY/jY2s+VbpxKP4j0ujCZ+11/oUB4NPQMY+dVEJ9vPA==}
+  /isomorphic-dompurify@1.8.0:
+    resolution: {integrity: sha512-qvNsRVUQIArrn7/TNDw0+0wQgtvRxAkSzfe0pGpX1+OYeGhrAWELxZIb6x+KFFRS6mb4OUe+zAK9yp0WDZHUdQ==}
     dependencies:
       '@types/dompurify': 3.0.2
       dompurify: 3.0.5
