@@ -166,6 +166,7 @@ jobs:
         with:
           path: |
             ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+            node_modules
           key: ${{ steps.cache-restore.outputs.cache-primary-key }}
           
       - name: Fix permissions
