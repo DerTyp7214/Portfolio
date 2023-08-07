@@ -9,8 +9,8 @@ dependencies:
     specifier: ^7.21.0
     version: 7.21.0
   '@heroicons/react':
-    specifier: ^2.0.16
-    version: 2.0.16(react@18.2.0)
+    specifier: ^2.0.18
+    version: 2.0.18(react@18.2.0)
   '@nextui-org/react':
     specifier: 1.0.0-beta.13
     version: 1.0.0-beta.13(react-dom@18.2.0)(react@18.2.0)
@@ -2571,8 +2571,8 @@ packages:
       tslib: 2.6.1
     dev: false
 
-  /@heroicons/react@2.0.16(react@18.2.0):
-    resolution: {integrity: sha512-x89rFxH3SRdYaA+JCXwfe+RkE1SFTo9GcOkZettHer71Y3T7V+ogKmfw5CjTazgS3d0ClJ7p1NA+SP7VQLQcLw==}
+  /@heroicons/react@2.0.18(react@18.2.0):
+    resolution: {integrity: sha512-7TyMjRrZZMBPa+/5Y8lN0iyvUU/01PeMGX2+RE7cQWpEUIcb4QotzUObFkJDejj/HUH4qjP/eQ0gzzKs2f+6Yw==}
     peerDependencies:
       react: '>= 16'
     dependencies:
