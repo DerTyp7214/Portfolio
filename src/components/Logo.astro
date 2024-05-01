@@ -1,10 +1,20 @@
-<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+---
+interface Props {
+    color?: string
+    size?: string | number
+    borderRadius?: string | number
+}
+
+const {color, size, borderRadius} = Astro.props
+---
+
+<svg width={size ?? 512} height={size ?? 512} viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <clipPath id="rounded-corners">
-            <rect width="512" height="512" rx="100" ry="100"/>
+            <rect width="512" height="512" rx={borderRadius ?? '0'} ry={borderRadius ?? '0'}/>
         </clipPath>
     </defs>
-    <rect width="512" height="512" fill="#BF012D" clip-path="url(#rounded-corners)"/>
+    <rect width="512" height="512" fill={color ?? '#BF012D'} clip-path="url(#rounded-corners)"/>
     <path d="M42 42H213.932V128.576H42V42Z M298.068 42H470V128.576H298.068V42Z M127.356 126.137H384.644V215.151H127.356V126.137Z M42 212.712H128.576V384.644H42V212.712Z M382.205 212.712H468.781V384.644H382.205V212.712Z M127.356 298.068H213.932V470H127.356V298.068Z M298.068 298.068H384.644V470H298.068V298.068Z M212.712 383.424H299.288V470H212.712V383.424Z"
           fill="#000000AB" clip-path="url(#rounded-corners)"/>
 </svg>
