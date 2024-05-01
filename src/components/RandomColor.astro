@@ -1,0 +1,20 @@
+---
+interface Props {
+    colorVar: string
+}
+
+const {colorVar} = Astro.props
+---
+
+<button data-random-color-button={colorVar}>
+    <slot/>
+</button>
+
+<script is:inline define:vars={{colorVar}}>
+    const selector = `[data-random-color-button="${colorVar}"]`
+    document.querySelector(selector).addEventListener('click', () => {
+        const hue = Math.floor(Math.random() * 361);
+        const color = `hsl(${hue}, 100%, 60%)`;
+        document.querySelector(selector).style.setProperty(colorVar, color);
+    });
+</script>
